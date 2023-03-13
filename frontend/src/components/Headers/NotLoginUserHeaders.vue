@@ -19,9 +19,12 @@
       <a href="" class="icon-margin">
         <img src="@\assets\wallet.png" alt="지갑">
       </a>
-      <a href="" class="icon-margin">
-        <img src="@\assets\base_profile.png" alt="기본 프로필 사진"> 
-      </a>
+      <router-link to="/mypageview">
+        <img
+          src="@\assets\base_profile.png"
+          alt="기본 프로필 사진"  
+        />
+      </router-link>
     </span>
   </div>
 </template>
