@@ -1,11 +1,11 @@
 <template>
   <div class="navbar">
-    <span>
+    <span class="headerlist-login">
       <a href="/" class="headerlist">
-        <img :src="require('@/assets/logo.png')" alt="로고" class="logo" />FANFTASY
+        <img :src="require('@/assets/logo.png')" alt="로고" class="header-logo-login" />FANFTASY
       </a>
     </span>
-    <span class="headerlist">
+    <span class="headerlist-login">
       <router-link to="/" style="text-decoration: none">NFT 마켓</router-link> |
       <router-link to="/about" style="text-decoration: none"
         >커뮤니티</router-link
@@ -63,14 +63,14 @@ export default {
   /* justify-content: space-between; */
 }
 
-.logo {
+.header-logo-login {
   width: 35px;
   height: 35px;
   /* display: flex; */
   vertical-align: center;
 }
 
-.headerlist {
+.headerlist-login {
   font-size: large;
   text-decoration: none;
   margin-left: 3vw;

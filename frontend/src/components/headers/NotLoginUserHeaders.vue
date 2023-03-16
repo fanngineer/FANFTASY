@@ -1,8 +1,8 @@
 <template>
   <div class="navbar">
-    <span>
+    <span class="headerlist">
       <a href="/" class="headerlist">
-        <img :src="require('@/assets/logo.png')" alt="로고" class="logo">FANFTASY
+        <img :src="require('@/assets/logo.png')" alt="로고" class="header-logo">FANFTASY
       </a>
     </span>
     <span class="headerlist">
@@ -37,15 +37,16 @@ export default {
 
 <style>
 .navbar {
-  height: 70px;
+  height: 100px;
   display: flex;
   align-items: center;
+  background: white;
 }
 
-.logo {
+.header-logo {
   /* display: flex; */
   float: left;
-  
+  vertical-align: center;
   width: 35px;
   height: 35px;
 }
@@ -53,6 +54,7 @@ export default {
 .headerlist {
   font-size: large;
   text-decoration: none;
+  /* margin-left: 2vw; */
 }
 
 .box {

@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <LoginUserHeaders v-if="i == 1" />
-    <NotLoginUserHeaders />
+    <LoginUserHeaders/>
+    <NotLoginUserHeaders  v-if="i == 1"/>
     <br />
     <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
+      <!-- max 1540 -->
       <slide v-for="slide in slides" :key="slide.id">
         <div class="carousel_item">
           <img :src="slide.image" alt="안나오냐" />
@@ -32,8 +33,8 @@
     <br />
     <br />
     <div>
+      <RankingCard />
     </div>
-    <AllFooter />
   </div>
 </template>
 
@@ -41,7 +42,8 @@
 // @ is an alias to /src
 import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
 import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
-import AllFooter from "@/components/headers/AllFooter.vue"
+
+import RankingCard from "@/components/mainpage/RankingCard.vue"
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 import "vue3-carousel/dist/carousel.css"
 // import { Carousel, Slide} from 'vue3-carousel'
@@ -53,9 +55,9 @@ export default {
     NotLoginUserHeaders,
     Carousel,
     Slide,
-    AllFooter,
     Pagination,
     Navigation,
+    RankingCard,
   },
   data() {
     return {
@@ -84,7 +86,7 @@ export default {
 <style>
 .carousel_item {
   height: 300px;
-  /* width: 100%; */
+  width: 100%;
   background-color: white;
   color: var(--vc-clr-white);
   font-size: 20px;
@@ -97,7 +99,7 @@ export default {
 .ranking-space {
   display: flex;
   justify-content: left;
-  margin-left: 12vw;
+  margin-left: 15vw;
   margin-right: 6vw;
   float: left;
 }
@@ -129,5 +131,14 @@ export default {
   font: bold;
   color: #6a3fc1;
   cursor: pointer;
+}
+
+/* .home {
+  min-width: 1540px;
+} */
+
+.footer-space {
+  position : relative;
+  transform : translateY(-100%);
 }
 </style>
