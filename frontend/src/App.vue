@@ -1,5 +1,7 @@
 <template >   
   <v-app class="page">
+    <LoginUserHeaders />
+    <NotLoginUserHeaders />
     <v-main >
       <router-view />
     </v-main>
@@ -9,12 +11,16 @@
 
 <script>
 import AllFooter from "@/components/headers/AllFooter.vue"
+import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
+import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
 
 
 export default {
   name: 'App',
   components:{
-    AllFooter
+    AllFooter,
+    LoginUserHeaders,
+    NotLoginUserHeaders
   },
   data: () => ({
     //

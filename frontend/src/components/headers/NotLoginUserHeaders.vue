@@ -11,9 +11,9 @@
         </a>
       </span>
       <span class="headerlist">
-        <router-link to="/" style="text-decoration: none">NFT 마켓</router-link>
+        <router-link to="/market" style="text-decoration: none">NFT 마켓</router-link>
         |
-        <router-link to="/about" style="text-decoration: none"
+        <router-link to="/community" style="text-decoration: none"
           >커뮤니티</router-link
         >
       </span>
@@ -37,7 +37,7 @@
         <a href="" class="icon-margin">
           <img :src="require('@/assets/wallet.png')" alt="지갑" />
         </a>
-        <router-link to="/mypageview" class="icon-margin">
+        <router-link to="/mypage" class="icon-margin">
           <img
             :src="require('@/assets/base_profile.png')"
             alt="기본 프로필 사진"
