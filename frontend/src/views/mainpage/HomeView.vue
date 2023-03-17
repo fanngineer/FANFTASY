@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    <LoginUserHeaders />
-    <NotLoginUserHeaders v-if="i == 1"/>
     <br />
     <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
       <!-- max 1540 -->
@@ -39,20 +37,13 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
-import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
-
 import RankingCard from "@/components/mainpage/RankingCard.vue"
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 import "vue3-carousel/dist/carousel.css"
-// import { Carousel, Slide} from 'vue3-carousel'
 
 export default {
   name: "HomeView",
   components: {
-    LoginUserHeaders,
-    NotLoginUserHeaders,
     Carousel,
     Slide,
     Pagination,
