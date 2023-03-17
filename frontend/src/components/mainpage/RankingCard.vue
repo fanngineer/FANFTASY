@@ -48,7 +48,7 @@
       <v-card-title style="padding: 0;">
         
       </v-card-title>
-      <v-card-item style="font-size:larger; vertical-align: center; text-align: center; ">
+      <v-card-item style="font-size:larger; vertical-align: center; text-align: center; z-index: 999;">
         <br>
         M.S.JO
       </v-card-item>
@@ -79,7 +79,7 @@ export default {
 }
 
 .card-img {
-  width: 206px;
+  width: 210px;
   height: 206px;
   object-fit: cover;
   /* display: flex; */

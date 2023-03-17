@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <LoginUserHeaders/>
-    <NotLoginUserHeaders  v-if="i == 1"/>
+    <LoginUserHeaders />
+    <NotLoginUserHeaders v-if="i == 1"/>
     <br />
     <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
       <!-- max 1540 -->
