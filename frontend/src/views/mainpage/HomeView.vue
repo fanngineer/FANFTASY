@@ -19,11 +19,18 @@
     <p></p>
     <h1 class="ranking-space">Ranking</h1>
     <br />
-    <button v-on:click="openNew" class="selected-ranking-button">최신순</button>
-    <button v-on:click="openNew" class="unselected-ranking-button">
+    <button v-on:click="selectNewest" v-if="sortnum === 0" class="selected-ranking-button">최신순</button>
+    <button v-on:click="selectNewest" v-else class="unselected-ranking-button">최신순</button>
+    <button v-on:click="selectSalesVolume" v-if="sortnum === 1" class="selected-ranking-button">
       판매량순
     </button>
-    <button v-on:click="openNew" class="unselected-ranking-button">
+    <button v-on:click="selectSalesVolume" v-else class="unselected-ranking-button">
+      판매량순
+    </button>
+    <button v-on:click="selectSalesAmmount" v-if="sortnum === 2" class="selected-ranking-button">
+      판매금액순
+    </button>
+    <button v-on:click="selectSalesAmmount" v-else class="unselected-ranking-button">
       판매금액순
     </button>
     <br />
@@ -58,20 +65,20 @@ export default {
         {
           id: 1,
           image:
-            "https://lab.ssafy.com/s08-blockchain-contract-sub2/S08P22A306/-/raw/mainpage/frontend/src/assets/BTS.png",
+            "https://lab.ssafy.com/s08-blockchain-contract-sub2/S08P22A306/-/raw/dev-front/frontend/src/assets/btsFrame.png",
         },
         {
           id: 2,
           image:
-            "https://lab.ssafy.com/s08-blockchain-contract-sub2/S08P22A306/-/raw/mainpage/frontend/src/assets/HERO.png",
+            "https://lab.ssafy.com/s08-blockchain-contract-sub2/S08P22A306/-/raw/dev-front/frontend/src/assets/HERO.png",
         },
         {
           id: 3,
           image:
-            "https://lab.ssafy.com/s08-blockchain-contract-sub2/S08P22A306/-/raw/mainpage/frontend/src/assets/Musical.png",
+            "https://lab.ssafy.com/s08-blockchain-contract-sub2/S08P22A306/-/raw/dev-front/frontend/src/assets/Musical.png",
         },
       ],
-
+    sortnum: 0,
     }
   },
   mounted() {
@@ -84,13 +91,24 @@ export default {
       location.href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn';
     }
   },
+  methods: {
+    selectNewest() {
+      this.sortnum = 0
+    },
+    selectSalesAmmount() {
+      this.sortnum = 2
+    },
+    selectSalesVolume() {
+      this.sortnum = 1
+    },
+  }
 }
 </script>
 
 <style>
 .carousel_item {
   height: 300px;
-  width: 100%;
+  /* width: 100%; */
   background-color: white;
   color: var(--vc-clr-white);
   font-size: 20px;
