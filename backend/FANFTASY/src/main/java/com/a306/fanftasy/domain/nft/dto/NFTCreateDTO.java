@@ -3,7 +3,7 @@
  * */
 package com.a306.fanftasy.domain.nft.dto;
 
-import java.util.List;
+import com.a306.fanftasy.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

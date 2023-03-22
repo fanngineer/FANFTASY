@@ -1,10 +1,12 @@
 package com.a306.fanftasy.domain.user.entity;
 
+import com.a306.fanftasy.domain.user.dto.UserJoinDTO;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Setter
@@ -17,8 +19,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "address")
     private String address;
     private String email;
     private String nickname;
@@ -26,11 +27,25 @@ public class User {
     private String profileImg;
     private String phone;
     private String role;
+
+    private String name;
     @Column(name = "total_sales")
-    private long totalSales;
+    private int totalSales;
     @Column(name = "total_price")
-    private double totalPrice;
+    private int totalPrice;
     private String company;
     @Column(name = "refresh_token")
     private String refreshToken;
+
+    public static User ofUser(UserJoinDTO joinDto){
+        User user = User.builder()
+                .address(joinDto.getAddress())
+                .email(joinDto.getEmail())
+                .nickname(joinDto.getNickname())
+                .name(joinDto.getName())
+                .phone(joinDto.getPhone())
+                .build();
+        return user;
+    }
+
 }
