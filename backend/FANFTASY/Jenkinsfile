@@ -1,0 +1,35 @@
+pipeline {
+	agent any
+	stages {
+		stage('Gradle Build') {
+				steps {
+					dir('backend'){
+						dir('FANFTASY') {
+							sh 'chmod +x gradlew'
+							sh './gradlew clean build -x test'
+						}
+					}
+				}
+		}
+		stage('Docker Build') {
+				steps { 
+				dir('backend') {
+						dir('FANFTASY') {
+							sh 'docker build -t fanftasy-back:latest .'
+						}
+				}
+			}
+		}
+		stage('Deploy') {
+				steps{
+					sh 'docker rm -f back'
+					sh 'docker run -d --name back -p 8099:8099 -u root fanftasy-back:latest'
+				}
+		}
+		stage('Finish') {
+				steps{
+					sh 'docker images -qf dangling=true | xargs -I{} docker rmi {}'
+				}
+		}
+	}
+}
