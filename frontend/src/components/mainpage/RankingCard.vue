@@ -76,6 +76,8 @@ export default {
   margin-right: 30px;
   /* border: solid white; */
   box-shadow: 0px 5px 5px gray;
+  border: solid 1px #d9d9d9;
+
 }
 
 .card-img {

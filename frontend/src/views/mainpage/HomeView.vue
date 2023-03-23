@@ -4,7 +4,7 @@
     <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
       <!-- max 1540 -->
       <slide v-for="slide in slides" :key="slide.id">
-        <div class="carousel_item">
+        <div class="carousel-item">
           <img :src="slide.image" alt="안나오냐" />
         </div>
       </slide>
@@ -106,7 +106,7 @@ export default {
 </script>
 
 <style>
-.carousel_item {
+.carousel-item {
   height: 300px;
   /* width: 100%; */
   background-color: white;

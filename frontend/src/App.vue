@@ -1,6 +1,6 @@
 <template >   
   <v-app class="page">
-    <LoginUserHeaders />
+    <LoginUserHeaders v-if="a===1"/>
     <NotLoginUserHeaders />
     <v-main >
       <router-view />
