@@ -1,6 +1,4 @@
 <template>
-  <LoginUserHeaders/>
-  <NotLoginUserHeaders  v-if="i == 1"/>
   <br>
   <div class="community-menu">
     <div>
@@ -76,14 +74,11 @@
 </template>
 
 <script>
-import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
-import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
 
 export default {
   name: "communityMain",
   components: {
-    LoginUserHeaders,
-    NotLoginUserHeaders,
+
   },
   data() {
     return {
