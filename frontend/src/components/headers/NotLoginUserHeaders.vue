@@ -7,11 +7,11 @@
             :src="require('@/assets/logo.png')"
             alt="로고"
             class="header-logo"
-          />FANFTASY
+          />
         </a>
       </span>
       <span class="headerlist">
-        <router-link to="/market" style="text-decoration: none">NFT 마켓</router-link>
+        <router-link to="/market" style="text-decoration: none; font-family: KCC-Ganpan;">NFT 마켓</router-link>
         |
         <router-link to="/community" style="text-decoration: none"
           >커뮤니티</router-link
@@ -67,7 +67,7 @@ export default {
   /* display: flex; */
   /* float: left; */
   vertical-align: center;
-  width: 35px;
+  /* width: 35px; */
   height: 35px;
 }
 
@@ -97,6 +97,7 @@ export default {
   display: flex;
   justify-content: left;
   float: left;
+  padding-left: 10px;
 }
 
 .icon-margin {

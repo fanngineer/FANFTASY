@@ -36,4 +36,12 @@ export default {
   overflow:auto;
 }
 
+@font-face {
+  font-family:'KCC-Ganpan';
+  src: url('assets/fonts/KCC-Ganpan.ttf') format('truetype');
+  font-weight: 400;
+}
+
+
+
 </style>
