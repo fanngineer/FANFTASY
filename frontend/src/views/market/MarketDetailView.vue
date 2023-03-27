@@ -5,7 +5,7 @@
       <div style="display: inline-flex; justify-content: center;">
         
         <!-- 이미지, 기타 정보 세로로 담는 div -->
-        <div>
+        <div style="margin-right:10px">
           
           <!-- 이미지 -->
           <div class="cen" style="height: 500px;">
@@ -21,16 +21,40 @@
           <div style="width: 500px; white-space:pre-line; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
             <p style="font-size: 14px; font-weight:500">
-              ""
+              도지코인은 2013년 12월 6일, IBM 출신 빌리 마커스와 잭슨 파머가 만든 럭키 코인 블록체인 기반의 암호화폐로 비트코인 커뮤니티에서 도지 코인이란 닉네임을 쓴 사람이 올린 Dogecoin - very currency - many coin - wow란 제목의 스레드로부터 시작되었다. 도지코인의 가장 큰 특징은 공급 정책이 무제한이란 점이다. 이를 증명하듯 출시하고 약 2년이 흐른 2015년엔 1천억번째 코인이 발행되었고 4년이 흐른 2019년도엔 그 규모가 달에 닿았다. 달착륙 기념 페이지 그렇기에 도지코인의 가격은 매우 낮게 책정되어 있는데 일례로 2018년 9월, 대다수의 암호화폐가 거품이 꺼지고, 각종 규제로 인해 하락을 거듭하는 가운데 유일하게 30일 동안 가격이 160%나 증가했지만, 가격은 2018년 하반기에 5원, 2년이 지난 2020년 1월엔 약 3원으로 거래되었었다
             </p>
           </div>
           <hr>
           <div style="width: 500px; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
+            <div>
+              <p>소유자</p>
+              <p>블록체인</p>
+              <p>컨트랙트 주소</p>
+              <p>토큰 표준</p>
+            </div>
           </div>
           <hr>
           <div style="width: 500px; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">거래 정보</p>
+            <p>
+              <table>
+                <thead>
+                  <tr>
+                    <th >거래일시</th>
+                    <th >NFT 에디션 번호</th>
+                    <th >가격</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(log, index) in tradeLog" :key="index"> 
+                    <td>{{ log.date }}</td>
+                    <td>{{ log.edition }}</td>
+                    <td>{{ log.price }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </p>
           </div>
           <hr>
         </div>
@@ -136,7 +160,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data(){
+    return{
+      tradeLog : [
+        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 ETH'},
+        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 ETH'},
+        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 ETH'},
+      ]
+    }
+  }
+
+}
 </script>
 
 <style>
