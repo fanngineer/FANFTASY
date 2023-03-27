@@ -8,6 +8,7 @@ import CommunityMainView from '../views/community/CommunityMainView.vue';
 import SignUpView from '../views/account/SignUpView.vue';
 import CommunityAddView from '../views/community/CommunityAddView.vue';
 import CommunityDetailView from '../views/community/CommunityDetailView.vue';
+import ResellListView from '../views/resell/ResellListView.vue';
 
 const routes = [
   {
@@ -51,9 +52,9 @@ const routes = [
     component: MarketDetailView
   },
   {
-    path: '/community',
-    name: 'CommunityMainView',
-    component: CommunityMainView
+    path: '/resell',
+    name: 'ResellListView',
+    component: ResellListView
   },
   {
     path: '/signup',

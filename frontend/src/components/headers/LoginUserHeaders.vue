@@ -1,16 +1,16 @@
 <template>
   <div class="navbar">
     <span style="display: inline-block">
-      <span class="headerlist-login">
+      <span class="headerlist">
         <a href="/" class="headerlist">
           <img
             :src="require('@/assets/logo.png')"
             alt="로고"
-            class="header-logo-login"
-          />FANFTASY
+            class="header-logo"
+          />
         </a>
       </span>
-      <span class="headerlist-login">
+      <span class="headerlist">
         <router-link to="/market" style="text-decoration: none">NFT 마켓</router-link>
         |
         <router-link to="/community" style="text-decoration: none"
@@ -19,7 +19,7 @@
       </span>
     </span>
     <span style="display: inline-block">
-      <label for="" class="box">
+      <!-- <label for="" class="box">
         <input type="text" class="notting search-input" />
         <button
           href=""
@@ -32,9 +32,9 @@
             style="margin-top: 7px"
           />
         </button>
-      </label>
+      </label> -->
       <span style="margin-left: 2vw">
-        <a href="" class="icon-margin">
+        <!-- <a href="" class="icon-margin">
           <img :src="require('@/assets/chatting.png')" alt="채팅" />
         </a>
         <a href="" class="icon-margin">
@@ -42,7 +42,7 @@
         </a>
         <a href="" class="icon-margin">
           <img :src="require('@/assets/wallet.png')" alt="지갑" />
-        </a>
+        </a> -->
         <router-link to="/mypage" class="icon-margin">
           <img
             :src="require('@/assets/base_profile.png')"
