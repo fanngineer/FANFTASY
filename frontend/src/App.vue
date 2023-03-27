@@ -32,8 +32,8 @@ export default {
 .page{
   white-space: nowrap;
   width: 100%;
-  overflow-x: auto;
-  overflow:auto;
+  /* overflow-x: auto;
+  overflow:auto; */
   font-family: kern;
 }
 

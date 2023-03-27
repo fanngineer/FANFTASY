@@ -179,6 +179,8 @@ export default {
 
 /* .home {
   min-width: 1540px;
+  overflow-x: auto;
+  overflow:auto;
 } */
 
 .footer-space {

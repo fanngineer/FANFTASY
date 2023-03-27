@@ -1,66 +1,136 @@
 <template>
-  <div class="df cen">
-    <div class="cen">
-      <v-img
-        src="@/assets/coin_hoyoen.png"
-        alt=""
-        class="nft-detail-img"
-      ></v-img>
-    </div>
-    <div>
-      <div class="nft-detail-box1">
-        <br />
-        <h1>노려보는 호연</h1>
-        <br />
-        <h4>코딩 하며 잘 안풀릴 때 부르면 "노려보는 호연"이 나온다</h4>
-        <br />
-        <br />
-        <div class="sb">
-          <span class="ib">
+  <div style="display: flex; justify-content: center;">
+    <div class="cen" style="width:fit-content;">
+      
+      <div style="display: inline-flex; justify-content: center;">
+        
+        <!-- 이미지, 기타 정보 세로로 담는 div -->
+        <div>
+          
+          <!-- 이미지 -->
+          <div class="cen" style="height: 500px;">
             <v-img
-              src="@/assets/심호연.png"
-              alt="호연"
-              class="nft-detail-small-img fl"
-            ></v-img>
-            <p>Artist</p>
-            <p>H.Y Shim</p>
-          </span>
-          <span class="ib">
-            <v-img
-              src="@/assets/photo.png"
-              alt="사진타입"
-              class="nft-detail-small-img fl"
-            ></v-img>
-            <p>Type</p>
-            <p>Photo</p>
-          </span>
-          <span class="ib">
-            <v-img
-              src="@/assets/Heart_Icon.png"
+              src="@/assets/coin_hoyoen.png"
               alt=""
-              class="nft-detail-small-img fl"
+              class="nft-detail-img"
             ></v-img>
-            <p style="margin-top: 12px">132</p>
-            <br />
-          </span>
+          </div>
+          
+          
+          
+          <div style="width: 500px; white-space:pre-line; margin:20px">
+            <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
+            <p style="font-size: 14px; font-weight:500">
+              ""
+            </p>
+          </div>
+          <hr>
+          <div style="width: 500px; margin:20px">
+            <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
+          </div>
+          <hr>
+          <div style="width: 500px; margin:20px">
+            <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">거래 정보</p>
+          </div>
+          <hr>
         </div>
-        <br />
-        <br />
-      </div>
-
-      <div class="nft-detail-box">
-        <div class="sa">
-          <span class="ib" style="margin-top: 30px;">
-            <p class="nft-item-name">판매가격</p>
-            <p class="nft-item-content">1.03NFN</p>
-          </span>
-          <span class="ib" style="margin-top: 30px;">
-            <p class="nft-item-name">잔여수량</p>
-            <p class="nft-item-content">19/50</p>
-          </span>
+        
+        <!-- nft 기본 정보 박스(우측) -->
+        <div class="detail-parent">
+          <div class="nft-detail-parent">
+              <div class="nft-detail-box1">
+                <br />
+                <h1>노려보는 호연</h1>
+                <br />
+                <h4>코딩 하며 잘 안풀릴 때 부르면 "노려보는 호연"이 나온다</h4>
+                <br />
+                <br />
+                <div class="sb">
+                  <span class="ib">
+                    <v-img
+                      src="@/assets/심호연.png"
+                      alt="호연"
+                      class="nft-detail-small-img fl"
+                    ></v-img>
+                    <p>Artist</p>
+                    <p>H.Y Shim</p>
+                  </span>
+                  <span class="ib">
+                    <v-img
+                      src="@/assets/photo.png"
+                      alt="사진타입"
+                      class="nft-detail-small-img fl"
+                    ></v-img>
+                    <p>Type</p>
+                    <p>Photo</p>
+                  </span>
+                  <span class="ib">
+                    <v-img
+                      src="@/assets/Heart_Icon.png"
+                      alt=""
+                      class="nft-detail-small-img fl"
+                    ></v-img>
+                    <p style="margin-top: 12px">132</p>
+                    <br />
+                  </span>
+                </div>
+                <br />
+                <br />
+              </div>
+        
+              <div class="nft-detail-box">
+                <div class="sa">
+                  <span class="ib" style="margin-top: 30px;">
+                    <p class="nft-item-name">판매가격</p>
+                    <p class="nft-item-content">1.03NFN</p>
+                  </span>
+                  <span class="ib" style="margin-top: 30px;">
+                    <p class="nft-item-name">잔여수량</p>
+                    <p class="nft-item-content">19/50</p>
+                  </span>
+                </div>
+                <button class="purchase-btn">구매하기</button>
+              </div>
+      
+          </div>
         </div>
-        <button class="purchase-btn">구매하기</button>
       </div>
+  
+      <!-- 주의사항 -->
+      <div style="display: flex; justify-content: center; margin-bottom: 60px;">
+          <ui>
+            <span style="font-weight: bold; font-size: 24px; background: linear-gradient(to right, #6A3FC1, #5B9BD5); color: transparent; -webkit-background-clip: text; margin: 15px;" >
+              FANFTASY 유의사항
+            </span>
+            <li>
+              구매는 메타마스크 계좌 내 이더리움(ETH)이 차감되는 방식으로 진행됩니다.
+            </li>
+            <li>
+              구매 거래가 체결되면 거래 취소가 불가하므로 신중하게 결정하여 진행해주세요.
+            </li>
+            <li>
+              가격 제안은 제안 시점으로부터 3일간 유효합니다. 제안 기간이 만료되면 해당 제안은 자동 취소됩니다.
+            </li>
+            <li>
+              가격 제안이 완료되면 해당 금액은 메타마스크 내 거래 가능 금액에서 제외됩니다.
+            </li>
+            <li>
+              판매자가 가격 제안을 수락하면, 메타마스크 계좌 내 계좌에서 이더리움(ETH)이 차감되어 거래가 체결될 수 있습니다.
+            </li>
+            <li>
+              NFT의 외부 입출금은 현재 지원하지 않습니다. 
+            </li>
+            <li>
+              해당 NFT에 연계된 디지털상품 관련 분쟁 (지식재산권 분쟁 포함)이 발생한 경우 해당 NFT에 대한 거래지원이 종료될 수 있습니다.
+            </li>
+            <li>
+              NFT 소유자는 NFT와 연계된 “디지털 저작물“을 비상업적인 용도로 사용<br>
+              (개인 SNS 내 업로드하는 행위 및 디지털 저작물 원본 그대로 개인적 용도로 사용하는 행위)<br>
+              할 수 있는 권리와 NFT 입출금, 거래 등이 지원되는 경우 지원되는 방식에 따라 NFT의 소유권을 타인에게 이전할 수 있는 권리를 갖습니다.
+            </li>
+          </ui>
+      </div>
+  
     </div>
   </div>
 </template>
@@ -70,6 +140,11 @@ export default {}
 </script>
 
 <style>
+.detail-parent {
+  height: 1400px;
+}
+
+
 .nft-detail-img {
   width: 372px;
   height: 504px;
@@ -96,6 +171,13 @@ export default {}
 
 .ib {
   display: inline-block;
+}
+
+/* nft 정보 상자 css */
+.nft-detail-parent{
+  position:sticky; 
+  top: 0px;  
+  height: 480px; 
 }
 
 .nft-detail-box {
@@ -156,4 +238,11 @@ export default {}
 .cen {
   justify-content: center;
 }
+
+li{
+  padding-left: 30px; 
+  text-indent: -20px;
+  margin-bottom: 5px;
+}
+
 </style>
