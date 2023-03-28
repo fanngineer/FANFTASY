@@ -1,24 +1,47 @@
 <template>
-  <div class="LogoTitle">
-    <v-img src="@/assets/logo.png" class="logo"></v-img>
-    <div class="title">회원 가입</div>
-  </div>
-  <div class="button-container">
-    <div class="button-group">
-      <button class="artist" @click="isartist()">
-        <v-img src="@/assets/Micro.png" alt="artistLogo" style="height: 15vh ; width: 15vw;"></v-img>
-        ARTIST
-      </button>
-      <div class="button-gap"></div>
-      <button class="fan" @click="isfan()">
-        <v-img src="@/assets/fan-club.png" alt="fanLogo" style="height: 15vh ; width: 15vw;"></v-img>
-        FAN
-      </button>
+  <div class="entire-select">
+    <div style="flex-direction: column;">
+
+    
+      
+      <div class="title-container">
+        <div class="title-select">
+          회원 가입
+        </div>
+        <div>
+          고객님께서 해당되는 회원 종류를 선택해주세요
+        </div>
+      </div>
+      <div class="button-container">
+        <div class="button-group ">
+          <div class="button-hover">
+            <button class="artist-button" @click="isArtist">
+              <v-img class="img-artist" src="@/assets/Micro.png" alt="artistLogo" style="height: 7vh ; width: 7vw;"></v-img>
+              <span style="margin-bottom:3vh; font-size:24px;">
+                ARTIST
+              </span>
+            </button>
+          </div>
+          <div class="button-gap"></div>
+          <div class="button-hover">
+            <button class="fan-button" @click="isFan">
+              <v-img class="img-fan" src="@/assets/fan-club.png" alt="fanLogo" style="height: 7vh ; width: 7vw;"></v-img>
+              <span style="margin-bottom:3vh; font-size:24px;">
+                FAN
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="button-gap2"></div>
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+          이미 계정이 있다면&nbsp; 
+          <button class="login">로그인</button>
+
+        </div>
+      </div>
+
     </div>
-    <div class="button-gap2"></div>
-    <button class="login">이미 계정이 있다면 로그인</button>
   </div>
-  
 </template>
 
 <script>
@@ -42,11 +65,11 @@ export default {
     
   },
   methods: {
-    isartist () {
+    isArtist () {
       this.$store.state.isFan = false;
       this.$router.push('/signup');
     },
-    isfan() {
+    isFan() {
       this.$store.state.isFan = true;
       this.$router.push('/signup')
     },
@@ -59,38 +82,30 @@ export default {
 </script>
 
 <style>
-
-.LogoTitle {
+.entire-select{
   display: flex;
-  align-items: center;
-  /* flex-direction: column; */
-  position: absolute;
-  top: 20vh;
-  left: 5vw;
+  justify-content: center;
 }
 
-.logo {
-  display: flex;
-  /* vertical-align: top; */
-  height: 30px;
-  width: 60px;
-  margin-right: 10px;
+
+.title-container {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
-.title {
-  display: flex;
-  height: 50px;
-  width: 80px;
+.title-select {
+  /* display: flex; */
+  font-family:'KCC-Ganpan';
   font-size: 40px;
-  color: purple;
+  font-weight: 200;
+  background: linear-gradient(to right, #6A3FC1, #5B9BD5); 
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .button-container {
-  display: flex;
-  flex-direction: column ;
-  justify-content: center;
-  align-items: center;
-  height: 74vh;
 }
 
 .button-group {
@@ -104,61 +119,108 @@ export default {
   height: 3vh;
 }
 
-.artist {
+.artist-button {
   display: flex;
   float: left;
-  /* flex-direction: center; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
   
-  width: 30vw;
-  height: 30vh;
+  width: 20vw;
+  height: 40vh;
   left: 1vw;
   top: 1vh;
   
   border: none;
   background: #FFFFFF;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  
   border-radius: 25px;
-  padding: 12px 24px;
-  margin: 0 8px;
   font-size: 16px;
   cursor: pointer;
 }
 
-.button-gap {
-  display: flex;
-  width: 1vw;
-
+.button-hover{
+  border-style: solid;
+  border-color: #DAD2E9;
+  border-radius: 25px;
 }
 
-.fan {
+.button-hover:not(:hover) .img-artist{
+  transition: .3s;
+}
+.button-hover:hover .img-artist{
+  transition: .3s;
+  animation: vibration1 .3s infinite;
+}
+.button-hover:hover{
+  border-radius: 25px;
+  border-color: #6A3FC1;
+  color: #6A3FC1;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+@keyframes vibration1 {
+  0% {
+    transform-origin: 50% 50%;
+    transform: rotate(18deg);
+  }
+  50% {
+    transform-origin: 50% 50%;
+    transform: rotate(-18deg);
+  }
+  100%{
+    transform-origin: 50% 50%;
+    transform: rotate(18deg);
+  }
+}
+
+.button-hover:not(:hover) .img-fan{
+  transition: .3s;
+}
+.button-hover:hover .img-fan{
+  transition: .3s;
+  animation: vibration .3s infinite;
+}
+@keyframes vibration {
+  0% {
+    transform-origin: 50% 100%;
+    transform: rotate(4deg);
+  }
+  50% {
+    transform-origin: 50% 100%;
+    transform: rotate(-4deg);
+  }
+  100%{
+    transform-origin: 50% 100%;
+    transform: rotate(4deg);
+  }
+}
+
+.button-gap {
   display: flex;
-  /* flex-direction: center; */
+  width: 3vw;
+}
+
+.fan-button {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   
-  width: 30vw;
-  height: 30vh;
+  width: 20vw;
+  height: 40vh;
   left: 4vw;
   top: 4vh;
-  /* border: none; */
+  
   background: #FFFFFF;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
-  padding: 12px 24px;
-  margin: 0 8px;
   font-size: 16px;
   cursor: pointer;
 }
 
 .login {
   display: flex;
-  justify-content: center;
-  flex: center;
-  color: blue;
+  font-weight: bold;
+  color: #6A3FC1;
 }
 
 </style>
