@@ -81,9 +81,15 @@
     </div>
     <br />
     <div style="text-align: center;">
-      <NFTCard v-for="i in 3" :key="i" class="nft-card-class"/>
+      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
       <br />
-      <NFTCard v-for="i in 3" :key="i" class="nft-card-class"/>
+      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+      <br />
+      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+      <br />
+      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+      <br />
+      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
     </div> 
     <br />
     <v-pagination :length="5"></v-pagination>

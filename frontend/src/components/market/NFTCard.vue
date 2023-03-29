@@ -6,32 +6,23 @@
           <v-card-title class="nft-card-title">
             <v-img src="@/assets/coin_hoyoen.png" alt="" class="nft-img"></v-img>
           </v-card-title>
-          <v-card-item class="nft-card-item">
-            <p class="item-name">
-              아티스트
-            </p>
-            <p class="item-content">
-              심호연
-            </p>
-            <p class="item-name">
-              제목
-            </p>
-            <p class="item-content">
-              노려보는 호연
-            </p>
-            <p class="item-name">
-              가격
-            </p>
-            <p class="item-content">
-              1.03FAN
-            </p>
-            <p class="item-name">
-              잔여수량
-            </p>
-            <p class="item-content">
-            19/50
-            </p>
-          </v-card-item>
+
+          <div style="width: 220px;">
+            <v-card-item class="nft-card-item">
+              <p class="item-name">
+                노려보는 호연은 누구를 바라보는가
+              </p>
+              <p class="item-content">
+                심호연
+              </p>
+              <p class="item-content">
+                1.03FAN
+              </p>
+              <p class="item-content">
+              19/50
+              </p>
+            </v-card-item>
+          </div>
         </v-card>
       </router-link>
     </div>
@@ -49,16 +40,21 @@ export default {
 .nft-card {
   display: flex;
   float: left;
-  width: 413px;
-  height: 245px;
+  /* width: 413px; */
+  /* height: 245px; */
+  width: 245px;
+  height: 360px;
   border: solid 1px #6a3fc1;
   margin: 20px 20px;
   border-radius: 15px;
+  flex-direction: column;
+  padding-top: 10px;
+  align-items: center;
 }
 
 .nft-img {
   border-radius: 15px;
-  border: solid 1px #D9D9D9;
+  /* border: solid 1px #D9D9D9; */
   width: 164px;
   height: 222px;
   margin-top: auto;
@@ -66,10 +62,21 @@ export default {
   margin-left: 10px;
 }
 
+.nft-img :hover{
+  transition: 0.5s;
+  border-radius: 15px;
+  transform: rotateX(-25deg) rotateY(25deg);
+}
+.nft-img :not(:hover){
+  transition: 0.5s;
+  border-radius: 15px;
+  transform: rotateX(0deg) rotateY(0deg);
+}
+
 .item-name{
   color: #6A3FC1;
   text-align: left;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bolder;
 }
 
@@ -89,11 +96,13 @@ export default {
   display: flex;
   justify-content: center;
   position: relative;
+  margin-top: 10px;
 }
 
 .nft-card-item {
   font-size:larger;
-  vertical-align: center;
-  text-align: center;
+  /* vertical-align: center; */
+  /* text-align: center; */
+  /* text-align: start; */
 }
 </style>
