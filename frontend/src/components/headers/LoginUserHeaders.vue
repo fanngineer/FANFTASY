@@ -61,13 +61,13 @@ export default {
 </script>
 
 <style>
-.navbar {
+/* .navbar {
   height: 100px;
   display: flex;
   align-items: center;
   background: white;
   justify-content: space-between;
-}
+} */
 
 .header-logo-login {
   width: 35px;

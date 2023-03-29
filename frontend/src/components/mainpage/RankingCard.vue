@@ -32,14 +32,14 @@
       </v-card-item>
     </v-card>
     <v-card class="ranking-card">      
-      <v-img src="@/assets/임영웅_logo.png" alt="" class="card-circle-img"></v-img>  
-      <v-img src="@/assets/임영웅.jpg" alt="" class="card-img"></v-img>
+      <!-- <v-img src="@/assets/임영웅_logo.png" alt="" class="card-circle-img"></v-img>   -->
+      <!-- <v-img src="@/assets/임영웅.jpg" alt="" class="card-img"></v-img> -->
       <v-card-title style="padding: 0;">
         
       </v-card-title>
       <v-card-item style="font-size:larger; vertical-align: center; text-align: center; ">
         <br>
-        임영웅
+        
       </v-card-item>
     </v-card>
     <v-card class="ranking-card">      

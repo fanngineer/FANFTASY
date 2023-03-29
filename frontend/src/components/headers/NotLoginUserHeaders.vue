@@ -90,10 +90,31 @@ export default {
 <style>
 .navbar {
   height: 100px;
+  width: 100%;
   display: flex;
   align-items: center;
-  background: white;
+  /* background: white; */
   justify-content: space-between;
+
+  position: fixed;
+
+  /* background-color: black; */
+  background-color: rgba(255,255,255,0.0);
+
+  z-index: 3;
+  border-bottom: solid black;
+  /* opacity: 0.5; */
+}
+.navbar::after {
+  width: 100%;
+  height: 100px;
+  /* display: flex; */
+  position: fixed;
+  /* background: none; */
+  top: 0;
+  left: 0;
+  z-index: 3;
+  /* opacity: 0.1; */
 }
 
 .header-router {

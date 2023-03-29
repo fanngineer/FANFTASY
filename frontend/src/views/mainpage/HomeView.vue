@@ -1,8 +1,18 @@
 <template>
   <div class="home">
-    <br />
-    <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
-      <!-- max 1540 -->
+    <div class="content" style="vertical-align: center;">
+      <div class="content1 df">
+        <span class="fl main-ff" style="vertical-align: center">
+          <p class="main-font main-font-1">NFT를 통해 팬과 아티스트가 하나되는 세상</p>
+          <br> 
+          <p class="main-font main-font-2">FANFTASY</p>
+        </span>
+        <span style="padding-top: 20vh; border-color: black;">
+          <v-img src="@/assets/maingif.gif" style="width:350px; height: 550px;"></v-img>
+        </span>
+      </div>
+    </div>
+    <!-- <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
       <slide v-for="slide in slides" :key="slide.id">
         <div class="carousel-item">
           <img :src="slide.image" alt="안나오냐" />
@@ -13,75 +23,136 @@
         <navigation />
         <pagination />
       </template>
-    </carousel>
+    </carousel> -->
 
-    <p></p>
-    <p></p>
-    <h1 class="ranking-space">Ranking</h1>
-    <br />
-    <button v-on:click="selectNewest" v-if="sortnum === 0" class="selected-ranking-button">최신순</button>
-    <button v-on:click="selectNewest" v-else class="unselected-ranking-button">최신순</button>
-    <button v-on:click="selectSalesVolume" v-if="sortnum === 1" class="selected-ranking-button">
-      판매량순
-    </button>
-    <button v-on:click="selectSalesVolume" v-else class="unselected-ranking-button">
-      판매량순
-    </button>
-    <button v-on:click="selectSalesAmmount" v-if="sortnum === 2" class="selected-ranking-button">
-      판매금액순
-    </button>
-    <button v-on:click="selectSalesAmmount" v-else class="unselected-ranking-button">
-      판매금액순
-    </button>
-    <br />
-    <br />
-    <br />
-    <br />
-    <div>
-      <RankingCard />
-    </div>
-    <router-link to="/market" style="text-decoration: none; color: black;">
-      <div style="width:100%; height: 935px; background-color:chocolate; display: flex; justify-content: center; align-items: center;">  
-        <div>
-          등록된 아티스트의 NFT를 구매할 수 있습니다.
+    <div class="content">
+      <router-link to="/market" style="text-decoration: none; color: black">
+        <div
+          style="
+            width: 100%;
+            height: 935px;
+            background-color: chocolate;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <!-- <h1 class="ranking-space">Ranking</h1>
+          <br />
+          <button
+            v-on:click="selectNewest"
+            v-if="sortnum === 0"
+            class="selected-ranking-button"
+          >
+            최신순
+          </button>
+          <button
+            v-on:click="selectNewest"
+            v-else
+            class="unselected-ranking-button"
+          >
+            최신순
+          </button>
+          <button
+            v-on:click="selectSalesVolume"
+            v-if="sortnum === 1"
+            class="selected-ranking-button"
+          >
+            판매량순
+          </button>
+          <button
+            v-on:click="selectSalesVolume"
+            v-else
+            class="unselected-ranking-button"
+          >
+            판매량순
+          </button>
+          <button
+            v-on:click="selectSalesAmmount"
+            v-if="sortnum === 2"
+            class="selected-ranking-button"
+          >
+            판매금액순
+          </button>
+          <button
+            v-on:click="selectSalesAmmount"
+            v-else
+            class="unselected-ranking-button"
+          >
+            판매금액순
+          </button> -->
+          <br />
+          <br />
+          <br />
+          <br />
           <div>
-
-            드롭스
+            <RankingCard />
           </div>
-          드랍되었습니다~~~~
+          <div>
+            등록된 아티스트의 NFT를 구매할 수 있습니다.
+            <div>드롭스</div>
+            드랍되었습니다~~~~
+          </div>
         </div>
-      </div>
-    </router-link>
+      </router-link>
+    </div>
 
-    <router-link to="/community" style="text-decoration: none; color: black;">
-      <div style="width:100%; height: 935px; background-color:tomato; display: flex; justify-content: center; align-items: center;">
-        <div>
-          리셀몰
+    <div class="content">
+      <router-link to="/community" style="text-decoration: none; color: black">
+        <div
+          style="
+            width: 100%;
+            height: 935px;
+            background-color: tomato;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <div>리셀몰</div>
         </div>
-      </div>
-    </router-link>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import RankingCard from "@/components/mainpage/RankingCard.vue"
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
-import "vue3-carousel/dist/carousel.css"
+// import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
+// import "vue3-carousel/dist/carousel.css"
 // import VueCookies from "vue-cookies"
 // import Web3 from "web3"
 // import { Carousel, Slide} from 'vue3-carousel'
 
+window.addEventListener("wheel", function(e){
+    e.preventDefault();
+},{passive : false})
+
+// window.on("wheel", function(e) {
+//     if(mHtml.is(":animated")) return;
+//     if(e.originalEvent.deltaY > 0) {
+//         if(page == 4) return;
+//         page++;
+//     } else if(e.originalEvent.deltaY < 0) {
+//         if(page == 1) return;
+//         page--;
+//     }
+//     var posTop =(page-1) * window.height();
+//     mHtml.animate({scrollTop : posTop});
+// })
+
 export default {
   name: "HomeView",
   components: {
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation,
+    // Carousel,
+    // Slide,
+    // Pagination,
+    // Navigation,
     RankingCard,
   },
   data() {
     return {
+      a: 1,
       slides: [
         {
           id: 1,
@@ -102,14 +173,9 @@ export default {
       sortnum: 0,
     }
   },
-  watch: {
-  },
-  created() {
-    
-  },
-  mounted() {
-    
-  },
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     selectNewest() {
       this.sortnum = 0
@@ -120,14 +186,21 @@ export default {
     selectSalesVolume() {
       this.sortnum = 1
     },
-    
-
   },
-  
 }
 </script>
 
 <style>
+html {
+  overflow: hidden;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 .carousel-item {
   height: 300px;
   /* width: 100%; */
@@ -183,8 +256,42 @@ export default {
   overflow:auto;
 } */
 
-.footer-space {
+/* .footer-space {
   position : relative;
   transform : translateY(-100%);
+} */
+
+.content {
+  width: 100% !important;
+  height: 100vh !important;
+  background-color: aliceblue;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
 }
+
+.content1 {
+  /* display: inline-block; */
+  vertical-align: middle;
+  justify-content: space-evenly;
+}
+
+.main-ff {
+  padding-top: 44vh;
+  width: 880px;
+}
+
+.main-font {
+  font-size: 40px;
+}
+
+.main-font-1 {
+  text-align: start;
+}
+
+.main-font-2 {
+  text-align: end;
+}
+
+
 </style>
