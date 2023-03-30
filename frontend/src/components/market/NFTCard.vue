@@ -4,22 +4,22 @@
       <router-link :to="{ name: 'MarketDetailView', params: { id: 1 }}">
         <v-card class="nft-card">      
           <v-card-title class="nft-card-title">
-            <v-img src="@/assets/coin_hoyoen.png" alt="" class="nft-img"></v-img>
+            <v-img src="@/assets/nft_main(1).jpg" alt="" class="nft-img"></v-img>
           </v-card-title>
 
           <div style="width: 220px;">
             <v-card-item class="nft-card-item">
               <p class="item-name">
-                노려보는 호연은 누구를 바라보는가
+                수민 공항패션
               </p>
               <p class="item-content">
-                심호연
+                수민
               </p>
               <p class="item-content">
                 1.03FAN
               </p>
               <p class="item-content">
-              19/50
+                19/30
               </p>
             </v-card-item>
           </div>
@@ -32,7 +32,7 @@
 <script>
 export default {
   name: "NFTCard",
-
+  
 }
 </script>
 

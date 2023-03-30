@@ -5,7 +5,7 @@
     <v-main >
       <router-view />
     </v-main>
-    <AllFooter class="footer-space"/>
+    <AllFooter class="footer-space footer_section"/>
   </v-app>
 </template>
 
@@ -13,6 +13,12 @@
 import AllFooter from "@/components/headers/AllFooter.vue"
 // import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
 import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
+
+window.onload = function(){
+  setTimeout(function(){
+    scrollTo(0,0);
+  },100);
+}
 
 
 export default {
@@ -34,7 +40,19 @@ export default {
   width: 100%;
   /* overflow-x: auto;
   overflow: auto; */
+  font-family: notosans-thin;
+}
+
+.font-k {
   font-family: kern;
+}
+
+.font-nt {
+  font-family: notosans-thin;
+}
+
+.font-n {
+  font-family: notosans;
 }
 
 @font-face {
@@ -46,6 +64,18 @@ export default {
 @font-face {
   font-family:'kern';
   src: url('assets/fonts/Kern Standard Trial Black.otf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family:'notosans';
+  src: url('assets/fonts/NotoSansKR-Black.otf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family:'notosans-thin';
+  src: url('assets/fonts/NotoSansKR-Medium.otf') format('truetype');
   font-weight: 400;
 }
 

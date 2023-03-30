@@ -11,8 +11,8 @@
         </a>
       </span>
       <span class="headerlist">
-        <router-link to="/market" class="header-router" style="margin: 0px 30px;">DROPS</router-link>
-        <router-link to="/resell" class="header-router" style="margin: 0px 30px;"
+        <router-link to="/market" class="header-router font-k" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/resell" class="header-router font-k" style="margin: 0px 30px;"
           >MARKET</router-link
         >
         <!-- <router-link to="/community" class="header-router"
@@ -123,6 +123,8 @@ export default {
   font-size: 20px;
   vertical-align: center;
 }
+
+
 
 .header-logo {
   /* display: flex; */
