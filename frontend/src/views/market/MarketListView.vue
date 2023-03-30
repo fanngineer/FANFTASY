@@ -92,10 +92,10 @@
       <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
     </div> 
     <br />
-    <v-pagination :length="5"></v-pagination>
-    <router-link :to="{ name: 'MarketDetailView', params: { id: 1 }}">
+    <!-- <v-pagination :length="5"></v-pagination> -->
+    <!-- <router-link :to="{ name: 'MarketDetailView', params: { id: 1 }}">
       <button v-if="artist===true" class="nft-add-btn">+ NFT 등록하기</button>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
