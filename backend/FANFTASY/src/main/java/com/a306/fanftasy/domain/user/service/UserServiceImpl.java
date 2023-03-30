@@ -23,15 +23,15 @@ public class UserServiceImpl implements UserService{
     private final JwtTokenUtil jwtTokenUtil;
     public UserLoginDTO login(String address){
         log.info(address);
-        System.out.println("설마설마 설마사카 "+address);
         User user = userRepository.findByAddress(address);
         if(user!=null){
             Long userId=user.getUserId();
             String nickname=user.getNickname();
             String profileImg=user.getProfileImg();
+            String role = user.getRole();
        //   String accessToken = jwtTokenUtil.generateAccessToken(address,userId)
        //   String refreshToken = jwtTokenUtil.generateRefreshToken(nickname);
-            return UserLoginDTO.of(userId,nickname,address,profileImg);
+            return UserLoginDTO.of(userId,nickname,address,role,profileImg);
         }
         else{
             return null;
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetailDTO getUserDetail(String addresss){
-        log.info("hihihi"+addresss);
         User user = userRepository.findByAddress(addresss);
         return UserDetailDTO.builder()
                 .name(user.getName())
@@ -68,7 +67,6 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByAddress(userUpdateDTO.getAddress());
         log.info(userUpdateDTO.getNickname());
         if (StringUtils.hasText(userUpdateDTO.getNickname())) {
-            log.info("AAAAAAAAA");
             user.setNickname(userUpdateDTO.getNickname());
         }
         if (StringUtils.hasText(userUpdateDTO.getProfileImg())) {

@@ -11,7 +11,8 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-
+jwt:
+  secret: ssafya306secretkeyforfanftasy20230328
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,8 +28,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
     generate-ddl: true
-jwt:
-  secret: ssafya306secretkeyforfanftasy20230328
+
 # Serialize 오류 해결 (다른 방법 찾아볼 것)
   jackson:
     serialization:

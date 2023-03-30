@@ -14,11 +14,13 @@ public class UserLoginDTO {
     private String address;
     private String profileImg;
     private String nickname;
-    public static UserLoginDTO of(Long userId,String nickname,String address,String profileImg){
+    private String role;
+    public static UserLoginDTO of(Long userId,String nickname,String address,String role,String profileImg){
         return UserLoginDTO.builder()
                 .userId(userId)
                 .nickname(nickname)
                 .address(address)
+                .role(role)
                 .profileImg(profileImg)
                 .build();
     }
