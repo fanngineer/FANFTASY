@@ -1,6 +1,6 @@
 <template>
-  <div style="display:flex; align-items: center; height: 400px;">
-    <div class="anim-h1">
+  <div class="anim-entire">
+    <div class="anim-h1 font-n">
         <div>
             <span class="anim-span fanftasy-nft">NFT</span>
             <span class="anim-span">를&nbsp;</span>
@@ -31,6 +31,13 @@ export default {
 </script>
 
 <style>
+.anim-entire{
+  display:flex; 
+  justify-content: space-between; 
+  align-items: center;
+  width: 1040px;
+  height: 400px;
+}
 
 .anim-h1 {
   /* font-family: kern; */
@@ -50,8 +57,6 @@ export default {
   font-size: 45px;
   opacity: 0;
   filter: blur(4px);
-  font-size: 22px;
-  font-family: 'Kern';
 }
 
 .anim-span:nth-child(1) {
@@ -104,6 +109,7 @@ export default {
     background-clip: text;
     animation: color-change 3.0s linear forwards;
     background-size: 100% 100%;
+    font-size: 60px;
 }
 
 @keyframes color-change{
@@ -122,7 +128,7 @@ export default {
 
 .banner-container{
   width: 200px;
-  margin-left: 20px;
+  margin-left: 20x;
   position:relative;
 }
 

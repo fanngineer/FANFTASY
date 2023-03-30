@@ -85,6 +85,7 @@ export default {
 .entire-select{
   display: flex;
   justify-content: center;
+  margin-top: 80px;
 }
 
 

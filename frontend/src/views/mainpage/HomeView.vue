@@ -366,7 +366,8 @@ body {
 }
 
 .main-ff {
-  padding-top: 44vh;
+  /* padding-top: 44vh; */
+  padding-top: 22vh;
   width: 880px;
 }
 

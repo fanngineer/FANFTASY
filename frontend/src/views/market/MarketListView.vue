@@ -1,7 +1,7 @@
 <template>
   <br />
   <br />
-  <div>
+  <div class="market-entire">
     <div class="nftbar">
       <span style="display: inline-block">
         <h1 class="market-space">판매중인 NFT</h1>
@@ -131,6 +131,10 @@ export default {
 </script>
 
 <style>
+.market-entire{
+  padding-top: 60px;
+}
+
 .nftbar {
   display: flex;
   justify-content: space-around;
