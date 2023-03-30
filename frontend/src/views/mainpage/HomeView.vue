@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="content" style="vertical-align: center;">
+    <div class="content section" style="vertical-align: center;">
       <div class="content1 df">
         <span class="fl main-ff" style="vertical-align: center">
           <p class="main-font main-font-1">NFT를 통해 팬과 아티스트가 하나되는 세상</p>
@@ -25,7 +25,7 @@
       </template>
     </carousel> -->
 
-    <div class="content">
+    <div class="content section">
       <router-link to="/market" style="text-decoration: none; color: black">
         <div
           style="
@@ -97,7 +97,7 @@
       </router-link>
     </div>
 
-    <div class="content">
+    <div class="content section">
       <router-link to="/community" style="text-decoration: none; color: black">
         <div
           style="
@@ -124,10 +124,57 @@ import RankingCard from "@/components/mainpage/RankingCard.vue"
 // import Web3 from "web3"
 // import { Carousel, Slide} from 'vue3-carousel'
 
-window.addEventListener("wheel", function(e){
-    e.preventDefault();
-},{passive : false})
+// window.addEventListener("wheel", function(e){
+//     e.preventDefault();
+// },{passive : false})
 
+window.onload = function(){
+      const elm = document.querySelectorAll('.section');
+      const elmCount = elm.length;
+      elm.forEach(function(item, index){
+        item.addEventListener('mousewheel', function(event){
+          event.preventDefault();
+          let delta = 0;
+
+          if (!event) event = window.event;
+          if (event.wheelDelta) {
+              delta = event.wheelDelta / 120;
+              if (window.opera) delta = -delta;
+          } 
+          else if (event.detail)
+              delta = -event.detail / 3;
+
+          let moveTop = window.scrollY;
+          let elmSelector = elm[index];
+
+          // wheel down : move to next section
+          if (delta < 0){
+            if (elmSelector !== elmCount-1){
+              try{
+                moveTop = window.pageYOffset + elmSelector.nextElementSibling.getBoundingClientRect().top;
+              }catch(e){
+                console.log("aa")
+              }
+            }
+          }
+          // wheel up : move to previous section
+          else{
+            if (elmSelector !== 0){
+              try{
+                moveTop = window.pageYOffset + elmSelector.previousElementSibling.getBoundingClientRect().top;
+              }catch(e){
+                console.log("aa")
+              }
+            }
+          }
+
+          // const body = document.querySelector('html');
+          window.scrollTo({top:moveTop, left:0, behavior:'smooth'});
+        });
+      });
+    }
+
+    
 // window.on("wheel", function(e) {
 //     if(mHtml.is(":animated")) return;
 //     if(e.originalEvent.deltaY > 0) {
