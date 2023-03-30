@@ -58,23 +58,38 @@ export default {
     else{
       this.role = 'artist';
     }
-      
+    
   },
   methods: {
     async connectWallet(){ // 회원가입
-      this.address = await this.$store.dispatch('getAccount');
-      console.log(this.address);
-      const payload = {
-        address: this.address,
-        email : this.email,
-        nickname: this.nickname,
-        phone: this.phone,
-        role: this.role,
-        company: this.company,
-      }
-      console.log(payload);
-      this.$store.dispatch('LOGIN');
-      // await this.$store.dispatch('signup', payload);
+      await this.$store.dispatch('changeNetWork');
+
+
+      // this.address = await this.$store.dispatch('getAccount');
+      // console.log(this.address);
+
+      // if(this.company === null){
+      //   this.company = 'once';
+      // }
+      // this.$store.state.email = this.email;
+      // this.$store.state.address = this.address;
+      // this.$store.state.phone = this.phone;
+      // this.$store.state.nickname = this.nickname;
+      // this.$store.state.name = this.name;
+      // this.$store.state.role = this.role;
+      // this.$store.state.company = this.company;
+      // await this.$store.dispatch('signup');
+      
+      // await this.$store.dispatch('modiUserInfo');
+
+      // await this.$store.dispatch('userDetail');
+      // console.log(this.$store.state.nickname);
+      
+      // await this.$store.dispatch('LOGIN');
+
+      // await this.$store.dispatch('modiUserInfo');
+      
+      console.log(this.$store.state.success);
     }
   },
   computed () {
