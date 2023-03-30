@@ -89,7 +89,7 @@ export default {
 
 <style>
 .navbar {
-  height: 100px;
+  height: 70px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -98,11 +98,12 @@ export default {
 
   position: fixed;
 
-  /* background-color: black; */
-  background-color: rgba(255,255,255,0.0);
+  background-color: white;
+  /* background-color: rgba(255,255,255,0.0); */
 
   z-index: 3;
-  border-bottom: solid black;
+  /* border-bottom: solid black; */
+  box-shadow: 0 3px 3px rgba(188, 188, 188, 0.5)
   /* opacity: 0.5; */
 }
 .navbar::after {

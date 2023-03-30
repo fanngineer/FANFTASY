@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <div class="content section" style="vertical-align: center;">
+  <div class="home my-template-container">
+    <div class="content section" style="vertical-align: center;;">
       <div class="content1 df">
         <span class="fl main-ff" style="vertical-align: center">
           <p class="main-font main-font-1">NFT를 통해 팬과 아티스트가 하나되는 세상</p>
@@ -8,7 +8,7 @@
           <p class="main-font main-font-2">FANFTASY</p>
         </span>
         <span style="padding-top: 20vh; border-color: black;">
-          <v-img src="@/assets/maingif.gif" style="width:350px; height: 550px;"></v-img>
+          <!-- <v-img src="@/assets/maingif.gif" style="width:350px; height: 550px;"></v-img> -->
         </span>
       </div>
     </div>
@@ -30,9 +30,11 @@
         <div
           style="
             width: 100%;
-            height: 935px;
-            background-color: chocolate;
-            display: flex;
+            height: 100vh;
+            background-color: white;
+            padding-top: 100px;
+            text-align: center;
+            /* display: flex; */
             justify-content: center;
             align-items: center;
           "
@@ -81,35 +83,58 @@
           >
             판매금액순
           </button> -->
-          <br />
-          <br />
-          <br />
-          <br />
-          <div>
-            <RankingCard />
-          </div>
-          <div>
-            등록된 아티스트의 NFT를 구매할 수 있습니다.
-            <div>드롭스</div>
-            드랍되었습니다~~~~
-          </div>
+            <div style="font-size: 45px;">🎁Drops</div>
+            <br />
+            <div style="font-size: 25px">등록된 아티스트의 NFT를 구매할 수 있습니다.</div>
+            <br />
+            <br />
+            <br />
+            <div>
+              <!-- <RankingCard /> -->
+            </div>
         </div>
       </router-link>
     </div>
-
+    
     <div class="content section">
       <router-link to="/community" style="text-decoration: none; color: black">
         <div
+        style="
+            width: 100%;
+            height: 100vh;
+            background-color: lightgray;
+            padding-top: 100px;
+            text-align: center;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            "
+        >
+        <div style="font-size: 45px;">🙋‍♀️리셀몰🙋‍♂️</div>
+        <br />
+        <div style="font-size: 25px">유저간 보유 NFT를 사고 팔 수 있습니다.</div>
+      </div>
+    </router-link>
+  </div>
+  
+  <div class="content section">
+    <router-link to="/community" style="text-decoration: none; color: black">
+      <div
           style="
             width: 100%;
-            height: 935px;
-            background-color: tomato;
-            display: flex;
+            height: 100vh;
+            background-color: violet;
+            padding-top: 100px;
+            text-align: center;
+            /* display: flex; */
             justify-content: center;
             align-items: center;
           "
         >
-          <div>리셀몰</div>
+          <div style="font-size: 45px;">✨나의 NFT</div>
+          <p style="padding-top: 35vh; font-size: 30px;">
+            현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
+          </p>
         </div>
       </router-link>
     </div>
@@ -117,7 +142,7 @@
 </template>
 
 <script>
-import RankingCard from "@/components/mainpage/RankingCard.vue"
+// import RankingCard from "@/components/mainpage/RankingCard.vue"
 // import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 // import "vue3-carousel/dist/carousel.css"
 // import VueCookies from "vue-cookies"
@@ -129,50 +154,53 @@ import RankingCard from "@/components/mainpage/RankingCard.vue"
 // },{passive : false})
 
 window.onload = function(){
-      const elm = document.querySelectorAll('.section');
-      const elmCount = elm.length;
-      elm.forEach(function(item, index){
-        item.addEventListener('mousewheel', function(event){
-          event.preventDefault();
-          let delta = 0;
+  const elm = document.querySelectorAll('.section');
+  const elmCount = elm.length;
+  elm.forEach(function(item, index){
+    item.addEventListener('mousewheel', function(event){
+      event.preventDefault();
+      let delta = 0;
 
-          if (!event) event = window.event;
-          if (event.wheelDelta) {
-              delta = event.wheelDelta / 120;
-              if (window.opera) delta = -delta;
-          } 
-          else if (event.detail)
-              delta = -event.detail / 3;
+      if (!event) event = window.event;
+      if (event.wheelDelta) {
+          delta = event.wheelDelta / 120;
+          if (window.opera) delta = -delta;
+      } 
+      else if (event.detail)
+          delta = -event.detail / 3;
 
-          let moveTop = window.scrollY;
-          let elmSelector = elm[index];
+      let moveTop = window.scrollY;
+      let elmSelector = elm[index];
 
-          // wheel down : move to next section
-          if (delta < 0){
-            if (elmSelector !== elmCount-1){
-              try{
-                moveTop = window.pageYOffset + elmSelector.nextElementSibling.getBoundingClientRect().top;
-              }catch(e){
-                console.log("aa")
-              }
-            }
+      // wheel down : move to next section
+      if (delta < 0){
+        if (elmSelector !== elmCount-1){
+          try{
+            moveTop = window.pageYOffset + elmSelector.nextElementSibling.getBoundingClientRect().top;
+          }catch(e){
+            console.log("aa")
           }
-          // wheel up : move to previous section
-          else{
-            if (elmSelector !== 0){
-              try{
-                moveTop = window.pageYOffset + elmSelector.previousElementSibling.getBoundingClientRect().top;
-              }catch(e){
-                console.log("aa")
-              }
-            }
+        }
+      }
+      // wheel up : move to previous section
+      else{
+        if (elmSelector !== 0){
+          try{
+            moveTop = window.pageYOffset + elmSelector.previousElementSibling.getBoundingClientRect().top;
+          }catch(e){
+            console.log("aa")
           }
+        }
+      }
 
-          // const body = document.querySelector('html');
-          window.scrollTo({top:moveTop, left:0, behavior:'smooth'});
-        });
-      });
-    }
+      // const body = document.querySelector('html');
+      window.scrollTo({top:moveTop, left:0, behavior:'smooth'});
+    });
+  });
+  setTimeout(function(){
+    scrollTo(0,0);
+  },100);
+}
 
     
 // window.on("wheel", function(e) {
@@ -195,7 +223,7 @@ export default {
     // Slide,
     // Pagination,
     // Navigation,
-    RankingCard,
+    // RankingCard,
   },
   data() {
     return {
@@ -238,12 +266,11 @@ export default {
 </script>
 
 <style>
-html {
-  overflow: hidden;
+html ::-webkit-scrollbar {
+  display: none;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   height: 100%;
 }
@@ -311,7 +338,9 @@ body {
 .content {
   width: 100% !important;
   height: 100vh !important;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
+  background-image: url(@/assets/maingif3.gif);
+  background-size: 100% 101vh;
   position: relative;
   z-index: 0;
   overflow: hidden;

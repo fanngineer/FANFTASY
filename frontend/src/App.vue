@@ -33,7 +33,7 @@ export default {
   white-space: nowrap;
   width: 100%;
   /* overflow-x: auto;
-  overflow:auto; */
+  overflow: auto; */
   font-family: kern;
 }
 
