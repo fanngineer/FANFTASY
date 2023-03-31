@@ -71,7 +71,7 @@ export default {
     },
     isFan() {
       this.$store.state.isFan = true;
-      this.$router.push('/signup')
+      this.$router.push('/signup');
     },
   },
   computed () {

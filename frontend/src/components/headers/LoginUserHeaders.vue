@@ -11,11 +11,13 @@
         </a>
       </span>
       <span class="headerlist">
-        <router-link to="/market" style="text-decoration: none">NFT 마켓</router-link>
-        |
-        <router-link to="/community" style="text-decoration: none"
-          >커뮤니티</router-link
+        <router-link to="/market" class="header-router" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/resell" class="header-router" style="margin: 0px 30px;"
+          >MARKET</router-link
         >
+        <!-- <router-link to="/community" class="header-router"
+          >커뮤니티</router-link
+        > -->
       </span>
     </span>
     <span style="display: inline-block">
@@ -55,8 +57,12 @@
 </template>
 
 <script>
+// import VueCookies from "vue-cookies"
 export default {
   name: "LoginUserHeaders",
+  data() {
+    // IsLOGIN: VueCookies.isKey("AccessToken");
+  }
 }
 </script>
 

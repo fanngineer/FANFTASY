@@ -79,14 +79,12 @@
 <script>
 // import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
 // import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
-import Web3 from "web3"
+// import Web3 from "web3"
 
 export default {
   name: 'MyPageView',
   data(){
     return {
-      web3: null,
-      // address: '0x53fd1C95DCe6f1d00aA1Ad0296899b02efB20686',
       address: null,
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
     }
@@ -95,11 +93,14 @@ export default {
     // LoginUserHeaders,
     // NotLoginUserHeaders,
   },
+  async created() {
+    await this.$store.dispatch('getAccount');
+    this.address = this.$store.state.currentAccount;
+  },
   methods:{
     copyAddress: async function(){
       const a = document.getElementById('metamaskAddress');
       console.log(a);
-
 
       try {
         const accounts = await this.web3.eth.getAccounts();
@@ -114,46 +115,13 @@ export default {
         alert("메타마스크 주소를 복사했습니다!");
       });
     },
+
+
   },
   watch() {
 
   },
-  async mounted() {
-
-    const web = new Web3(window.ethereum);
-
-    // // check network RPC URL meaning Endpoint
-    // const rpcUrl = window.ethereum.getEndpoint();
-    // console.log(rpcUrl);
-    
-    // check chain ID
-    const chainId = await web.eth.getChainId();
-    console.log(chainId); //number
-    console.log("0x" + chainId.toString(16));  //string(16)
-    const chain = await window.ethereum.request({ method: 'eth_chainId' });
-    console.log(chain); //string(16)
-    console.log(await window.ethereum.networkVersion); //string
-    console.log("1");
-
-    const metamaskInstallUrl = 'https://metamask.io/download.html';
-    
-    // Check if Web3 has already been injected by MetaMask
-    if (typeof window.ethereum !== 'undefined') {
-      // Use MetaMask's provider
-      this.web3 = new Web3(window.ethereum);
-      try {
-        // Request account access if needed
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        this.address = accounts[0];
-        console.log(accounts[0]);
-        console.log(await window.ethereum.request({ method: 'eth_accounts'}));
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      console.log('Please install MetaMask!');
-      window.open(metamaskInstallUrl, '_blank');
-    }
+  mounted() {
 
   },
 }

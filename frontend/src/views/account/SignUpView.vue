@@ -34,6 +34,7 @@
 </template>
 
 <script>
+// import VueCookies from 'vue-cookies';
 
 export default {
   name: "SignUpView",
@@ -62,23 +63,23 @@ export default {
   },
   methods: {
     async connectWallet(){ // 회원가입
+      
+      this.address = await this.$store.dispatch('getAccount');
+      console.log(this.address);
+      
       await this.$store.dispatch('changeNetWork');
 
-
-      // this.address = await this.$store.dispatch('getAccount');
-      // console.log(this.address);
-
-      // if(this.company === null){
-      //   this.company = 'once';
-      // }
-      // this.$store.state.email = this.email;
-      // this.$store.state.address = this.address;
-      // this.$store.state.phone = this.phone;
-      // this.$store.state.nickname = this.nickname;
-      // this.$store.state.name = this.name;
-      // this.$store.state.role = this.role;
-      // this.$store.state.company = this.company;
-      // await this.$store.dispatch('signup');
+      if(this.company === null){
+        this.company = 'once';
+      }
+      this.$store.state.email = this.email;
+      this.$store.state.address = this.address;
+      this.$store.state.phone = this.phone;
+      this.$store.state.nickname = this.nickname;
+      this.$store.state.name = this.name;
+      this.$store.state.role = this.role;
+      this.$store.state.company = this.company;
+      await this.$store.dispatch('signup');
       
       // await this.$store.dispatch('modiUserInfo');
 
@@ -90,6 +91,12 @@ export default {
       // await this.$store.dispatch('modiUserInfo');
       
       console.log(this.$store.state.success);
+
+      if(this.$store.state.success) {
+        // await this.$store.dispatch('LOGIN');
+        alert("회원가입 되었습니다. 로그인하여주십시오.");
+        this.$router.push('/');
+      }
     }
   },
   computed () {

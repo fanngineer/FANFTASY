@@ -46,7 +46,7 @@
           /> -->
 
         <!-- </router-link> -->
-        <router-link v-if="isLogin===True" to="/mypage" class="icon-profile">
+        <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
           <img
           class="profile-image"
           :src="require('@/assets/base_profile.png')"
@@ -54,6 +54,7 @@
           />
           <p class="nick">{{ this.nickname }} 님</p>
         </router-link>
+        <p v-if="IsLOGIN" @click="logOut()">로그아웃</p>
         <p v-else class="header-router" @click="this.isMember()" style="font-size: 17px;">로그인</p>
         <!-- <p v-if="isLogin===True" class="header-router" @click="this.isMember()" style="font-size: 17px;">Login</p>
         <router-link v-else to="/mypage" class="icon-profile">
@@ -70,19 +71,54 @@
 </template>
 
 <script>
+import VueCookies from "vue-cookies"
 export default {
   name: "NotLoginUserHeaders",
   data() {
     return {
-      nickname: '신선호'
+      nickname: VueCookies.get('nickname'),
+      logIn: VueCookies.isKey('AccessToken'),
     }
   },
+  watch: {
+    nickname: function () {
+
+      console.log(VueCookies.isKey('AccessToken'));
+      this.logIn = VueCookies.isKey('AccessToken');
+    },
+  },
+  computed: {
+    // 반응형으로 계산된 속성
+    IsLOGIN() {
+      console.log(this.logIn);
+      return this.logIn === true;
+    },
+  },
   methods: {
-    isMember() {
-      if(this.$store.commit('installedMetamask')){ // 메타마스크가 설치되어 있으면
-        console.log("설치 되어있음");
+    
+    async isMember() {
+      await this.$store.dispatch('LOGIN');
+
+      if(this.$store.state.isMember === true){
+        this.$router.go(this.$router.currentRoute);
+        console.log(this.$store.state.CurrentAccount);
+      }
+      else if(this.$store.state.isMember === false) {
+        this.$router.push('/select');
+      }
+      else if(this.$store.state.isMember === null) {
+        console.log("무슨 에러인지 모르겠습니다.");
       }
     },
+    logOut() {
+      this.$store.commit('LogOut');
+      if(!VueCookies.isKey('AccessToken')) {
+        this.$router.go(this.$router.currentRoute);
+      }
+      else {
+        console.log("무슨 에러인지 모르겠습니다.");
+      }
+    }
   }
 }
 </script>

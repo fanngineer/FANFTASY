@@ -5,6 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import InfiniteScroll from 'infinite-loading-vue3'
+import VueCookies from "vue-cookies"
 
 loadFonts()
 
@@ -12,5 +13,6 @@ createApp(App)
   .use(router)
   .use(store)
   .use(vuetify)
+  .use(VueCookies)
   .mount('#app')
   .use(InfiniteScroll)

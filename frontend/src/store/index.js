@@ -3,8 +3,6 @@ import VueCookies from "vue-cookies"
 import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 
-// const API_URL = "http://70.12.246.214/api"
-
 const store = createStore({
   plugins: [createPersistedState()],
   state: {
@@ -13,16 +11,17 @@ const store = createStore({
     // API_URL : "http://localhost:8080/api",
     CurrentAccount: null,
     // RefreshToken: null,
-    AccessToken: null,
+    AccessToken: VueCookies.get('AccessToken'),
     chainId: '0x538',
     rpcUrl: "https://fanftasy.kro.kr/network",
     currentChainId: null,
     isFan: true,
     isMember:false,
-    isLogin: false,
+    isLogIn: VueCookies.isKey('AccessToken'),
     isSame: false,
     name: null,
-    nickname: null,
+    nickname: VueCookies.get('nickname'),
+    address: null,
     phone: null,
     role: null,
     email: null,
@@ -34,9 +33,12 @@ const store = createStore({
     page: null,
     keyword: null,
     success: false,
+    haveNet: null,
   },
   getters: {
-    
+    isLogin: function() { 
+      return VueCookies.isKey('AccessToken');
+    }
   },
   mutations: {
 
@@ -58,19 +60,10 @@ const store = createStore({
       // this.state.RefreshToken = null;
       VueCookies.remove("CurrentAccount");
       VueCookies.remove("AccessToken");
+      VueCookies.remove("nickname");
+      console.log("로그아웃");
       // VueCookies.remove("RefreshToken");
     },
-
-    LogInStatus() {
-      // if(VueCookies.isKey('RefreshToken')){
-      if(VueCookies.isKey('AccessToken')){
-        this.state.isLogin = true;
-      }
-      else {
-        this.state.isLogin = false;
-      }
-    },
-
 
   },
   actions: {
@@ -78,7 +71,7 @@ const store = createStore({
       const chain = await window.ethereum.request({ method: 'eth_chainId' });
       console.log(chain);
       this.state.currentChainId = chain;
-      const haveNet = false;
+      this.state.haveNet = false;
       if(chain !== this.state.chainId) {
         await window.ethereum.request({ 
           method: 'wallet_switchEthereumChain',
@@ -89,12 +82,13 @@ const store = createStore({
         .then((res) => {
           console.log(res);
           this.state.success = true;
-          this.haveNet = true;
+          this.state.haveNet = true;
         })
         .catch((err) => {
           console.log(err.code);
           if(err.code === 4902){
-            this.haveNet = false;
+            this.state.haveNet = false;
+            this.state.success = true;
           }
         })
         console.log("다름");
@@ -104,8 +98,10 @@ const store = createStore({
         this.haveNet = true;
         this.state.success = true;
       }
+    },
 
-      if(haveNet === false){
+    async addNetWork() {
+      if(this.state.haveNet === false){
         await window.ethereum.request({ 
           method: 'wallet_addEthereumChain',
           params : [{
@@ -129,16 +125,17 @@ const store = createStore({
     },
 
     async getAccount() { // 계정 불러오기
-      const account = (await window.ethereum.request({ method: 'eth_requestAccounts' }))[0];
-      this.state.currentAccount = account;
-      console.log(account);
+      this.state.CurrentAccount = (await window.ethereum.request({ method: 'eth_requestAccounts' }))[0];
+      this.state.address = this.state.CurrentAccount;
     },
 
     async LOGIN() { // 우리 회원인지 확인하고, 회원이면 토큰을 받고, 비회원이면 404 에러
+      await this.dispatch('changeNetWork');
       await this.dispatch('getAccount');
       await axios({
         method: "post",
         url: `${this.state.API_URL}/user/login`,
+        // url: `http://70.12.247.124:8080/api/user/login`,
         params: {
           address: this.state.CurrentAccount, //지갑 주소
         },
@@ -146,7 +143,11 @@ const store = createStore({
       .then((res) => {
         console.log(res);
         console.log(res.headers.accesstoken);
+        console.log(res.data.data);
+        VueCookies.set('Account', res.data.data.address, '3h');
+        VueCookies.set('nickname', res.data.data.nickname, '3h');
         VueCookies.set('AccessToken', res.headers.accesstoken, '3h');
+        this.state.isMember = true;
         this.state.success = true;
       }) 
       .catch((error) => {
@@ -156,7 +157,10 @@ const store = createStore({
           this.state.success = false;
           this.state.isMember = false;
         }
-        this.state.success = false;
+        else {
+          this.state.success = false;
+          this.state.isMember = null;
+        }
       })
       
     },
@@ -182,12 +186,15 @@ const store = createStore({
     },
 
     async signup() {
-
+      console.log(this.state.address);
+      console.log(this.state.CurrentAccount);
+      await this.dispatch('changeNetWork');
+      await this.dispatch('addNetWork');
       await axios({
         method: "post",
         url: `${this.state.API_URL}/user/join`,
         data: {
-          address: this.state.address, //지갑 주소
+          address: this.state.CurrentAccount, //지갑 주소
           email : this.state.email, //이메일
           nickname: this.state.nickname, //닉네임
           phone: this.state.phone, //전화번호
