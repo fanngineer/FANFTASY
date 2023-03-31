@@ -2,100 +2,68 @@
   <br />
   <br />
   <div class="market-entire">
-    <div class="nftbar">
-      <span style="display: inline-block">
-        <h1 class="market-space">판매중인 NFT</h1>
-
-        <button
-          v-on:click="selectNewest"
-          v-if="sortnum === 0"
-          class="selected-ranking-button"
-        >
-          최신순
-        </button>
-        <button
-          v-on:click="selectNewest"
-          v-else
-          class="unselected-ranking-button"
-        >
-          최신순
-        </button>
-        <button
-          v-on:click="selectSalesVolume"
-          v-if="sortnum === 1"
-          class="selected-ranking-button"
-        >
-          잔여량순
-        </button>
-        <button
-          v-on:click="selectSalesVolume"
-          v-else
-          class="unselected-ranking-button"
-        >
-          잔여량순
-        </button>
-        <button
-          v-on:click="selectHighAmmount"
-          v-if="sortnum === 2"
-          class="selected-ranking-button"
-        >
-          높은가격순
-        </button>
-        <button
-          v-on:click="selectHighAmmount"
-          v-else
-          class="unselected-ranking-button"
-        >
-          높은가격순
-        </button>
-        <button
-          v-on:click="selectLowAmmount"
-          v-if="sortnum === 3"
-          class="selected-ranking-button"
-        >
-          낮은가격순
-        </button>
-        <button
-          v-on:click="selectLowAmmount"
-          v-else
-          class="unselected-ranking-button"
-        >
-          낮은가격순
-        </button>
-      </span>
-      <label for="" class="box ib">
-        
-        <input type="text" class="notting search-input" placeholder="아티스트를 입력하세요"/>
-        <button
-          href=""
-          class="notting"
-          style="display: flex; justify-content: right; align-self: center"
-        >
-          <img
-            :src="require('@/assets/Search.png')"
-            alt=""
-            style="margin-top: 7px"
-          />
-        </button>
-      </label>
+    <div>
+      <div class="nftbar-container">
+        <div class="nftbar">
+          <div class="market-space">
+            판매중인 NFT
+    
+          </div>
+          <div class="df filter-search-drops">
+            <!-- <div style="display: inline-block">
+              <button v-on:click="selectNewest" v-if="sortnum === 0" class="selected-ranking-button">최신순</button>
+              <button v-on:click="selectNewest" v-else  class="unselected-ranking-button">최신순</button>
+              <button v-on:click="selectSalesVolume" v-if="sortnum === 1" class="selected-ranking-button">잔여량순</button>
+              <button v-on:click="selectSalesVolume" v-else class="unselected-ranking-button">잔여량순</button>
+              <button v-on:click="selectHighAmmount" v-if="sortnum === 2" class="selected-ranking-button">높은가격순</button>
+              <button v-on:click="selectHighAmmount" v-else class="unselected-ranking-button">높은가격순</button>
+              <button v-on:click="selectLowAmmount"  v-if="sortnum === 3" class="selected-ranking-button">낮은가격순</button>
+              <button v-on:click="selectLowAmmount" v-else class="unselected-ranking-button">낮은가격순</button>
+            </div> -->
+            
+            <div>
+              <button v-on:click="selectNewest" v-if="sortnum === 0" class="filter-btn"> 최신순 </button>
+              <button v-on:click="selectNewest" v-else class="filter-btn2"> 최신순 </button>
+              <button v-on:click="selectHighAmmount" v-if="sortnum === 2" class="filter-btn">높은가격순</button>
+              <button v-on:click="selectHighAmmount" v-else class="filter-btn2">높은가격순</button>
+              <button v-on:click="selectLowAmmount"  v-if="sortnum === 3" class="filter-btn">낮은가격순</button>
+              <button v-on:click="selectLowAmmount" v-else class="filter-btn2">낮은가격순</button>
+            </div>
+            
+            <label for="" class="box ib">
+              <input type="text" class="notting search-input" placeholder="아티스트를 입력하세요"/>
+              <button
+                href=""
+                class="notting"
+                style="display: flex; justify-content: right; align-self: center"
+              >
+                <img
+                  :src="require('@/assets/Search.png')"
+                  alt=""
+                  style="margin-top: 7px"
+                />
+              </button>
+            </label>
+    
+          </div>
+          <br />
+          <hr>
+          <br>
+        </div>
+      </div>
+      <div style="text-align: center; padding-top: 168px;">
+        <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+        <br />
+        <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+        <br />
+        <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+        <br />
+        <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+        <br />
+        <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+      </div> 
+      <br />
     </div>
-    <br />
-    <div style="text-align: center;">
-      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
-      <br />
-      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
-      <br />
-      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
-      <br />
-      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
-      <br />
-      <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
-    </div> 
-    <br />
-    <!-- <v-pagination :length="5"></v-pagination> -->
-    <!-- <router-link :to="{ name: 'MarketDetailView', params: { id: 1 }}">
-      <button v-if="artist===true" class="nft-add-btn">+ NFT 등록하기</button>
-    </router-link> -->
   </div>
 </template>
 
@@ -132,28 +100,34 @@ export default {
 
 <style>
 .market-entire{
-  padding-top: 60px;
+  padding-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.nftbar-container{
+  background-color: white;
+  position: fixed;
+  padding-top: 20px;
+  z-index: 1;
 }
 
 .nftbar {
-  display: flex;
-  justify-content: space-around;
-  /* white-space: nowrap; */
-  /* width: 100%; */
-  overflow: hidden;
+  width: 75rem;
 }
 
 .market-space {
-  display: flex;
-  justify-content: left;
-  /* margin-left: 7vw; */
-  margin-right: 3vw;
-  float: left;
+  font-family: notosans;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.filter-search-drops{
+  justify-content: space-between;
 }
 
 .nft-add-btn {
   display: flex;
-  /* right: 10px; */
   width: 246px;
   height: 67px;
   font-size: 24px;
@@ -162,10 +136,80 @@ export default {
   align-items: center;
   border-radius: 15px;
   color: white;
-  /* margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto; */
-  /* position: relative; */
   background-color: RGB(106, 63, 193);
 }
+
+
+.filter-btn2{
+  width: 120px;
+  height: 40px;
+  display: inline-block;
+  position: relative;
+  font-weight: bolder;
+}
+.filter-btn2:after{
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  position: absolute;
+  content:"";
+  bottom: -5%;
+  display: block;
+  background: #6a3fc1;
+  width: 120px;
+  animation: btn-click2 1.0s forwards;
+  z-index: -1;
+}
+@keyframes btn-click2{
+  0%{
+    font-weight: bolder;
+    /* opacity: 0.5; */
+    height: 100%
+  }
+  100%{
+    font-weight: bolder;
+    opacity: 0;
+    height: 0px;
+  }
+}
+.filter-btn2:hover{
+  font-weight: bolder;
+  color: #6a3fc1;
+}
+
+.filter-btn{
+  width: 120px;
+  height: 40px;
+  display: inline-block;
+  position: relative;
+  font-weight: bolder;
+  color: white;
+}
+.filter-btn:after{
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  position: absolute;
+  content:"";
+  bottom: -5%;
+  display: block;
+  background: #6a3fc1;
+  width: 120px;
+  animation: btn-click 1.0s forwards;
+  z-index: -1;
+}
+@keyframes btn-click{
+  0%{
+    color: red;
+    font-weight: bolder;
+    opacity: 0;
+    height: 0px;
+  }
+  100%{
+    color: yellowgreen;
+    font-weight: bolder;
+    /* opacity: 0.5; */
+    height: 100%;
+  }
+}
+
+
 </style>
