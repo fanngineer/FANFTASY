@@ -138,7 +138,7 @@ const store = createStore({
         url: `${API_URL}/user/login`,
         // url: `http://70.12.247.124:8080/api/user/login`,
         params: {
-          address: this.state.CurrentAccount, //지갑 주소
+          address: this.state.address, //지갑 주소
         },
       })
       .then((res) => {
