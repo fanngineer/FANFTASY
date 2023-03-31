@@ -12,6 +12,10 @@
           <!-- <v-img src="@/assets/maingif.gif" style="width:350px; height: 550px;"></v-img> -->
         </span>
       </div>
+      <div style="text-align: center; font-size: 30px; margin-top: 90px;">스크롤</div>
+      <div style="text-align: center;">
+        <v-img src="@/assets/chevron-double-down.png" alt="" style="width: 35px; margin: auto;"></v-img>
+      </div>
     </div>
     <!-- <carousel :items-to-show="1" :wrap-around="true" :autoplay="5000">
       <slide v-for="slide in slides" :key="slide.id">
@@ -105,7 +109,7 @@
       style="
             width: 100%;
             height: 100vh;
-            background-color: lightgray;
+            background-color: rgb(218, 227, 243);
             padding-top: 100px;
             text-align: center;
             /* display: flex; */
@@ -125,25 +129,55 @@
     </div>
 
     <div class="content section">
-      <router-link to="/community" style="text-decoration: none; color: black">
-        <div
-          style="
+      <div
+      style="
             width: 100%;
             height: 100vh;
-            background-color: violet;
+            background-color: white;
             padding-top: 100px;
             text-align: center;
             /* display: flex; */
             justify-content: center;
             align-items: center;
-          "
+            "
         >
-          <div style="font-size: 45px">✨나의 NFT</div>
-          <p style="padding-top: 35vh; font-size: 30px">
-            현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
-          </p>
+        <router-link to="/mypage" style="text-decoration: none; color: black">
+          <span style="font-size: 45px">✨나의 NFT</span>
+        </router-link>
+        <br>
+        <br>
+        <div class="df cen" v-if="a == 1">
+          <div style="width: 300px; height: 500px; margin: 0 40px;">
+            <v-img src="@/assets/nft_main(1).jpg" alt="" style=" border-radius: 3%;">
+            </v-img>
+          </div>
+          <div style="width: 300px; height: 500px; margin: 0 40px;">
+            <v-img src="@/assets/nft_main(1).jpg" alt="" style=" border-radius: 3%;">
+            </v-img>
+          </div>
+          <div style="width: 300px; height: 500px; margin: 0 40px;">
+            <v-img src="@/assets/nft_main(1).jpg" alt="" style=" border-radius: 3%;">
+            </v-img>
+          </div>
         </div>
-      </router-link>
+        <div v-else style="margin: 33vh;">
+          <router-link to="/market" style="text-decoration: none; color: black">
+            <span style="font-size: 30px">
+              현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
+            </span>
+          </router-link>
+        </div>
+        <br>
+        <span>
+          <router-link to="/mypage" style="text-decoration: none; color: white;">
+            <div v-show="a==1" class="go-my-box">
+              <p style="padding-top: 7px; font-size: 16px;">
+                SEE MORE MY NFT
+              </p> 
+            </div>
+          </router-link>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -187,7 +221,7 @@ window.onload = function () {
               window.pageYOffset +
               elmSelector.nextElementSibling.getBoundingClientRect().top
           } catch (e) {
-            console.log("aa")
+            // console.log("aa")
           }
         }
       }
@@ -199,7 +233,7 @@ window.onload = function () {
               window.pageYOffset +
               elmSelector.previousElementSibling.getBoundingClientRect().top
           } catch (e) {
-            console.log("aa")
+            // console.log("aa")
           }
         }
       }
@@ -361,10 +395,16 @@ body {
   overflow: hidden;
 }
 
+
 .content1 {
   /* display: inline-block; */
   vertical-align: middle;
   justify-content: space-evenly;
+}
+
+.content2 {
+  
+  background-image: url(@/assets/배경.jpg) !important;
 }
 
 .main-ff {
@@ -383,5 +423,17 @@ body {
 
 .main-font-2 {
   text-align: end;
+}
+
+.go-my-box {
+  width: 300px;
+  height: 40px;
+  /* font-size: 30px; */
+  border: solid 1px;
+  border-radius: 50px;
+  margin: auto;
+  background: #9B7CF8;
+  vertical-align: middle;
+  font-family: KCC-Ganpan;
 }
 </style>

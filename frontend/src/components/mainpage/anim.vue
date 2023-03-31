@@ -139,7 +139,7 @@ export default {
 
 .nft-banner:nth-child(1){
   position:absolute;
-  animation: fade-banner1 50s  infinite;
+  animation: fade-banner1 25s  infinite;
 }
 @keyframes fade-banner1 {
   0%{
@@ -164,7 +164,7 @@ export default {
 
 .nft-banner:nth-child(2){
   position:absolute;
-  animation: fade-banner2 50s  infinite;
+  animation: fade-banner2 25s  infinite;
 }
 @keyframes fade-banner2 {
   0%{
@@ -190,7 +190,7 @@ export default {
 
 .nft-banner:nth-child(3){
   position:absolute;
-  animation: fade-banner3 50s  infinite;
+  animation: fade-banner3 25s  infinite;
 }
 @keyframes fade-banner3 {
   0%{
@@ -216,7 +216,7 @@ export default {
 
 .nft-banner:nth-child(4){
   position:absolute;
-  animation: fade-banner4 50s infinite;
+  animation: fade-banner4 25s infinite;
 }
 @keyframes fade-banner4 {
   0%{
@@ -240,7 +240,7 @@ export default {
 }
 
 .nft-banner:nth-child(5){
-  animation: fade-banner5 50s  infinite;
+  animation: fade-banner5 25s  infinite;
 }
 @keyframes fade-banner5 {
   0%{

@@ -1,7 +1,7 @@
 <template>
   <hr />
   <br />
-  <div class="footer">
+  <div class="footer section">
     <img :src="require('@/assets/logo.png')" alt="" class="header-logo" />
     <span style="display: inline-block;">
       <span>
