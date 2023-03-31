@@ -87,7 +87,7 @@
     >
     판매금액순
   </button> -->
-        <router-link to="/market" style="text-decoration: none; color: black">
+        <router-link to="/drops" style="text-decoration: none; color: black">
           <span style="font-size: 45px">🎁Drops</span>
         </router-link>
         <br />
@@ -117,7 +117,7 @@
             align-items: center;
             "
         >
-        <router-link to="/community" style="text-decoration: none; color: black">
+        <router-link to="/market" style="text-decoration: none; color: black">
           <span style="font-size: 45px">🙋‍♀️리셀몰🙋‍♂️</span>
         </router-link>
           <br />
@@ -161,11 +161,24 @@
           </div>
         </div>
         <div v-else style="margin: 33vh;">
-          <router-link to="/market" style="text-decoration: none; color: black">
-            <span style="font-size: 30px">
-              현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
+          <span style="font-size: 30px">
+            현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
+          </span>
+          <br>
+          <br>
+          <br>
+          <div class="">
+            <span class="">
+              <router-link to="/drops" style="text-decoration: none; color: black">
+                아티스트가 만든 NFT를 구매해보세요
+              </router-link>
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="">
+              <router-link to="/market" style="text-decoration: none; color: black">
+                사용자간 거래를 해보세요
+              </router-link>
             </span>
-          </router-link>
+          </div>
         </div>
         <br>
         <span>
@@ -273,7 +286,7 @@ export default {
   },
   data() {
     return {
-      a: 1,
+      a: 2,
       slides: [
         {
           id: 1,

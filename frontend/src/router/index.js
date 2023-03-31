@@ -38,22 +38,22 @@ const routes = [
     component: MyPageView
   },
   {
-    path: '/market',
+    path: '/drops',
     name: 'MarketListView',
     component: MarketListView
   },
   {
-    path: '/market/add',
+    path: '/drops/add',
     name: 'MarketAddView',
     component: MarketAddView
   },
   {
-    path: '/market/:id',
+    path: '/drops/:id',
     name: 'MarketDetailView',
     component: MarketDetailView
   },
   {
-    path: '/resell',
+    path: '/market',
     name: 'ResellListView',
     component: ResellListView
   },

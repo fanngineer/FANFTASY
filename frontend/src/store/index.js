@@ -3,12 +3,12 @@ import VueCookies from "vue-cookies"
 import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 
+const API_URL = "https://fanftasy.kro.kr/api"
+// const API_URL = "http://70.12.247.124:8080/api",
+// const API_URL = "http://localhost:8080/api",
 const store = createStore({
   plugins: [createPersistedState()],
   state: {
-    API_URL : "https://fanftasy.kro.kr/api",
-    // API_URL : "http://70.12.247.124:8080/api",
-    // API_URL : "http://localhost:8080/api",
     CurrentAccount: null,
     // RefreshToken: null,
     AccessToken: VueCookies.get('AccessToken'),
@@ -135,7 +135,7 @@ const store = createStore({
       await this.dispatch('getAccount');
       await axios({
         method: "post",
-        url: `${this.state.API_URL}/user/login`,
+        url: `${API_URL}/user/login`,
         // url: `http://70.12.247.124:8080/api/user/login`,
         params: {
           address: this.state.CurrentAccount, //지갑 주소
@@ -193,7 +193,7 @@ const store = createStore({
       await this.dispatch('addNetWork');
       await axios({
         method: "post",
-        url: `${this.state.API_URL}/user/join`,
+        url: `${API_URL}/user/join`,
         data: {
           address: this.state.CurrentAccount, //지갑 주소
           email : this.state.email, //이메일
@@ -218,7 +218,7 @@ const store = createStore({
       console.log(address);
       await axios({
         method: "get",
-        url: `${this.state.API_URL}/user/detail`,
+        url: `${API_URL}/user/detail`,
         params: {
           address: address,
         },
@@ -237,7 +237,7 @@ const store = createStore({
       const address = (await window.ethereum.request({ method: 'eth_requestAccounts' }))[0];
       await axios({
         method: "put",
-        url: `${this.state.API_URL}/user/modi`,
+        url: `${API_URL}/user/modi`,
         data: {
           address: address,
           nickname: this.state.nickname,
@@ -255,7 +255,7 @@ const store = createStore({
     async dropsAll() {
       await axios({
         methos: "get",
-        url: `${this.state.API_URL}/nft/market`,
+        url: `${API_URL}/nft/market`,
         params: {
           orderType: this.state.orderType,
           page: this.state.page,

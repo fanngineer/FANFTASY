@@ -11,8 +11,8 @@
         </a>
       </span>
       <span class="headerlist">
-        <router-link to="/market" class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
-        <router-link to="/resell" class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
+        <router-link to="/drops" class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/market" class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
         <!-- <router-link to="/community" class="header-router"
           >커뮤니티</router-link
         > -->
