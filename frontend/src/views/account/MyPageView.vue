@@ -95,19 +95,20 @@ export default {
   },
   async created() {
     await this.$store.dispatch('getAccount');
-    this.address = this.$store.state.currentAccount;
+    this.address = this.$store.state.address;
   },
   methods:{
     copyAddress: async function(){
-      const a = document.getElementById('metamaskAddress');
+      let a = document.getElementById('metamaskAddress');
+      this.$store.dispatch('getAccount');
+      a = this.$store.state.address;
       console.log(a);
 
       try {
-        const accounts = await this.web3.eth.getAccounts();
-        console.log(accounts[0]);
+        console.log('a');
       } catch (error) {
         console.error(error);
-      }
+      } 
 
       console.log('dd', a, '와:', a.textContent , '끝')
       window.navigator.clipboard.writeText(a.textContent).then(() => {
