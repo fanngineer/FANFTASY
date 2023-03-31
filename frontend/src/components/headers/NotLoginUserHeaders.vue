@@ -11,10 +11,8 @@
         </a>
       </span>
       <span class="headerlist">
-        <router-link to="/market" class="header-router font-k" style="margin: 0px 30px;">DROPS</router-link>
-        <router-link to="/resell" class="header-router font-k" style="margin: 0px 30px;"
-          >MARKET</router-link
-        >
+        <router-link to="/market" class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/resell" class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
         <!-- <router-link to="/community" class="header-router"
           >커뮤니티</router-link
         > -->
@@ -158,8 +156,41 @@ export default {
   text-decoration: none !important;
   font-size: 20px;
   vertical-align: center;
+  color: black;
 }
 
+.header-tab:hover{
+  background: linear-gradient(90deg,#6A3FC1,#5B9BD5);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 100% 100%;
+  transition: 0.5s;
+}
+.header-tab:not(:hover){
+  transition: 0.5s;
+  background-size: 0% 0%;
+}
+
+.header-tab{
+  display: inline-block;
+  position: relative;  
+}
+
+.header-tab:after{
+  position: absolute;
+  content:  "";
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg,#6A3FC1,#5B9BD5);
+  -webkit-text-fill-color: transparent;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  
+}
+
+.header-tab:hover:after{
+  width: 100%;
+}
 
 
 .header-logo {
