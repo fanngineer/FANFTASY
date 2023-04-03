@@ -29,6 +29,7 @@ const store = createStore({
     totalPrice: null,
     totalSales: null,
     profileImg: null,
+    profileImage: null,
     orderType: null,
     page: null,
     keyword: null,
@@ -61,6 +62,7 @@ const store = createStore({
       VueCookies.remove("CurrentAccount");
       VueCookies.remove("AccessToken");
       VueCookies.remove("nickname");
+      VueCookies.remove("profileImage");
       console.log("로그아웃");
       // VueCookies.remove("RefreshToken");
     },
@@ -135,7 +137,7 @@ const store = createStore({
       await this.dispatch('getAccount');
       this.state.isMember = false;
       // console.log(this.state.address);
-      axios({
+      await axios({
         method: "post",
         url: `${API_URL}/user/login`,
         // url: `http://70.12.247.124:8080/api/user/login`,
@@ -147,15 +149,19 @@ const store = createStore({
         console.log(res);
         console.log(res.headers.accesstoken);
         console.log(res.data.data);
+        
+        // console.log(this.state.profileImage);
         VueCookies.set('Account', res.data.data.address, '3h');
         VueCookies.set('nickname', res.data.data.nickname, '3h');
         VueCookies.set('AccessToken', res.headers.accesstoken, '3h');
+        VueCookies.set('profileImage', res.data.data.profileImg, '3h');
         this.state.isMember = !this.state.isMember;
         this.state.success = true;
       }) 
       .catch((error) => {
+        
         console.log(error);
-        console.log(error.response.data.success);
+        // console.log(error.response.data.success);
         if(!error.response.data.success){ // 회원이 아닙니다.
           this.state.success = false;
           this.state.isMember = false;

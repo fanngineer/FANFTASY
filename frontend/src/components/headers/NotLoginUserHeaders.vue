@@ -53,7 +53,7 @@
         <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
           <img
           class="profile-image"
-          :src="require('@/assets/base_profile.png')"
+          :src="this.profileImage"
           alt="기본 프로필 사진"
           />
           <p class="nick">{{ this.nickname }} 님</p>
@@ -82,8 +82,7 @@ export default {
     return {
       nickname: VueCookies.get('nickname'),
       logIn: VueCookies.isKey('AccessToken'),
-
-      
+      profileImage: VueCookies.get('profileImage'),
     }
   },
   watch: {
@@ -92,6 +91,9 @@ export default {
       console.log(VueCookies.isKey('AccessToken'));
       this.logIn = VueCookies.isKey('AccessToken');
     },
+    profileImage: function () {
+      console.log(VueCookies.get('profileImage'));
+    }
   },
   computed: {
     // 반응형으로 계산된 속성
@@ -118,19 +120,33 @@ export default {
     async isMember() {
       this.$store.state.isMember = false;
       await this.$store.dispatch('LOGIN');
+
       console.log(this.$store.state.isMember);
-      
-      if(this.$store.state.isMember === true){
-        console.log("회원입니다.");
-        this.$router.go(this.$router.currentRoute);
+
+      const Member = this.$store.state.isMember;
+      console.log(VueCookies.get('profileImage'));
+      if(VueCookies.get('profileImage') === undefined){
+        this.profileImage = '@/assets/Search.png';
       }
-      else if(this.$store.state.isMember === false) {
+      else{
+        this.profileImage = VueCookies.get('profileImage');
+        console.log(this.profileImage);
+      }
+      
+      if(Member === true){
+        console.log("회원입니다.");
+        // this.$router.go(this.$router.currentRoute);
+      }
+      else if(Member === false) {
         console.log("회원이 아닙니다.");
         this.$router.push('/select');
       }
-      else if(this.$store.state.isMember === null) {
+      else if(Member === null) {
         console.log("무슨 에러인지 모르겠습니다.");
       }
+      // setTimeout(function() {
+      // }, 500);
+      
     },
     logOut() {
       this.$store.commit('LogOut');
@@ -284,6 +300,8 @@ export default {
 .profile-image{
   display: flex;
   float: left;
+  width: 30px;
+  height: 30px;
 }
 
 .nick {

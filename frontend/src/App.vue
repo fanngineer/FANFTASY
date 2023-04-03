@@ -62,6 +62,7 @@ export default {
     console.log(this.$store.getters.isLogin);
     console.log(VueCookies.isKey('AccessToken'));
     console.log(VueCookies.get('nickname'));
+    console.log(VueCookies.get('profileImage'));
     console.log(VueCookies.isKey('AccessToken'));
   },
   watch() {
