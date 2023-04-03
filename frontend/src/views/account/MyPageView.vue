@@ -15,6 +15,9 @@
           
           <div style="margin: 10px; font-weight: bold; font-size: 32px;">
             {{ nickname }} 님
+            <router-link to="/mypageupdate" style="text-decoration: none;">
+              <v-icon icon="mdi-lead-pencil"  @click="searchArticle" class="profile-pencil-button"></v-icon>
+            </router-link>
           </div>
 
           <!-- 메타마스크 주소 -->
@@ -51,7 +54,7 @@
       <hr style="width:100%">
   
       <!-- 메뉴 콤보박스 -->
-      <div style="border-radius: 50%; border-color: blueviolet; margin-left: auto;">
+      <div style="display: flex; justify-content: end;">
         <div style="margin-left:14px; width:200px; border-radius: 50% !important;">
           <div>
             <v-combobox :items="myNFTmenu"></v-combobox> 
@@ -222,6 +225,15 @@ export default {
 .profile-logo{
   width: 100px;
   height: 100px;
+}
+
+
+.profile-pencil-button{
+  font-size: 30px;
+  color: black;
+}
+.profile-pencil-button:hover{
+  color: #9B7CF8;
 }
 
 .address-inline{
