@@ -7,20 +7,8 @@
         <div class="nftbar">
           <div class="market-space">
             판매중인 NFT
-    
           </div>
           <div class="df filter-search-drops">
-            <!-- <div style="display: inline-block">
-              <button v-on:click="selectNewest" v-if="sortnum === 0" class="selected-ranking-button">최신순</button>
-              <button v-on:click="selectNewest" v-else  class="unselected-ranking-button">최신순</button>
-              <button v-on:click="selectSalesVolume" v-if="sortnum === 1" class="selected-ranking-button">잔여량순</button>
-              <button v-on:click="selectSalesVolume" v-else class="unselected-ranking-button">잔여량순</button>
-              <button v-on:click="selectHighAmmount" v-if="sortnum === 2" class="selected-ranking-button">높은가격순</button>
-              <button v-on:click="selectHighAmmount" v-else class="unselected-ranking-button">높은가격순</button>
-              <button v-on:click="selectLowAmmount"  v-if="sortnum === 3" class="selected-ranking-button">낮은가격순</button>
-              <button v-on:click="selectLowAmmount" v-else class="unselected-ranking-button">낮은가격순</button>
-            </div> -->
-            
             <div>
               <button v-on:click="selectNewest" v-if="sortnum === 0" class="filter-btn"> 최신순 </button>
               <button v-on:click="selectNewest" v-else class="filter-btn2"> 최신순 </button>

@@ -77,6 +77,17 @@ export default {
 </script>
 
 <style>
+*{cursor: none;}
+.cursor{
+  position: absolute;
+  z-index: 1000;
+  border: 1px solid #000;
+  width: 2rem;
+  height: 2rem;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
 .page{
   white-space: nowrap;
   width: 100%;

@@ -23,7 +23,7 @@
       NFN 충전
     </button>
     <div>
-      보유 NFT | 거래 내역 | 관심 아이템
+      보유 NFT | 거래 내역 | 관심 아이템s
     </div>
 
     <hr>
@@ -99,9 +99,9 @@ export default {
   },
   methods:{
     copyAddress: async function(){
-      let a = document.getElementById('metamaskAddress');
-      this.$store.dispatch('getAccount');
-      a = this.$store.state.address;
+      let a = this.address;
+      // this.$store.dispatch('getAccount');
+      // a = this.$store.state.address;
       console.log(a);
 
       try {
@@ -111,7 +111,7 @@ export default {
       } 
 
       console.log('dd', a, '와:', a.textContent , '끝')
-      window.navigator.clipboard.writeText(a.textContent).then(() => {
+      window.navigator.clipboard.writeText(a).then(() => {
         // 복사가 완료되면 호출된다.
         alert("메타마스크 주소를 복사했습니다!");
       });

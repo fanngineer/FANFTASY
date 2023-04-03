@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: center;">
+  <div class="market-detail-entire">
     <div class="cen" style="width:fit-content;">
       
       <div style="display: inline-flex; justify-content: center;">
@@ -8,7 +8,7 @@
         <div style="margin-right:10px">
           
           <!-- 이미지 -->
-          <div class="cen" style="height: 500px;">
+          <div class="cen" style="height: 500px; ">
             <v-img
               src="@/assets/coin_hoyoen.png"
               alt=""
@@ -175,6 +175,12 @@ export default {
 </script>
 
 <style>
+.market-detail-entire{
+  display: flex; 
+  justify-content: center;
+  margin-top: 100px;
+}
+
 .detail-parent {
   height: 1400px;
 }

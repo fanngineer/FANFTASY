@@ -71,7 +71,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  //페이지 이동 시 스크롤 맨 위로 지정
+  scrollBehavior(){
+    return {top: 0}
+  },
 })
 
 export default router

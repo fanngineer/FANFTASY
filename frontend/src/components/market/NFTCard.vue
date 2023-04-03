@@ -10,7 +10,7 @@
           <div style="width: 220px;">
             <v-card-item class="nft-card-item">
               <p class="item-name">
-                수민 공항패션
+                수민 공항패션이라는데 애초에 수민이가 누구임????
               </p>
               <p class="item-content">
                 수민
@@ -76,14 +76,19 @@ export default {
 .item-name{
   color: #6A3FC1;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bolder;
+  
+  /* 제목 말줄임표 CSS */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .item-content{
   text-align: left;
   margin-left: 1vw;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .nft-card-class{
