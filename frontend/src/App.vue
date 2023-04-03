@@ -58,7 +58,7 @@ export default {
     
   }),
   created() {
-    // console.log(this.IsLOGIN());
+    // console.log(this.$store.state.isMember);
     console.log(this.$store.getters.isLogin);
     console.log(VueCookies.isKey('AccessToken'));
     console.log(VueCookies.get('nickname'));

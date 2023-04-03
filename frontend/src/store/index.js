@@ -16,7 +16,7 @@ const store = createStore({
     rpcUrl: "https://fanftasy.kro.kr/network",
     currentChainId: null,
     isFan: true,
-    isMember:false,
+    isMember: false,
     isLogIn: VueCookies.isKey('AccessToken'),
     isSame: false,
     name: null,
@@ -133,7 +133,9 @@ const store = createStore({
       await this.dispatch('changeNetWork');
       await this.dispatch('addNetWork');
       await this.dispatch('getAccount');
-      await axios({
+      this.state.isMember = false;
+      // console.log(this.state.address);
+      axios({
         method: "post",
         url: `${API_URL}/user/login`,
         // url: `http://70.12.247.124:8080/api/user/login`,
@@ -148,7 +150,7 @@ const store = createStore({
         VueCookies.set('Account', res.data.data.address, '3h');
         VueCookies.set('nickname', res.data.data.nickname, '3h');
         VueCookies.set('AccessToken', res.headers.accesstoken, '3h');
-        this.state.isMember = true;
+        this.state.isMember = !this.state.isMember;
         this.state.success = true;
       }) 
       .catch((error) => {
@@ -163,7 +165,6 @@ const store = createStore({
           this.state.isMember = null;
         }
       })
-      
     },
 
     async sameAccount(){ // 쿠키와 메타마스크의 현재 지갑 주소를 비교해서 같으면 true, 다르면 false

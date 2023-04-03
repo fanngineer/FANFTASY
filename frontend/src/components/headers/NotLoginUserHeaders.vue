@@ -116,13 +116,16 @@ export default {
   methods: {
     
     async isMember() {
+      this.$store.state.isMember = false;
       await this.$store.dispatch('LOGIN');
-
+      console.log(this.$store.state.isMember);
+      
       if(this.$store.state.isMember === true){
+        console.log("회원입니다.");
         this.$router.go(this.$router.currentRoute);
-        console.log(this.$store.state.CurrentAccount);
       }
       else if(this.$store.state.isMember === false) {
+        console.log("회원이 아닙니다.");
         this.$router.push('/select');
       }
       else if(this.$store.state.isMember === null) {
