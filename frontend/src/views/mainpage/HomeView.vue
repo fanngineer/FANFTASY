@@ -96,8 +96,35 @@
           등록된 아티스트의 NFT를 구매할 수 있습니다.
         </div>
         <br />
+        <div class="df" style="justify-content: center;">
+          <NFTCard v-for="(card, index) in cards.slice(0, 4)" :key="index" :card="card" class="" />
+        </div>
+        <br>
+        <span>
+          <router-link to="/drops" style="text-decoration: none; color: white;">
+            <div class="go-my-box">
+              <p style="padding-top: 7px; font-size: 16px;">
+                SEE MORE DROPS NFT
+              </p> 
+            </div>
+          </router-link>
+        </span>
         <div>
-          <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/>
+          <!-- <carousel :items-to-show="5" :wrap-around="true" :autoplay="5000"> -->
+          <!-- <carousel :items-to-show="3" :wrap-around="true">
+            <slide v-for="i in 4" :key="slide.id">
+              <div class="carousel-item">
+                <img :src="slide.image" alt="안나오냐" />
+              </div>
+            </slide>
+            
+            <template #addons>
+              <navigation />
+              <pagination />
+            </template>
+          </carousel> -->
+          <!-- <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/> -->
+          <!-- <NFTCard  v-for="card in cards" :key="card.nftSourceId" :card="card" class="nft-card-class"/> -->
           <!-- <br />
           <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/> -->
         </div>
@@ -125,6 +152,12 @@
           <div style="font-size: 25px">
             유저간 보유 NFT를 사고 팔 수 있습니다.
           </div>
+          <br />
+        <div>
+          <NFTCardR v-for="i in 4" :key="i" class="nft-card-class"/>
+          <!-- <br />
+          <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/> -->
+        </div>
         </div>
     </div>
 
@@ -198,6 +231,7 @@
 <script>
 import animMain from "@/components/mainpage/anim.vue"
 import NFTCard from "@/components/market/NFTCard.vue"
+import NFTCardR from "@/components/resell/NFTCard.vue"
 // import RankingCard from "@/components/mainpage/RankingCard.vue"
 // import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 // import "vue3-carousel/dist/carousel.css"
@@ -282,11 +316,16 @@ export default {
     // Navigation,
     // RankingCard,
     NFTCard,
+    NFTCardR,
     animMain,
   },
   data() {
     return {
       a: 2,
+      cards: [],
+      orderType: 1,
+      page: 0,
+      keyword: "",
       slides: [
         {
           id: 1,
@@ -309,7 +348,7 @@ export default {
   },
   watch: {},
   created() {
-    
+    this.getDrops()
   },
   mounted() {},
   methods: {
@@ -321,6 +360,21 @@ export default {
     },
     selectSalesVolume() {
       this.sortnum = 1
+    },
+    async getDrops() {
+      const orderType = this.orderType
+      const page = this.page
+      const keyword = this.keyword
+      const payload = {
+        orderType,
+        page,
+        keyword,
+      }
+      await this.$store.dispatch("getDrops", payload)
+      // console.log(this.cards)
+      this.cards = this.$store.cards
+      // console.log(this.cards)
+      // console.log("123456789")
     },
   },
 }

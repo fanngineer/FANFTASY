@@ -1,25 +1,25 @@
 <template>
   <div style="text-align: center;">
     <div class="nft-card-class">
-      <router-link :to="{ name: 'MarketDetailView', params: { id: card.nftSourceId }}">
-        <v-card class="nft-card">      
+      <router-link :to="{ name: 'MarketDetailView', params: { id: 1 }}">
+        <v-card class="nft-card-r">      
           <v-card-title class="nft-card-title">
-            <v-img src="https://ipfs.io/ipfs/QmXNpWrTjykQ4qEhRam7qkqJMJ2Twj1phrtvy5cnWfVRLF" alt="" class="nft-img"></v-img>
+            <v-img src="@/assets/nft_main(1).jpg" alt="" class="nft-img"></v-img>
           </v-card-title>
 
           <div style="width: 220px;">
             <v-card-item class="nft-card-item">
               <p class="item-name">
-                {{ card.title }}  
+                수민 공항패션이라는데 애초에 수민이가 누구임????
               </p>
               <p class="item-content">
-                {{ card.regArtist.nickname }}
+                수민
               </p>
               <p class="item-content">
-                {{ card.originPrice }} FAN
+                1.03FAN
               </p>
               <p class="item-content">
-                {{card.remainNum}}/{{ card.totalNum }}
+                19/30
               </p>
             </v-card-item>
           </div>
@@ -32,21 +32,19 @@
 <script>
 export default {
   name: "NFTCard",
-  props: {
-    card: Object
-  }
+  
 }
 </script>
 
 <style>
-.nft-card {
+.nft-card-r {
   display: flex;
   float: left;
   /* width: 413px; */
   /* height: 245px; */
   width: 245px;
   height: 360px;
-  border: solid 1px #6a3fc1;
+  border: solid 1px white;
   margin: 20px 20px;
   border-radius: 15px;
   flex-direction: column;
@@ -96,7 +94,6 @@ export default {
 .nft-card-class{
   display: inline-block;
   text-align: center;
-  min-width: 100% ;
 }
 
 .nft-card-title{

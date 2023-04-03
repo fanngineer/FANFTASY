@@ -5,12 +5,12 @@
       <div style="display: inline-flex; justify-content: center;">
         
         <!-- 이미지, 기타 정보 세로로 담는 div -->
-        <div style="margin-right:10px">
+        <div style="margin-right:10px; margin-bottom: 10vh;">
           
           <!-- 이미지 -->
           <div class="cen" style="height: 500px; ">
             <v-img
-              src="@/assets/coin_hoyoen.png"
+              :src="this.card.data.fileCID"
               alt=""
               class="nft-detail-img"
             ></v-img>
@@ -21,17 +21,18 @@
           <div style="width: 500px; white-space:pre-line; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
             <p style="font-size: 14px; font-weight:500">
-              도지코인은 2013년 12월 6일, IBM 출신 빌리 마커스와 잭슨 파머가 만든 럭키 코인 블록체인 기반의 암호화폐로 비트코인 커뮤니티에서 도지 코인이란 닉네임을 쓴 사람이 올린 Dogecoin - very currency - many coin - wow란 제목의 스레드로부터 시작되었다. 도지코인의 가장 큰 특징은 공급 정책이 무제한이란 점이다. 이를 증명하듯 출시하고 약 2년이 흐른 2015년엔 1천억번째 코인이 발행되었고 4년이 흐른 2019년도엔 그 규모가 달에 닿았다. 달착륙 기념 페이지 그렇기에 도지코인의 가격은 매우 낮게 책정되어 있는데 일례로 2018년 9월, 대다수의 암호화폐가 거품이 꺼지고, 각종 규제로 인해 하락을 거듭하는 가운데 유일하게 30일 동안 가격이 160%나 증가했지만, 가격은 2018년 하반기에 5원, 2년이 지난 2020년 1월엔 약 3원으로 거래되었었다
+              {{ this.card.data.content }}
+              <!-- {{ this.card.data }} -->
             </p>
           </div>
           <hr>
           <div style="width: 500px; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
             <div>
-              <p>소유자</p>
-              <p>블록체인</p>
-              <p>컨트랙트 주소</p>
-              <p>토큰 표준</p>
+              <p>소유자 : {{ this.card.data.regArtist.nickname }}</p>
+              <p>블록체인 : </p>
+              <p>컨트랙트 주소 : </p>
+              <p>토큰 표준 : </p>
             </div>
           </div>
           <hr>
@@ -64,7 +65,8 @@
           <div class="nft-detail-parent">
               <div class="nft-detail-box1">
                 <br />
-                <h1>노려보는 호연</h1>
+
+                <h1>{{ this.card.data.title }}</h1>
                 <br />
                 <h4>코딩 하며 잘 안풀릴 때 부르면 "노려보는 호연"이 나온다</h4>
                 <br />
@@ -77,7 +79,7 @@
                       class="nft-detail-small-img fl"
                     ></v-img>
                     <p>Artist</p>
-                    <p>H.Y Shim</p>
+                    <p>{{ this.card.data.regArtist.nickname }}</p>
                   </span>
                   <span class="ib">
                     <v-img
@@ -86,7 +88,7 @@
                       class="nft-detail-small-img fl"
                     ></v-img>
                     <p>Type</p>
-                    <p>Photo</p>
+                    <p>{{ this.card.data.fileType }}</p>
                   </span>
                   <span class="ib">
                     <v-img
@@ -94,7 +96,7 @@
                       alt=""
                       class="nft-detail-small-img fl"
                     ></v-img>
-                    <p style="margin-top: 12px">132</p>
+                    <p style="margin-top: 12px">{{this.card.data.likeNum}}</p>
                     <br />
                   </span>
                 </div>
@@ -127,19 +129,16 @@
               FANFTASY 유의사항
             </span>
             <li>
-              구매는 메타마스크 계좌 내 이더리움(ETH)이 차감되는 방식으로 진행됩니다.
+              구매는 메타마스크 계좌 내 판타지(FTS)가 차감되는 방식으로 진행됩니다.
             </li>
             <li>
               구매 거래가 체결되면 거래 취소가 불가하므로 신중하게 결정하여 진행해주세요.
             </li>
             <li>
-              가격 제안은 제안 시점으로부터 3일간 유효합니다. 제안 기간이 만료되면 해당 제안은 자동 취소됩니다.
+              거래가 완료되면 해당 금액은 메타마스크 내 거래 가능 금액에서 제외됩니다.
             </li>
             <li>
-              가격 제안이 완료되면 해당 금액은 메타마스크 내 거래 가능 금액에서 제외됩니다.
-            </li>
-            <li>
-              판매자가 가격 제안을 수락하면, 메타마스크 계좌 내 계좌에서 이더리움(ETH)이 차감되어 거래가 체결될 수 있습니다.
+              메타마스크 계좌 내 계좌에서 판타지(FTS)가 차감되어 거래가 체결됩니다.
             </li>
             <li>
               NFT의 외부 입출금은 현재 지원하지 않습니다. 
@@ -164,12 +163,27 @@ export default {
   data(){
     return{
       tradeLog : [
-        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 ETH'},
-        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 ETH'},
-        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 ETH'},
-      ]
+        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
+        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
+        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
+      ],
+      NFTId: this.$route.params.id,
+      card: [],
     }
-  }
+  },
+  created() {
+    this.getDropsDetail()
+  },
+  methods: {
+    async getDropsDetail() {
+      
+      await this.$store.dispatch("getDropsDetail", this.NFTId )
+      // console.log(this.card)
+      this.card = this.$store.card
+      // console.log(this.card)
+      // console.log("123456789")
+    },
+  },
 
 }
 </script>
@@ -182,7 +196,8 @@ export default {
 }
 
 .detail-parent {
-  height: 1400px;
+  /* height: 1400px; */
+  margin-bottom: 10vh;
 }
 
 
@@ -217,8 +232,8 @@ export default {
 /* nft 정보 상자 css */
 .nft-detail-parent{
   position:sticky; 
-  top: 0px;  
-  height: 480px; 
+  top: 100px;  
+  /* height: 480px;  */
 }
 
 .nft-detail-box {
