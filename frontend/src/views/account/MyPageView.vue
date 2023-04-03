@@ -1,75 +1,98 @@
 <template>
   <div class="mypage-entire">
-    <!-- <LoginUserHeaders/> -->
-    <!-- <NotLoginUserHeaders v-if="i == 1"/> -->
-
-    <!-- 프로필 이미지 -->
-    <div class="circle1">
-      <div class="circle2">
-        <div class="circle3">
-          <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo">
-        </div>
-      </div>
-    </div>
-
-    <!-- 메타마스크 주소 -->
-    <div class="address-inline">
-      <img :src="require('@/assets/metamask_logo.png')" alt="여우" style="width:35px; height: 25px; padding-left: 5px; padding-right: 5px;">
-      <div id="metamask-address">{{address}}</div>
-      <img :src="require('@/assets/copy.png')" alt="복사" style="width:28px; height: 20px; padding-left: 5px; padding-right: 5px; " @click="copyAddress">
-    </div>
-
-    <button class="charge-button">
-      NFN 충전
-    </button>
     <div>
-      보유 NFT | 거래 내역 | 관심 아이템s
-    </div>
-
-    <hr>
-
-    <!-- 메뉴 콤보박스 -->
-    <div style="border-radius: 50%; border-color: blueviolet; margin-left: 1300px; display: flex;">
-      <div style="margin-left:140px; width:200px; border-radius: 50% !important;">
+      <!-- 프로필 이미지, 메타마스크 주소, NFT 충전 버튼 -->
+      <div style="display: flex; justify-content: space-between;">
         <div>
-          <v-combobox :items="myNFTmenu"></v-combobox> 
-  
+          <!-- 프로필 이미지 -->
+          <div class="circle1">
+            <div class="circle2">
+              <div class="circle3">
+                <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo">
+              </div>
+            </div>
+          </div>
+          
+          <div style="margin: 10px; font-weight: bold; font-size: 32px;">
+            {{ nickname }} 님
+          </div>
+
+          <!-- 메타마스크 주소 -->
+          <div class="address-inline">
+            <img :src="require('@/assets/metamask_logo.png')" alt="여우" style="width:35px; height: 25px; padding-left: 5px; padding-right: 5px;">
+            <div id="metamask-address">{{address}}</div>
+            <img :src="require('@/assets/copy.png')" alt="복사" style="width:28px; height: 20px; padding-left: 5px; padding-right: 5px; " @click="copyAddress">
+          </div>
+        </div>
+        
+        <div style="margin-top: auto">
+          <button class="charge-button">
+            FAN 충전
+          </button>
         </div>
       </div>
+  
+      
+      <div class="mypage-filter-tab" >
+        <button @click="clickOwnedNFT" class="mypage-filter-tab-part" tabindex="-1" @keydown.prevent="handleBtnDown" >
+          보유 NFT
+        </button>
+        |
+        <button @click="clickNFTLog" class="mypage-filter-tab-part" tabindex="-1" @keydown.prevent="handleBtnDown"> 
+          거래 내역 
+        </button>
+        |
+        <button @click="clickAttractedNFT" class="mypage-filter-tab-part" tabindex="-1" @keydown.prevent="handleBtnDown">
+          관심 아이템
+        </button>
+        <div class="indicator" :style="{transform:'translateX('+filterTapX+'%)'}"></div>
+      </div>
+  
+      <hr style="width:100%">
+  
+      <!-- 메뉴 콤보박스 -->
+      <div style="border-radius: 50%; border-color: blueviolet; margin-left: auto;">
+        <div style="margin-left:14px; width:200px; border-radius: 50% !important;">
+          <div>
+            <v-combobox :items="myNFTmenu"></v-combobox> 
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      <v-container>
+        <v-row style="max-width:1000px">
+          <v-col v-for="n in 14" :key="n" :cols="3">
+            <v-card outlined tile class="holding-item" style="height:200px; width: 200px;">
+              <div class="artist-circle">
+                {{ n }}
+              </div>
+              <div>
+                <v-img src="@/assets/minsu.jpg" alt="민수 ">
+                  
+                  <v-card-text class="nft-info">
+                    <div class="font-weight-bold">
+                      dfdfdffdsffs
+                    </div>
+                    <div>
+                      전체거래량
+                    </div>
+                    <div>
+                      최저거래가
+                    </div>
+                  </v-card-text>
+                </v-img>
+              </div>                                                                                                                                                                                                              
+  
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
 
     </div>
 
-  
-    
-    
-    <v-container>
-      <v-row>
-        <v-col v-for="n in 14" :key="n" :cols="2" class="mx-2 ">
-          <v-card outlined tile class="holding-item" height="200px">
-            <div class="artist-circle">
-              {{ n }}
-            </div>
-            <div>
-              <v-img src="@/assets/minsu.jpg" alt="민수 ">
-                
-                <v-card-text class="nft-info">
-                  <div class="font-weight-bold">
-                    dfdfdffdsffs
-                  </div>
-                  <div>
-                    전체거래량
-                  </div>
-                  <div>
-                    최저거래가
-                  </div>
-                </v-card-text>
-              </v-img>
-            </div>                                                                                                                                                                                                              
-
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
 
     
 
@@ -77,21 +100,25 @@
 </template>
 
 <script>
-// import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
-// import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
-// import Web3 from "web3"
+import VueCookies from "vue-cookies"
 
 export default {
   name: 'MyPageView',
   data(){
     return {
+      nickname: VueCookies.get('nickname'),
       address: null,
+
+      filterTapX: 0,
+      btnOwnedNFT: true,
+      btnNFTLog: false,
+      btnAttractedNFT: false ,
+
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
     }
   },
   components:{
-    // LoginUserHeaders,
-    // NotLoginUserHeaders,
+
   },
   async created() {
     await this.$store.dispatch('getAccount');
@@ -117,7 +144,32 @@ export default {
       });
     },
 
-
+    clickOwnedNFT (){
+      this.btnOwnedNFT = true;
+      this.btnNFTLog = false;
+      this.btnAttractedNFT = false;
+      this.filterTapX = 0;
+      console.log('보유한 NFT')
+    },
+    clickNFTLog (){
+      this.btnOwnedNFT = false;
+      this.btnNFTLog = true;
+      this.btnAttractedNFT = false;
+      this.filterTapX = 104;
+      console.log('NFT 거래 기록')
+    },
+    clickAttractedNFT (){
+      this.btnOwnedNFT = false;
+      this.btnNFTLog = false;
+      this.btnAttractedNFT = true;
+      this.filterTapX = 216;
+      console.log('관심 있는 NFT')
+    },
+    handleBtnDown(e){
+      if (e.keyCode===9){
+        e.stopPropagation();
+      }
+    },
   },
   watch() {
 
@@ -130,7 +182,9 @@ export default {
 
 <style>
 .mypage-entire{
-  padding-top: 120px;
+  padding-top: 90px;
+  display: flex;
+  justify-content: center;
 }
 
 .circle1{
@@ -141,6 +195,8 @@ export default {
   justify-content: center;
   align-items: center;
   box-shadow: 0px 5px 5px gray; 
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .circle2{
@@ -176,6 +232,7 @@ export default {
   border-radius: 15px;
   width: 500px;
   height: 40px;
+  margin-bottom: 10px;
 }
 
 .charge-button{
@@ -190,14 +247,37 @@ export default {
   border-radius: 15px;
   color: white;
   background-color: RGB(106, 63, 193);
+  margin-bottom: 10px;
 }
 
 #metamask-address{
   width: 440px;
-  /* justify-content: right; */
-  /* justify-items: right; */
-  /* justify-self: right; */
   text-align: left;
+}
+
+/* 마이페이지 보유NFT, 거래내역, 관심아이템 탭 버튼 */
+.mypage-filter-tab{
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  font-size: 1em;
+  position: relative;
+}
+.mypage-filter-tab-part{
+  padding: 10px;
+  border-radius: 15px;
+}
+.indicator {
+  padding: 10px;
+  border-radius: 15px;
+  position: absolute;
+  bottom: 0%;
+  width: 84px;
+  height: 40px;
+  background-color: #9B7CF8;
+  opacity: 0.3;
+  transition: transform 0.3s ease-in;
+  pointer-events: none;
 }
 
 
