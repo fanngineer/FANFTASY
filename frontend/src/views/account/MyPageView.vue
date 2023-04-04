@@ -131,8 +131,8 @@
 <script>
 // import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
 // import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
-import BankABI from "../../../path/to/BankABI.json";
-import Web3 from "web3"
+// import BankABI from "../../../path/to/BankABI.json";
+// import Web3 from "web3"
 import  VueCookies  from 'vue-cookies';
 
 export default {
