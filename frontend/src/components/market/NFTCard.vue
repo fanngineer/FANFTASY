@@ -1,10 +1,12 @@
 <template>
   <div style="text-align: center;">
     <div class="nft-card-class">
+      <!-- {{ card }} -->
       <router-link :to="{ name: 'MarketDetailView', params: { id: card.nftSourceId }}">
         <v-card class="nft-card">      
           <v-card-title class="nft-card-title">
-            <v-img src="https://ipfs.io/ipfs/QmXNpWrTjykQ4qEhRam7qkqJMJ2Twj1phrtvy5cnWfVRLF" alt="" class="nft-img"></v-img>
+            <v-img v-if="card.fileType === 'image'" :src="card.fileCID" alt="" class="nft-img"></v-img>
+            <video v-if="card.fileType === 'video'" :src="card.fileCID" alt="" class="nft-img"></video>
           </v-card-title>
 
           <div style="width: 220px;">

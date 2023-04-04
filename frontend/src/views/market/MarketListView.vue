@@ -61,7 +61,7 @@
               <button
                 @click="searchEvents"
                 class="notting"
-                style="display: flex;                  justify-content: right;
+                style="display: flex;                  justify-content: right; 
                 align-self: center;
                 "
               >
@@ -156,10 +156,7 @@ export default {
         keyword,
       }
       await this.$store.dispatch("getDrops", payload)
-      console.log(this.cards)
       this.cards = this.$store.cards
-      console.log(this.cards)
-      console.log("123456789")
     },
   },
 }

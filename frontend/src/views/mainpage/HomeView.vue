@@ -43,50 +43,6 @@
           align-items: center;
         "
       >
-        <!-- <h1 class="ranking-space">Ranking</h1>
-          <br />
-          <button
-          v-on:click="selectNewest"
-          v-if="sortnum === 0"
-          class="selected-ranking-button"
-          >
-          최신순
-        </button>
-        <button
-        v-on:click="selectNewest"
-        v-else
-        class="unselected-ranking-button"
-        >
-        최신순
-      </button>
-      <button
-      v-on:click="selectSalesVolume"
-      v-if="sortnum === 1"
-            class="selected-ranking-button"
-          >
-          판매량순
-        </button>
-        <button
-        v-on:click="selectSalesVolume"
-        v-else
-        class="unselected-ranking-button"
-        >
-        판매량순
-      </button>
-      <button
-      v-on:click="selectSalesAmmount"
-      v-if="sortnum === 2"
-      class="selected-ranking-button"
-      >
-      판매금액순
-    </button>
-    <button
-    v-on:click="selectSalesAmmount"
-    v-else
-    class="unselected-ranking-button"
-    >
-    판매금액순
-  </button> -->
         <router-link to="/drops" style="text-decoration: none; color: black">
           <span style="font-size: 45px">🎁Drops</span>
         </router-link>
@@ -98,6 +54,7 @@
         <br />
         <div class="df" style="justify-content: center;">
           <NFTCard v-for="(card, index) in cards.slice(0, 4)" :key="index" :card="card" class="" />
+          
         </div>
         <br>
         <span>
@@ -153,10 +110,11 @@
             유저간 보유 NFT를 사고 팔 수 있습니다.
           </div>
           <br />
-        <div>
-          <NFTCardR v-for="i in 4" :key="i" class="nft-card-class"/>
-          <!-- <br />
-          <NFTCard v-for="i in 4" :key="i" class="nft-card-class"/> -->
+          <!-- {{this.mcards}} -->
+        <div class="df" style="justify-content: center;">
+          <NFTCardR v-for="(card, index) in mcards.slice(0, 4)" :key="index" :card="card" class="" />
+          <!-- <NFTCardR v-for="i in 4" :key="i" class="nft-card-class"/> -->
+
         </div>
         </div>
     </div>
@@ -323,7 +281,9 @@ export default {
     return {
       a: 2,
       cards: [],
+      mcards: [],
       orderType: 1,
+      saleType: 1,
       page: 0,
       keyword: "",
       slides: [
@@ -349,18 +309,10 @@ export default {
   watch: {},
   created() {
     this.getDrops()
+    this.getMarket()
   },
   mounted() {},
   methods: {
-    selectNewest() {
-      this.sortnum = 0
-    },
-    selectSalesAmmount() {
-      this.sortnum = 2
-    },
-    selectSalesVolume() {
-      this.sortnum = 1
-    },
     async getDrops() {
       const orderType = this.orderType
       const page = this.page
@@ -375,6 +327,19 @@ export default {
       this.cards = this.$store.cards
       // console.log(this.cards)
       // console.log("123456789")
+    },
+    async getMarket() {
+      const orderType = this.orderType
+      const saleType = this.saleType
+      const keyword = this.keyword
+      const payload = {
+        orderType,
+        saleType,
+        keyword,
+      }
+      await this.$store.dispatch("getMarket", payload)
+      this.mcards = this.$store.mcards
+
     },
   },
 }

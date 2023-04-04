@@ -4,6 +4,7 @@ import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 
 const API_URL = "https://fanftasy.kro.kr/api"
+// const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://localhost:8080/api",
 const store = createStore({
@@ -39,6 +40,8 @@ const store = createStore({
     haveNet: null,
     cards: [],
     card: [],
+    mcards: [],
+    mcard: [],
   },
   getters: {
     isLogin: function () {
@@ -295,31 +298,21 @@ const store = createStore({
     },
 
     async getDrops(context, payload) {
-      // const AccessToken = VueCookies.get("AccessToken")
-      // console.log(this.state.orderType)
       const orderType = payload.orderType
       const page = payload.page
       const keyword = payload.keyword
       console.log(payload)
       await axios({
         methos: "get",
-        url: `${API_URL}/nft/market`,
-        // headers: { accesstoken: AccessToken },
+        url: `${API_URL}/nft/drops`,
         params: {
           orderType: orderType,
           page: page,
           keyword: keyword,
-          // orderType: 1,
-          // page: 1,
-          // keyword: '',
         },
       })
         .then((res) => {
-          console.log("res.data")
           this.cards = res.data.data
-          console.log(this.cards)
-          console.log("------------------------")
-          
         })
         .catch((err) => {
           console.log(err)
@@ -327,11 +320,9 @@ const store = createStore({
     },
     
     async getDropsDetail(context, NFTId) {
-      // const AccessToken = VueCookies.get("AccessToken")
-      // console.log(AccessToken)
       await axios({
         methos: "get",
-        url: `${API_URL}/nft/market/${NFTId}`,
+        url: `${API_URL}/nft/drops/${NFTId}`,
       })
         .then((res) => {
           console.log(res)
@@ -341,8 +332,50 @@ const store = createStore({
           console.log(err)
         })
     },
-  },
-  modules: {},
-})
-
-export default store
+    
+    async getMarket(context, payload) {
+      const orderType = payload.orderType
+      const saleType = payload.saleType
+      const keyword = payload.keyword
+      console.log(payload)
+      await axios({
+        methos: "get",
+        url: `${API_URL}/nft/market`,
+        params: {
+          orderType: orderType,
+          saleType: saleType,
+          keyword: keyword,
+        },
+      })
+      .then((res) => {
+        this.mcards = res.data.data
+          
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+      
+    async getMarketDetail(context, nftSourceId) {
+      // const currentPrice = payload.currentPrice
+      await axios({
+        methos: "get",
+        url: `${API_URL}/nft/market/${nftSourceId}`,
+        params: {
+          // nftSourceId:nftSourceId,
+          // currentPrice:currentPrice
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          this.mcard = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      },
+    },
+    modules: {},
+  })
+  
+  export default store

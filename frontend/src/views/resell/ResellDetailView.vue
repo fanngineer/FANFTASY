@@ -3,43 +3,42 @@
     <div class="cen" style="width:fit-content;">
       
       <div style="display: inline-flex; justify-content: center;">
-        
         <!-- 이미지, 기타 정보 세로로 담는 div -->
         <div style="margin-right:10px; margin-bottom: 10vh;">
           
           <!-- 이미지 -->
           <div class="cen" style="height: 500px; ">
             <v-img
-              v-if="this.card.data.fileType === 'image'"
-              :src="this.card.data.fileCID"
+              v-if="this.card.data.nftSource.fileType === 'image'"
+              :src="this.card.data.nftSource.fileCID"
               alt=""
               class="nft-detail-img"
-            ></v-img>
-            <iframe 
-            v-if="this.card.data.fileType === 'video'" 
-            :src="this.card.data.fileCID" 
-            alt="" 
-            class="nft-detail-img"
-            autoplay="1"
-            ></iframe>
-          </div>
-          
-          
-          
-          <div style="width: 500px; white-space:pre-line; margin:20px">
-            <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
-            <p style="font-size: 14px; font-weight:500">
-              {{ this.card.data.content }}
-              <!-- {{ this.card.data }} -->
-            </p>
-          </div>
-          <hr>
-          <div style="width: 500px; margin:20px">
-            <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
-            <div>
-              <p>소유자 : {{ this.card.data.regArtist.nickname }}</p>
-              <p>블록체인 : </p>
-              <p>컨트랙트 주소 : </p>
+              ></v-img>
+              <iframe 
+              v-if="this.card.data.nftSource.fileType === 'video'" 
+              :src="this.card.data.nftSource.fileCID" 
+              alt="" 
+              class="nft-detail-img"
+              autoplay="1"
+              ></iframe>
+            </div>
+            
+            
+            
+            <div style="width: 500px; white-space:pre-line; margin:20px">
+              <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
+              <p style="font-size: 14px; font-weight:500">
+                {{ this.card.data.nftSource.content }}
+                <!-- {{ this.card.data }} -->
+              </p>
+            </div>
+            <hr>
+            <div style="width: 500px; margin:20px">
+              <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
+              <div>
+                <p>소유자 : {{ this.card.data.owner.nickname }}</p>
+                <p>블록체인 : </p>
+                <p>컨트랙트 주소 : </p>
               <p>토큰 표준 : </p>
             </div>
           </div>
@@ -74,9 +73,9 @@
               <div class="nft-detail-box1">
                 <br />
 
-                <h1>{{ this.card.data.title }}</h1>
+                <h1>{{ this.card.data.nftSource.title }}</h1>
                 <br />
-                <h4>코딩 하며 잘 안풀릴 때 부르면 "노려보는 호연"이 나온다</h4>
+                <!-- <h4>{{this.card.data.nftSource.content}}</h4> -->
                 <br />
                 <br />
                 <div class="sb">
@@ -87,16 +86,14 @@
                       class="nft-detail-small-img fl"
                     ></v-img>
                     <p>Artist</p>
-                    <p>{{ this.card.data.regArtist.nickname }}</p>
+                    <p>{{ this.card.data.nftSource.regArtist.nickname }}</p>
                   </span>
                   <span class="ib">
-                    <v-img
-                      src="@/assets/photo.png"
-                      alt="사진타입"
-                      class="nft-detail-small-img fl"
-                    ></v-img>
+                    <v-icon v-if="this.card.data.nftSource.fileType === 'image'" icon="mdi-image" class="nft-detail-small-img fl"></v-icon>
+                    <v-icon v-if="this.card.data.nftSource.fileType === 'video'" icon="mdi-motion-play-outline" class="nft-detail-small-img fl" style="font-size: 40px;"></v-icon>
+                    <v-icon v-if="this.card.data.nftSource.fileType === 'audio'" icon="mdi-microphone" class="nft-detail-small-img fl" style="font-size: 40px;"></v-icon>
                     <p>Type</p>
-                    <p>{{ this.card.data.fileType }}</p>
+                    <p>{{ this.card.data.nftSource.fileType }}</p>
                   </span>
                   <span class="ib">
                     <v-img
@@ -104,7 +101,7 @@
                       alt=""
                       class="nft-detail-small-img fl"
                     ></v-img>
-                    <p style="margin-top: 12px">{{this.card.data.likeNum}}</p>
+                    <p style="margin-top: 12px">{{this.card.data.nftSource.likeNum}}</p>
                     <br />
                   </span>
                 </div>
@@ -115,13 +112,13 @@
               <div class="nft-detail-box">
                 <div class="sa">
                   <span class="ib" style="margin-top: 30px;">
-                    <p class="nft-item-name">판매가격</p>
-                    <p class="nft-item-content">1.03NFN</p>
-                  </span>
-                  <span class="ib" style="margin-top: 30px;">
-                    <p class="nft-item-name">잔여수량</p>
-                    <p class="nft-item-content">19/50</p>
-                  </span>
+                    <span class="nft-item-name">판매가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nft-item-content">{{ this.card.data.currentPrice }} FTS</span>
+                    </span>
+                    <!-- <span class="ib" style="margin-top: 30px;">
+                      <p class="nft-item-name">잔여수량</p>
+                      <p class="nft-item-content">19/50</p>
+                    </span> -->
                 </div>
                 <button class="purchase-btn">구매하기</button>
               </div>
@@ -176,18 +173,26 @@ export default {
         {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
       ],
       NFTId: this.$route.params.id,
+      // currentPrice: this.$route.params.currentPrice,
       card: [],
     }
   },
   created() {
-    this.getDropsDetail()
+    this.getMarketDetail()
   },
   methods: {
-    async getDropsDetail() {
+    async getMarketDetail() {
       
-      await this.$store.dispatch("getDropsDetail", this.NFTId )
+      const nftSourceId = this.NFTId
+      // const currentPrice = this.currentPrice
+      
+      // const payload = {
+      //   nftSourceId,
+      //   currentPrice
+      // }
+      await this.$store.dispatch("getMarketDetail", nftSourceId)
       // console.log(this.card)
-      this.card = this.$store.card
+      this.card = this.$store.mcard
       // console.log(this.card)
       // console.log("123456789")
     },
@@ -219,6 +224,14 @@ export default {
 .nft-detail-small-img {
   width: 40px;
   height: 40px;
+  margin-right: 10px;
+  margin-top: 3px;
+  font-size: 40px;
+}
+
+.nft-detail-small-img-mic {
+  width: 50px;
+  height: 50px;
   margin-right: 10px;
   margin-top: 3px;
 }
