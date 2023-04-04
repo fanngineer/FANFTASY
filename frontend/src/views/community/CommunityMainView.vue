@@ -233,6 +233,7 @@ export default {
 
 <style>
   .community-menu{
+    margin-top: 100px;
     display: flex;
   }
 

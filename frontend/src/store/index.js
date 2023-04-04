@@ -264,6 +264,9 @@ const store = createStore({
         await window.ethereum.request({ method: "eth_requestAccounts" })
       )[0]
       await axios({
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
         method: "put",
         url: `${API_URL}/user/modi`,
         data: {
