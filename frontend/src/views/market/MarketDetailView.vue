@@ -29,8 +29,8 @@
           <div style="width: 500px; white-space:pre-line; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
             <p style="font-size: 14px; font-weight:500">
-              {{ this.card.data.content }}
-              <!-- {{ this.card.data }} -->
+              <!-- {{ this.card.data.content }} -->
+              {{ this.card }}
             </p>
           </div>
           <hr>
@@ -38,9 +38,9 @@
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
             <div>
               <p>소유자 : {{ this.card.data.regArtist.nickname }}</p>
-              <p>블록체인 : </p>
-              <p>컨트랙트 주소 : </p>
-              <p>토큰 표준 : </p>
+              <p>블록체인 : FANFTASY </p>
+              <p>컨트랙트 주소 : 0xaeb2DC75a63352947Bdbe6d9E6A37c0752481007 </p>
+              <p>토큰 표준 : ERC721 </p>
             </div>
           </div>
           <hr>
@@ -50,17 +50,20 @@
               <table>
                 <thead>
                   <tr>
-                    <th >거래일시</th>
-                    <th >NFT 에디션 번호</th>
+                    <th >발매일시</th>
+                    <th >발매 NFT 에디션 개수</th>
                     <th >가격</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(log, index) in tradeLog" :key="index"> 
+                  <!-- <tr v-for="(log, index) in tradeLog" :key="index"> 
                     <td>{{ log.date }}</td>
                     <td>{{ log.edition }}</td>
                     <td>{{ log.price }}</td>
-                  </tr>
+                  </tr> -->
+                  <td>{{ this.card.data.regDate }}</td>
+                  <td>{{ this.card.data.totalNum }}</td>
+                  <td>{{ this.card.data.originPrice }}</td>
                 </tbody>
               </table>
             </p>
@@ -76,7 +79,7 @@
 
                 <h1>{{ this.card.data.title }}</h1>
                 <br />
-                <h4>코딩 하며 잘 안풀릴 때 부르면 "노려보는 호연"이 나온다</h4>
+                <h4>{{ this.card.data.content }}</h4>
                 <br />
                 <br />
                 <div class="sb">
@@ -167,16 +170,19 @@
 </template>
 
 <script>
+import VueCookies from "vue-cookies"
+
 export default {
   data(){
     return{
-      tradeLog : [
-        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
-        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
-        {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
-      ],
+      // tradeLog : [
+      //   {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
+      //   {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
+      //   {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
+      // ],
       NFTId: this.$route.params.id,
       card: [],
+      profile: VueCookies.get('profileImage'),
     }
   },
   created() {

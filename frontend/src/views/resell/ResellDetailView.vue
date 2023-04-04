@@ -37,9 +37,9 @@
               <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
               <div>
                 <p>소유자 : {{ this.card.data.owner.nickname }}</p>
-                <p>블록체인 : </p>
-                <p>컨트랙트 주소 : </p>
-              <p>토큰 표준 : </p>
+                <p>블록체인 : FANFTASY </p>
+                <p>컨트랙트 주소 : 0xaeb2DC75a63352947Bdbe6d9E6A37c0752481007 </p>
+                <p>토큰 표준 : ERC721 </p>
             </div>
           </div>
           <hr>
