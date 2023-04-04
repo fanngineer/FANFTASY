@@ -10,8 +10,8 @@
         <div class="signup-title">
           회원가입
         </div>
+        <input type="text" class="name t" placeholder="실명" v-model="this.name"/>
         <input type="text" class="nickname t" placeholder="닉네임" v-model="this.nickname"/>
-        <!-- <input type="text" class="RealName" placeholder="실명" v-bind=""> -->
         <input type="text" class="email t" placeholder="이메일" v-model="this.email" />
         <input type="text" class="phone t" placeholder="전화번호" v-model="this.phone" />
         <input type="text" class="company t" v-if="!this.$store.state.isFan" placeholder="소속사" v-model="this.company" />
@@ -45,6 +45,7 @@ export default {
 
     return {
       address: null,
+      name: null,
       email: null,
       nickname: null,
       phone: null,

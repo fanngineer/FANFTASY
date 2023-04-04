@@ -1,5 +1,31 @@
 <template>
   <div class="mypage-entire">
+    <!-- <LoginUserHeaders/> -->
+    <!-- <NotLoginUserHeaders v-if="i == 1"/> -->
+
+    <!-- 프로필 이미지 -->
+    <div class="circle1">
+      <div class="circle2">
+        <div class="circle3">
+          <img :src="this.profileImage" alt="로고" class="profile-logo">
+        </div>
+      </div>
+    </div>
+    <!-- <div>
+      <input type="file" class="changeImage">
+      <button class="changeImageBtn" @click="changeImage()">프로필 사진 바꾸기</button>
+    </div> -->
+
+    <!-- 메타마스크 주소 -->
+    <div class="address-inline">
+      <img :src="require('@/assets/metamask_logo.png')" alt="여우" style="width:35px; height: 25px; padding-left: 5px; padding-right: 5px;">
+      <div id="metamask-address">{{address}}</div>
+      <img :src="require('@/assets/copy.png')" alt="복사" style="width:28px; height: 20px; padding-left: 5px; padding-right: 5px; " @click="copyAddress">
+    </div>
+
+    <button class="charge-button" @click="charge()">
+      NFN 충전
+    </button>
     <div>
       <!-- 프로필 이미지, 메타마스크 주소, NFT 충전 버튼 -->
       <div style="display: flex; justify-content: space-between;">
@@ -103,7 +129,11 @@
 </template>
 
 <script>
-import VueCookies from "vue-cookies"
+// import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
+// import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
+import BankABI from "../../../path/to/BankABI.json";
+import Web3 from "web3"
+import  VueCookies  from 'vue-cookies';
 
 export default {
   name: 'MyPageView',
@@ -118,6 +148,8 @@ export default {
       btnAttractedNFT: false ,
 
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
+      profileImage: VueCookies.get('profileImage'),
+
     }
   },
   components:{
@@ -320,6 +352,11 @@ export default {
   font-size: 10px;
   border-bottom-left-radius: 15px;
   margin-top: 118px;
+}
+
+.changeImageBtn{
+  border: solid 1px black;
+  border-radius: 5%;
 }
 
 </style>
