@@ -1,31 +1,5 @@
 <template>
   <div class="mypage-entire">
-    <!-- <LoginUserHeaders/> -->
-    <!-- <NotLoginUserHeaders v-if="i == 1"/> -->
-
-    <!-- 프로필 이미지 -->
-    <div class="circle1">
-      <div class="circle2">
-        <div class="circle3">
-          <img :src="this.profileImage" alt="로고" class="profile-logo">
-        </div>
-      </div>
-    </div>
-    <!-- <div>
-      <input type="file" class="changeImage">
-      <button class="changeImageBtn" @click="changeImage()">프로필 사진 바꾸기</button>
-    </div> -->
-
-    <!-- 메타마스크 주소 -->
-    <div class="address-inline">
-      <img :src="require('@/assets/metamask_logo.png')" alt="여우" style="width:35px; height: 25px; padding-left: 5px; padding-right: 5px;">
-      <div id="metamask-address">{{address}}</div>
-      <img :src="require('@/assets/copy.png')" alt="복사" style="width:28px; height: 20px; padding-left: 5px; padding-right: 5px; " @click="copyAddress">
-    </div>
-
-    <button class="charge-button" @click="charge()">
-      NFN 충전
-    </button>
     <div>
       <!-- 프로필 이미지, 메타마스크 주소, NFT 충전 버튼 -->
       <div style="display: flex; justify-content: space-between;">
@@ -91,7 +65,7 @@
       
       
       
-      <v-container>
+      <!-- <v-container>
         <v-row style="max-width:1000px">
           <v-col v-for="n in 14" :key="n" :cols="3">
             <v-card outlined tile class="holding-item" style="height:200px; width: 200px;">
@@ -118,11 +92,37 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-container>
-
+      </v-container> -->
+      
+      <!-- <NFTCard v-for="(nft, index) in userNFTs" :key="index" :card="nft">
+        
+      </NFTCard> -->
+      <!-- <div style="height:1000px; width: 1000px; padding-top: 100px;"> -->
+        <div v-for="(nft, index) in userNFTs" :key="index" class="fl">
+          <div> 
+            <router-link :to="{name:'MarketDetailView', params:{id: nft.nftId}}">
+              <div class="nft-card-title">
+                <img :src="nft.nftSource.fileCID" alt="no" class="nft-img">
+              </div>
+              <div>
+                {{ nft.nftSource.regArtist.nickname }}
+              </div>
+              <div>
+                {{ nft.nftSource.title }}
+              </div>
+              <div>
+                {{ nft.nftSource.originPrice }} FAN
+              </div>
+              <div>
+                {{ nft.nftSource.remainNum }} / {{ nft.nftSource.totalNum }}
+              </div>
+            </router-link>
+          </div>
+        </div>
+      <!-- </div> -->
+      
+      
     </div>
-
-
     
 
   </div>
@@ -134,9 +134,13 @@
 // import BankABI from "../../../path/to/BankABI.json";
 // import Web3 from "web3"
 import  VueCookies  from 'vue-cookies';
+// import NFTCard from "@/components/market/NFTCard.vue"
 
 export default {
   name: 'MyPageView',
+  components: {
+    // NFTCard,
+  },
   data(){
     return {
       nickname: VueCookies.get('nickname'),
@@ -150,14 +154,15 @@ export default {
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
       profileImage: VueCookies.get('profileImage'),
 
-    }
-  },
-  components:{
 
+      userNFTs: [],
+    }
   },
   async created() {
     await this.$store.dispatch('getAccount');
     this.address = this.$store.state.address;
+
+    this.getUserNFTs();
   },
   methods:{
     copyAddress: async function(){
@@ -205,12 +210,16 @@ export default {
         e.stopPropagation();
       }
     },
+
+    getUserNFTs(){
+      this.$store.dispatch('userNFTs')
+      this.userNFTs = this.$store.userNFTs
+    },
   },
   watch() {
 
   },
   mounted() {
-
   },
 }
 </script>

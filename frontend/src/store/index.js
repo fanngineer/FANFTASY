@@ -40,6 +40,7 @@ const store = createStore({
     haveNet: null,
     cards: [],
     card: [],
+    userNFTs: [],
     mcards: [],
     mcard: [],
   },
@@ -271,14 +272,55 @@ const store = createStore({
         })
     },
 
+    async userNFTs(){
+      const uid = VueCookies.get("userId"); 
+      console.log('uid :',uid)
+      await axios({
+        method: "get",
+        url: `${API_URL}/nft/user/${uid}`,
+        // data: {
+        //   ownerId: uid,
+        // }
+      })
+      .then((res)=>{
+        console.log('userNFTs : ', res)
+        this.userNFTs = res.data.data
+      })
+      .catch((err)=>{
+        console.log(err)
+        this.state.success = false
+      })
+    },
+
+    async modiUserImg(){
+      const uid = VueCookies.get("userId");
+      await axios({
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        method: "put",
+        url: `${API_URL}/user/profile`,
+        data: {
+          id: uid,
+          profileImg: this.state.profileImg
+        }
+      })
+      .then((res)=>{
+        console.log(res)
+        this.state.success = true
+      })
+      .catch((err)=>{
+        console.log(err)
+        this.state.success = false
+      })
+    },
+
+
     async modiUserInfo() {
       const address = (
         await window.ethereum.request({ method: "eth_requestAccounts" })
       )[0]
       await axios({
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
         method: "put",
         url: `${API_URL}/user/modi`,
         data: {
