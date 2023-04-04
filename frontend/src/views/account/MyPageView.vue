@@ -211,8 +211,8 @@ export default {
       }
     },
 
-    getUserNFTs(){
-      this.$store.dispatch('userNFTs')
+    async getUserNFTs(){
+      await this.$store.dispatch('userNFTs')
       this.userNFTs = this.$store.userNFTs
     },
   },

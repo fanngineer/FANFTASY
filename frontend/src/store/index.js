@@ -2,10 +2,13 @@ import { createStore } from "vuex"
 import VueCookies from "vue-cookies"
 import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
+import router from "@/router"
 
-const API_URL = "https://fanftasy.kro.kr/api"
+// const API_URL = "https://fanftasy.kro.kr/api"
 // const API_URL = "http://70.12.247.102:8080/api"
+const API_URL = "http://192.168.91.51:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
+// const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
 const store = createStore({
   plugins: [createPersistedState()],
@@ -25,6 +28,7 @@ const store = createStore({
     isSame: false,
     name: null,
     nickname: VueCookies.get("nickname"),
+    nickname2: null,
     address: null,
     phone: null,
     role: null,
@@ -261,11 +265,11 @@ const store = createStore({
         },
       })
         .then((res) => {
-          console.log(res)
-          console.log(res.data)
-          console.log(res.data.data)
-          this.state.name = res.data.data.name
-          console.log(this.state.name)
+          console.log('res :', res)
+          console.log('res.data :', res.data)
+          console.log('res.data.data : ', res.data.data)
+          this.state.nickname2 = res.data.data.nickname
+          console.log(this.state.nickname2)
         })
         .catch((err) => {
           console.log(err)
@@ -293,21 +297,29 @@ const store = createStore({
     },
 
     async modiUserImg(){
-      const uid = VueCookies.get("userId");
+      const id = VueCookies.get("userId");
+      let formData = new FormData();
+      formData.append('profileImg', this.profileImg);
+      console.log('this.file = ',formData, this.profileImg)
       await axios({
         headers: {
           'Content-Type': 'multipart/form-data'
         },
         method: "put",
-        url: `${API_URL}/user/profile`,
-        data: {
-          id: uid,
-          profileImg: this.state.profileImg
-        }
+        url: `${API_URL}/user/profile/${id}`,
+        data: formData,
+        // data: {
+        //   profileImg: this.state.profileImg
+        // }
       })
       .then((res)=>{
-        console.log(res)
+        VueCookies.set('profileImage', res.data.data, '3h');
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
+        console.log(this.profileImg)
+        console.log('bbbbbbbbbbbbbbbbbbbbb')
+        console.log(res.data.data)
         this.state.success = true
+        this.$router.go(0)
       })
       .catch((err)=>{
         console.log(err)
@@ -330,8 +342,12 @@ const store = createStore({
         },
       })
         .then((res) => {
+          VueCookies.set('nickname', this.state.nickname, '3h');
           console.log(res)
           this.state.success = true
+          // router.go(-1);
+          // router.push("/mypage")
+          router.go(0)
         })
         .catch((err) => {
           console.log(err)

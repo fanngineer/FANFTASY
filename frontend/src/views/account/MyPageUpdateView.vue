@@ -10,7 +10,8 @@
         </label>
         <input id="uploadImg" type="file" ref="fileInput" @change="uploadFile">
       </div>
-
+      
+      <img :src="this.$store.profileImg" alt="no">
       
 
       <div>
@@ -51,24 +52,24 @@ export default {
     }
   },
   mounted() {
-    this.getUserDetail();
+    // this.getUserDetail();
   },
   methods: {
     uploadFile() {
-      console.log('이미지 바꿉니다')
-      this.file = this.$refs.fileInput.files[0];
-      console.log('파일입니다 =>',this.file)
-      const formData = new FormData();
-      formData.append('image', this.file);
+      // console.log('이미지 바꿉니다')
+      this.$store.profileImg = this.$refs.fileInput.files[0];
+      // console.log('파일입니다 =>',this.file)
+      // const formData = new FormData();
+      // formData.append('profileImg', this.file);
 
-      for (var key of formData.keys()){
-        console.log(key)
-      }
-      for (var vale of formData.values()){
-        console.log(vale)
-      }
-      // this.$store.state.nickname = 
-      this.$store.state.profileImg = formData
+      // for (var key of formData.keys()){
+      //   console.log('key:',key)
+      // }
+      // for (var vale of formData.values()){
+      //   console.log('vale :',vale)
+      // }
+      // // this.$store.state.nickname = 
+      // this.$store.state.profileImg = formData
 
       // axios.post('/api/upload', formData, {
       //   headers: {
@@ -81,23 +82,37 @@ export default {
       // .catch(error => {
       //   console.log(error);
       // });
-      console.log('엥?', formData);
-      console.log(this.$store.state.profileImg)
+      // console.log('엥?', formData);
+      // console.log(this.$store.state.profileImg)
       this.$store.dispatch('modiUserImg')
       
     },
     
     confirmEditProfile(){
       this.$store.dispatch('modiUserInfo')
+      // this.$router.go(-1)
     },
 
-    getUserDetail(){
-      this.$store.dispatch('userDetail')
-      const a = this.$store.state.nickname;
-      const c = document.getElementById('nickname')
-      c.placeholder= a
-      const b= this.$store.state.profileImg;
-      console.log('안녕', a, b);
+    async getUserDetail(){
+      try{
+        const result = await this.$store.dispatch('userDetail')
+
+        console.log("result : " + result)
+        const nickname = this.$store.state.nickname2;
+        const a = this.$store.state.name;
+        const c = document.getElementById('nickname')
+        const b= this.$store.state.profileImg;
+        console.log('안녕', a, b, nickname);
+        c.placeholder = nickname
+        // if (this.$store.state.success){
+        // }
+      }
+      catch (err){
+        console.log(err)
+      }
+      // finally{
+
+      // }
     },
 
     
