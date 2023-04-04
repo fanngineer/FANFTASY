@@ -46,18 +46,18 @@
           <div style="width: 500px; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">거래 정보</p>
             <p>
-              <table>
+              <table style="width: 500px;" >
                 <thead>
-                  <tr>
+                  <tr style="text-align: start; margin-left: 10px; ">
                     <th >거래일시</th>
                     <th >NFT 에디션 번호</th>
                     <th >가격</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  style="text-align: center;">
                   <tr v-for="(log, index) in tradeLog" :key="index"> 
-                    <td>{{ log.date }}</td>
-                    <td>{{ log.edition }}</td>
+                    <td >{{ log.date }}</td>
+                    <td >{{ log.edition }}</td>
                     <td>{{ log.price }}</td>
                   </tr>
                 </tbody>

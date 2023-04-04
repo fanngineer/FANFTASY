@@ -40,7 +40,7 @@
               </button>
               <button
                 v-on:click="selectNoSales"
-                v-if="orderType === 3 & saleType === 2"
+                v-if="orderType === 1 & saleType === 2"
                 class="filter-btn"
               >
                 미판매
