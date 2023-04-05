@@ -306,21 +306,17 @@ const store = createStore({
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-        method: "put",
+        method: "post",
         url: `${API_URL}/user/profile/${id}`,
         data: formData,
-        // data: {
-        //   profileImg: this.state.profileImg
-        // }
       })
       .then((res)=>{
         VueCookies.set('profileImage', res.data.data, '3h');
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
         console.log(this.profileImg)
-        console.log('bbbbbbbbbbbbbbbbbbbbb')
         console.log(res.data.data)
         this.state.success = true
-        this.$router.go(0)
+        // this.$router.go(0)
+        router.go(0)
       })
       .catch((err)=>{
         console.log(err)

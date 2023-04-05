@@ -52,38 +52,12 @@ export default {
     }
   },
   mounted() {
-    // this.getUserDetail();
+    // this.getUserDetail();  
   },
   methods: {
     uploadFile() {
-      // console.log('이미지 바꿉니다')
+      console.log('이미지 바꿉니다')
       this.$store.profileImg = this.$refs.fileInput.files[0];
-      // console.log('파일입니다 =>',this.file)
-      // const formData = new FormData();
-      // formData.append('profileImg', this.file);
-
-      // for (var key of formData.keys()){
-      //   console.log('key:',key)
-      // }
-      // for (var vale of formData.values()){
-      //   console.log('vale :',vale)
-      // }
-      // // this.$store.state.nickname = 
-      // this.$store.state.profileImg = formData
-
-      // axios.post('/api/upload', formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // })
-      // .then(response => {
-      //   console.log(response.data);
-      // })
-      // .catch(error => {
-      //   console.log(error);
-      // });
-      // console.log('엥?', formData);
-      // console.log(this.$store.state.profileImg)
       this.$store.dispatch('modiUserImg')
       
     },
@@ -100,19 +74,15 @@ export default {
         console.log("result : " + result)
         const nickname = this.$store.state.nickname2;
         const a = this.$store.state.name;
-        const c = document.getElementById('nickname')
+        // const c = document.getElementById('nickname')
         const b= this.$store.state.profileImg;
         console.log('안녕', a, b, nickname);
-        c.placeholder = nickname
-        // if (this.$store.state.success){
-        // }
+        // c.placeholder = nickname
+        
       }
       catch (err){
         console.log(err)
       }
-      // finally{
-
-      // }
     },
 
     

@@ -8,7 +8,8 @@
           <div class="circle1">
             <div class="circle2">
               <div class="circle3">
-                <img :src="this.profileImage" alt="로고" class="profile-logo">
+                <img class="profile-logo" :src="this.profileImage"  alt="로고"/>
+                <!-- <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo"> -->
               </div>
             </div>
           </div>
@@ -64,50 +65,19 @@
       
       
       
-      <!-- <v-container>
-        <v-row style="max-width:1000px">
-          <v-col v-for="n in 14" :key="n" :cols="3">
-            <v-card outlined tile class="holding-item" style="height:200px; width: 200px;">
-              <div class="artist-circle">
-                {{ n }}
-              </div>
-              <div>
-                <v-img src="@/assets/minsu.jpg" alt="민수 ">
-                  
-                  <v-card-text class="nft-info">
-                    <div class="font-weight-bold">
-                      dfdfdffdsffs
-                    </div>
-                    <div>
-                      전체거래량
-                    </div>
-                    <div>
-                      최저거래가
-                    </div>
-                  </v-card-text>
-                </v-img>
-              </div>                                                                                                                                                                                                              
-  
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container> -->
-      
-      <!-- <NFTCard v-for="(nft, index) in userNFTs" :key="index" :card="nft">
-        
-      </NFTCard> -->
       <!-- <div style="height:1000px; width: 1000px; padding-top: 100px;"> -->
         <div v-for="(nft, index) in userNFTs" :key="index" class="fl">
           <div> 
-            <router-link :to="{name:'MarketDetailView', params:{id: nft.nftId}}">
+            <router-link :to="{name:'MarketDetailView', params:{id: nft.nftSource.nftSourceId}}">
               <div class="nft-card-title">
                 <img :src="nft.nftSource.fileCID" alt="no" class="nft-img">
               </div>
               <div>
-                {{ nft.nftSource.regArtist.nickname }}
+                {{ nft.nftSource.nftSourceId }}
+                {{ nft.nftSource.title }}
               </div>
               <div>
-                {{ nft.nftSource.title }}
+                by. {{ nft.nftSource.regArtist.nickname }}
               </div>
               <div>
                 {{ nft.nftSource.originPrice }} FAN
@@ -341,6 +311,10 @@ export default {
 
   },
   mounted() {
+    if (this.profileImage === null) {
+        this.profileImage = 'https://fanftasy.s3.ap-northeast-2.amazonaws.com/profileImg/8c64c983-1b80-40fb-bcc1-366f3322cbb2.png'
+        console.log(this.profileImage)
+      }
   },
 }
 </script>
@@ -382,11 +356,15 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: white;
+  overflow: hidden;
 }
 
 .profile-logo{
-  width: 100px;
-  height: 100px;
+  /* width: 100px;
+  height: 100px; */
+  width:100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 
