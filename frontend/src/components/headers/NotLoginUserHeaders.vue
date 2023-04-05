@@ -50,12 +50,15 @@
           /> -->
 
         <!-- </router-link> -->
-        <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
-          <img
-          class="profile-image"
-          :src="this.profileImage"
-          alt=""
-          />
+        <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile" style="display:flex;">
+          <p style="width:30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+            <img
+            class="profile-image"
+            :src="this.profileImage"
+            alt=""
+            style="object-fit: cover;"
+            />
+          </p>
           <p class="nick">{{ this.nickname }} 님</p>
         </router-link>
         <p v-if="IsLOGIN" @click="logOut()" style="cursor: pointer;">로그아웃</p>

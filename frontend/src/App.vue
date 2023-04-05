@@ -4,8 +4,8 @@
     <!-- <LoginUserHeaders v-else /> -->
     <v-main >
       <router-view />
-      <AllFooter class="footer-space footer_section"/>
     </v-main>
+    <AllFooter class="footer-space footer_section"/>
     <div id="gotoup" style="cursor:pointer; display: none;" onclick="window.scrollTo({top:0, behavior: 'smooth'});">
       <span class="goto-up">
         <v-img src="@/assets/arrow-up-circle.png" alt="" style="width: 50px; margin-left: 4px;"></v-img>

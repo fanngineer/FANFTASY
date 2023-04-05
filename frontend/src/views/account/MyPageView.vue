@@ -2,7 +2,7 @@
   <div class="mypage-entire">
     <div>
       <!-- 프로필 이미지, 메타마스크 주소, NFT 충전 버튼 -->
-      <div style="display: flex; justify-content: space-between;">
+      <div style="display: flex; justify-content: space-between; width: 800px;">
         <div>
           <!-- 프로필 이미지 -->
           <div class="circle1">
@@ -63,34 +63,34 @@
       </div>
       
       
-      
-      
-      <!-- <div style="height:1000px; width: 1000px; padding-top: 100px;"> -->
-        <div v-for="(nft, index) in userNFTs" :key="index" class="fl">
-          <div> 
-            <router-link :to="{name:'MarketDetailView', params:{id: nft.nftSource.nftSourceId}}">
-              <div class="nft-card-title">
-                <img :src="nft.nftSource.fileCID" alt="no" class="nft-img">
-              </div>
-              <div>
-                {{ nft.nftSource.nftSourceId }}
-                {{ nft.nftSource.title }}
-              </div>
-              <div>
-                by. {{ nft.nftSource.regArtist.nickname }}
-              </div>
-              <div>
-                {{ nft.nftSource.originPrice }} FAN
-              </div>
-              <div>
-                {{ nft.nftSource.remainNum }} / {{ nft.nftSource.totalNum }}
-              </div>
-            </router-link>
-          </div>
-        </div>
-      <!-- </div> -->
-      
-      
+      <v-container style="width:800px">
+        <v-row>
+          <v-col v-for="(nft,index) in userNFTs" :key="index" cols="12" md="3">
+            <div class="own-nfts-card">
+              <router-link :to="{name:'MarketDetailView', params:{id: nft.nftSource.nftSourceId}}" style="min-width:164px; text-decoration: none; color:black; display:flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <img :src="nft.nftSource.fileCID" alt="no" class="nft-img-owned">
+                </div>
+                <div style="margin-left: 5px; margin-bottom: 15px">
+                  <div class="item-name" style="font-size:20px;">
+                    {{ nft.nftSource.title }}
+                  </div>
+                  <div style="font-size:15px">
+                    by. {{ nft.nftSource.regArtist.nickname }}
+                  </div>
+                  <div style="font-size:15px">
+                    {{ nft.nftSource.originPrice }} FAN
+                  </div>
+                  <div style="font-size:15px">
+                    {{ nft.nftSource.remainNum }} / {{ nft.nftSource.totalNum }}
+                  </div>
+                </div>
+              </router-link>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
     </div>
     
 
@@ -312,7 +312,7 @@ export default {
   },
   mounted() {
     if (this.profileImage === null) {
-        this.profileImage = 'https://fanftasy.s3.ap-northeast-2.amazonaws.com/profileImg/8c64c983-1b80-40fb-bcc1-366f3322cbb2.png'
+        this.profileImage = 'https://fanftasy.s3.ap-northeast-2.amazonaws.com/profileImg/08157c4f-6c97-4678-8f8a-1534d96aa21a.png'
         console.log(this.profileImage)
       }
   },
@@ -360,10 +360,10 @@ export default {
 }
 
 .profile-logo{
-  /* width: 100px;
-  height: 100px; */
-  width:100%;
-  height: 100%;
+  width: 154px;
+  height: 154px;
+  /* width:50%; */
+  /* height: 50%; */
   object-fit: cover;
 }
 
@@ -465,6 +465,23 @@ export default {
 .changeImageBtn{
   border: solid 1px black;
   border-radius: 5%;
+}
+
+.nft-img-owned{
+  border-radius: 15px;
+  width: 164px;
+  height: 222px;
+  margin-top: 10px;
+}
+
+.own-nfts-card{
+  display:flex; 
+  justify-content: center;
+  min-height: 353px;
+  border-radius: 15px;
+}
+.own-nfts-card:hover{
+  box-shadow: 0px 10px 10px rgba(188, 188, 188, 0.6);
 }
 
 </style>
