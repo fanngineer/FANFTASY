@@ -218,7 +218,7 @@ public class NFTServiceImpl implements NFTService {
   }
 
   @Override
-  public NFTDetailDTO getNFTDetail(Long nftSourceId) {
+  public NFTDetailDTO getNFTDetail(long nftSourceId, Long userId) {
     List<NFT> resultList;
     NFTDetailDTO nftDetailDTO;
     Optional<Double> currentPriceOpt = nftRepository.findByNftSourceId(nftSourceId);
@@ -232,6 +232,19 @@ public class NFTServiceImpl implements NFTService {
       resultList = nftRepository.findByIdAndByCurrentPriceMaxResult(nftSourceId, currentPrice,
           pageable);
       nftDetailDTO = NFTDetailDTO.fromEntity(resultList.get(0));
+    }
+
+    NFT nft = nftRepository.findById(nftDetailDTO.getNftId()).orElse(null);
+
+    if (userId == null) {
+      nftDetailDTO.updateUserLike(false);
+    } else {
+      User userEntity = userRepository.findByUserId(userId);
+      boolean userLike = false;
+      if (nftLikeRepository.findByNftAndUser(nft, userEntity) != null) {
+        userLike = true;
+      }
+      nftDetailDTO.updateUserLike(userLike);
     }
     return nftDetailDTO;
   }

@@ -11,7 +11,7 @@ public interface NFTSourceService {
 
   List<NFTSourceListDTO> getNFTSourceList(int OrderType, int page, String keyword);
 
-  NFTSourceDetailDTO getNFTSourceDetail(long nftSourceId);
+  NFTSourceDetailDTO getNFTSourceDetail(long nftSourceId, Long userId);
 
   List<NFTSourceListDTO> getNFTSourceListByArtist(long artistId);
   //////////

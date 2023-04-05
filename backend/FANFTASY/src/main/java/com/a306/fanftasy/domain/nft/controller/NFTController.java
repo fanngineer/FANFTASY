@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/nft")
@@ -91,13 +93,15 @@ public class NFTController {
 
     // 마켓 플레이스 NFT 상세 정보
     @GetMapping("/market/{nftSourceId}")
-    public ResponseEntity<?> NFTMarketDetail(@PathVariable("nftSourceId") Long nftSourceId) {
+    public ResponseEntity<?> NFTMarketDetail(@PathVariable("nftSourceId") Long nftSourceId, @RequestParam(value = "userId", required = false) Long userId) {
+        log.info("NFT 마켓 페이지 상세 요청 : " + nftSourceId);
+        log.info("userId 번호 조회 : " + userId);
         ResponseDefault responseDefault = null;
         try {
             responseDefault = ResponseDefault.builder()
                     .success(true)
                     .messege("SUCCESS")
-                    .data(nftService.getNFTDetail(nftSourceId))
+                    .data(nftService.getNFTDetail(nftSourceId, userId))
                     .build();
             return ResponseEntity.ok().body(responseDefault);
         } catch (Exception e) {
@@ -113,13 +117,14 @@ public class NFTController {
 
     //3. 아티스트가 올린 NFT 컨텐츠 상세 페이지 반환
     @GetMapping("/drops/{nftSourceId}")
-    public ResponseEntity<?> NFTMarketDetail(@PathVariable long nftSourceId){
+    public ResponseEntity<?> NFTMarketDetail(@PathVariable("nftSourceId") long nftSourceId, @RequestParam(value = "userId", required = false) Long userId){
         log.info("NFT 마켓 페이지 상세 요청 : " + nftSourceId);
+        log.info("userId 번호 조회 : " + userId);
         ResponseDefault responseDefault = null;
         try{
             responseDefault = ResponseDefault.builder()
                 .messege("SUCCESS")
-                .data(nftSourceService.getNFTSourceDetail(nftSourceId))
+                .data(nftSourceService.getNFTSourceDetail(nftSourceId, userId))
                 .success(true).build();
             log.info("NFT 조회 성공");
             return ResponseEntity.ok().body(responseDefault);

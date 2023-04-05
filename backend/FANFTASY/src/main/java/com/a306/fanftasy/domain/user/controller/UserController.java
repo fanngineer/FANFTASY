@@ -64,43 +64,60 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody UserJoinDTO userJoinDTO) {
-        System.out.println("====================="+userJoinDTO.getProfileImg());
-        userService.join(userJoinDTO);
         ResponseDefault responseDefault = null;
-        responseDefault = ResponseDefault.builder()
-                .success(true)
-                .messege("SUCCESS")
-                .data(null)
-                .build();
-        return new ResponseEntity<>(responseDefault, HttpStatus.OK);
+        try {
+            userService.join(userJoinDTO);
+            responseDefault = ResponseDefault.builder()
+                    .success(true)
+                    .messege("SUCCESS")
+                    .data(null)
+                    .build();
+            return new ResponseEntity<>(responseDefault, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("회원 가입 실패");
+            responseDefault = ResponseDefault.builder()
+                    .success(false)
+                    .messege("FAIL")
+                    .build();
+            return ResponseEntity.badRequest().body(responseDefault);
+        }
     }
 
     @GetMapping("/detail")
     public ResponseEntity<?> userDetail(@Param("address") String address) throws IOException {
-        UserDetailDTO userDetailDTO=userService.getUserDetail(address);
         ResponseDefault responseDefault = null;
-        responseDefault = ResponseDefault.builder()
-                .success(true)
-                .messege("SUCCESS")
-                .data(userDetailDTO)
-                .build();
-        return new ResponseEntity<>(responseDefault, HttpStatus.OK);
+        try {
+            UserDetailDTO userDetailDTO=userService.getUserDetail(address);
+            responseDefault = ResponseDefault.builder()
+                    .success(true)
+                    .messege("SUCCESS")
+                    .data(userDetailDTO)
+                    .build();
+            return new ResponseEntity<>(responseDefault, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("상세 정보 조회 실패");
+            responseDefault = ResponseDefault.builder()
+                    .success(false)
+                    .messege("FAIL")
+                    .build();
+            return ResponseEntity.badRequest().body(responseDefault);
+        }
     }
 
     @PostMapping("/profile/{id}")
     public ResponseEntity<?> uploadImage(@PathVariable("id") Long id, @RequestPart("profileImg") MultipartFile profileImg) {
         log.info("이미지 변경 요청");
-    String imgUrl = null;
-    ResponseDefault responseDefault = null;
-    User user = userService.findByUserId(id);
-    if (user == null) {
-        responseDefault = ResponseDefault.builder()
-                .success(false)
-                .messege("유저 없음")
-                .data(null)
-                .build();
-        return new ResponseEntity<>(responseDefault, HttpStatus.NOT_FOUND);
-    } else {
+        String imgUrl = null;
+        ResponseDefault responseDefault = null;
+        User user = userService.findByUserId(id);
+        if (user == null) {
+            responseDefault = ResponseDefault.builder()
+                    .success(false)
+                    .messege("유저 없음")
+                    .data(null)
+                    .build();
+            return new ResponseEntity<>(responseDefault, HttpStatus.NOT_FOUND);
+        } else {
             try {
                 s3Service.saveUploadFile(user, profileImg);
                 responseDefault = ResponseDefault.builder()
@@ -123,14 +140,23 @@ public class UserController {
 
     @PutMapping("/modi")//수정클릭
     public ResponseEntity<?> updateUser(@RequestBody UserUpdateDTO userUpdateDTO){
-        userService.updateUser(userUpdateDTO);
         ResponseDefault responseDefault = null;
-        responseDefault = ResponseDefault.builder()
-                .success(true)
-                .messege("SUCCESS")
-                .data(null)
-                .build();
-        return new ResponseEntity<>(responseDefault, HttpStatus.OK);
+        try {
+            userService.updateUser(userUpdateDTO);
+            responseDefault = ResponseDefault.builder()
+                    .success(true)
+                    .messege("SUCCESS")
+                    .data(null)
+                    .build();
+            return new ResponseEntity<>(responseDefault, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("회원 정보 수정 실패");
+            responseDefault = ResponseDefault.builder()
+                    .success(false)
+                    .messege("FAIL")
+                    .build();
+            return ResponseEntity.badRequest().body(responseDefault);
+        }
     }
 
     @GetMapping("/modi/{id}")//주는거

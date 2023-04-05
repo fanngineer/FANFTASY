@@ -77,13 +77,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailDTO getUserDetail(String addresss) throws IOException {
-        User user = userRepository.findByAddress(addresss);
-        double balance = ethereumService.getBalance(addresss);
+    public UserDetailDTO getUserDetail(String address) throws IOException {
+        User user = userRepository.findByAddress(address);
+        double balance = ethereumService.getBalance(address);
         try {
             return UserDetailDTO.builder()
                     .name(userSecurityService.aesDecrypt(user.getName(),userSecurityService.hexToByteArray(user.getUserKey())))
-                    .address(userSecurityService.aesDecrypt(user.getAddress(),userSecurityService.hexToByteArray(user.getUserKey())))
+                    .address(user.getAddress())
                     .email(userSecurityService.aesDecrypt(user.getEmail(),userSecurityService.hexToByteArray(user.getUserKey())))
                     .nickname(user.getNickname())
                     .profileImg(userSecurityService.aesDecrypt(user.getProfileImg(),userSecurityService.hexToByteArray(user.getUserKey())))

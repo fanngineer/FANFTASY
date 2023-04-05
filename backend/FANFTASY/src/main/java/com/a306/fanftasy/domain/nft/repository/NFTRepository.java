@@ -65,7 +65,8 @@ public interface NFTRepository extends JpaRepository<NFT, Long> {
           "FROM NFT n1 " +
           "WHERE n1.isOnSale = true " +
           "GROUP BY n1.nftSource" +
-          ") " +
+          ") AND n.nftSource.regArtist.userId != n.owner.userId " +
+          "GROUP BY n.nftSource.nftSourceId " +
           "ORDER BY n.nftSource.regDate DESC")
   List<Long> findNftSourceIdsNotOnSaleOrderByRegDateDesc();
 

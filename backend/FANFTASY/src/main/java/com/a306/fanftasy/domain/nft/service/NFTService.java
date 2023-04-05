@@ -23,5 +23,5 @@ public interface NFTService {
 
   List<NFTMarketListDTO> getNFTList(int orderType, int saleType, String keyword);
 
-  NFTDetailDTO getNFTDetail(Long nftSourceId);
+  NFTDetailDTO getNFTDetail(long nftSourceId, Long userId);
 }
