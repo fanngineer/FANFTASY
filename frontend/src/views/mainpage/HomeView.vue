@@ -328,11 +328,18 @@ export default {
       // console.log(this.cards)
       // console.log("123456789")
     },
-    selectSalesAmmount() {
-      this.sortnum = 2
-    },
-    selectSalesVolume() {
-      this.sortnum = 1
+    async getMarket() {
+      const orderType = this.orderType
+      const saleType = this.saleType
+      const keyword = this.keyword
+      const payload = {
+        orderType,
+        saleType,
+        keyword,
+      }
+      await this.$store.dispatch("getMarket", payload)
+      this.mcards = this.$store.mcards
+
     },
   },
 }

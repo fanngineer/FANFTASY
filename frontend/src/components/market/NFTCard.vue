@@ -13,18 +13,14 @@
             <v-card-item class="nft-card-item">
               <p class="item-name">
                 {{ card.title }}  
-                {{ card.title }}  
               </p>
               <p class="item-content">
-                {{ card.regArtist.nickname }}
                 {{ card.regArtist.nickname }}
               </p>
               <p class="item-content">
                 {{ card.originPrice }} FAN
-                {{ card.originPrice }} FAN
               </p>
               <p class="item-content">
-                {{card.remainNum}}/{{ card.totalNum }}
                 {{card.remainNum}}/{{ card.totalNum }}
               </p>
             </v-card-item>
@@ -38,9 +34,6 @@
 <script>
 export default {
   name: "NFTCard",
-  props: {
-    card: Object
-  }
   props: {
     card: Object
   }
@@ -88,13 +81,7 @@ export default {
   color: #6A3FC1;
   text-align: left;
   font-size: 16px;
-  font-size: 16px;
   font-weight: bolder;
-  
-  /* 제목 말줄임표 CSS */
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   
   /* 제목 말줄임표 CSS */
   overflow: hidden;
@@ -106,13 +93,11 @@ export default {
   text-align: left;
   margin-left: 1vw;
   font-size: 14px;
-  font-size: 14px;
 }
 
 .nft-card-class{
   display: inline-block;
   text-align: center;
-  min-width: 100% ;
   min-width: 100% ;
 }
 

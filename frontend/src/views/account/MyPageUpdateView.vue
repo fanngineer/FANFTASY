@@ -133,7 +133,7 @@ export default {
 }
 
 #uploadImg{
-  display: none;
+  /* display: none; */
 }
 
 #nickname{

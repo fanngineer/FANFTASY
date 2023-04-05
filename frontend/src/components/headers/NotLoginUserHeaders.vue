@@ -19,14 +19,6 @@
         <router-link to="/drops" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
         <router-link to="/market" v-if="currentRouteName==='ResellListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">MARKET</router-link>
         <router-link to="/market" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
-        <!-- {{ currentRouteName }} -->
-        
-
-        <router-link to="/drops" v-if="currentRouteName==='MarketListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">DROPS</router-link>
-        <router-link to="/drops" v-else-if="currentRouteName==='MarketDetailView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">DROPS</router-link>
-        <router-link to="/drops" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
-        <router-link to="/market" v-if="currentRouteName==='ResellListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">MARKET</router-link>
-        <router-link to="/market" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
         <!-- <router-link to="/community" class="header-router"
           >커뮤니티</router-link
         > -->
@@ -59,7 +51,6 @@
 
         <!-- </router-link> -->
         <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
-        <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
           <img
           class="profile-image"
           :src="this.profileImage"
@@ -67,8 +58,6 @@
           />
           <p class="nick">{{ this.nickname }} 님</p>
         </router-link>
-        <p v-if="IsLOGIN" @click="logOut()" style="cursor: pointer;">로그아웃</p>
-        <p v-else class="header-router" @click="this.isMember()" style="font-size: 17px; cursor: pointer;">로그인</p>
         <p v-if="IsLOGIN" @click="logOut()" style="cursor: pointer;">로그아웃</p>
         <p v-else class="header-router" @click="this.isMember()" style="font-size: 17px; cursor: pointer;">로그인</p>
         <!-- <p v-if="isLogin===True" class="header-router" @click="this.isMember()" style="font-size: 17px;">Login</p>
@@ -87,7 +76,6 @@
 
 <script>
 import VueCookies from "vue-cookies"
-import VueCookies from "vue-cookies"
 export default {
   name: "NotLoginUserHeaders",
   data() {
@@ -96,40 +84,6 @@ export default {
       logIn: VueCookies.isKey('AccessToken'),
       profileImage: VueCookies.get('profileImage'),
     }
-  },
-  // created: {
-  //   nickname: this.cutIdName()
-  // },
-  watch: {
-    nickname: function () {
-      console.log(VueCookies.get('nickname'));
-
-      console.log(VueCookies.isKey('AccessToken'));
-      this.logIn = VueCookies.isKey('AccessToken');
-    },
-    profileImage: function () {
-      console.log(VueCookies.get('profileImage'));
-    }
-  },
-  computed: {
-    // 반응형으로 계산된 속성
-    IsLOGIN() {
-      console.log(this.logIn);
-      return this.logIn === true;
-    },
-    currentRouteName(){
-      // console.log(this.$route.name)
-      return this.$route.name
-    },
-    marketClicked(){
-      const mc = this.$route.name;
-      console.log(mc, 'dfdf')
-      if (mc.indexOf('Market')>=0) {
-        console.log('네')
-        return '네';
-      }
-      return '아니오';
-    },
   },
   mounted() {
     if (this.profileImage === null) {
@@ -300,56 +254,6 @@ export default {
 
 .header-tab:hover:after{
   width: 100%;
-  color: black;
-}
-
-.header-tab-clicked{
-  background: linear-gradient(90deg,#6A3FC1,#5B9BD5);
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 100% 100%;
-  position: relative;
-}
-.header-tab-clicked:after{
-  position: absolute;
-  content:  "";
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg,#6A3FC1,#5B9BD5);
-  -webkit-text-fill-color: transparent;
-}
-
-.header-tab:hover{
-  background: linear-gradient(90deg,#6A3FC1,#5B9BD5);
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 100% 100%;
-  transition: 0.5s;
-}
-.header-tab:not(:hover){
-  transition: 0.5s;
-  background-size: 0% 0%;
-}
-
-.header-tab{
-  display: inline-block;
-  position: relative;  
-}
-
-.header-tab:after{
-  position: absolute;
-  content:  "";
-  display: block;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg,#6A3FC1,#5B9BD5);
-  -webkit-text-fill-color: transparent;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-}
-
-.header-tab:hover:after{
-  width: 100%;
 }
 
 
@@ -404,8 +308,6 @@ export default {
 .profile-image{
   display: flex;
   float: left;
-  width: 30px;
-  height: 30px;
   width: 30px;
   height: 30px;
 }
