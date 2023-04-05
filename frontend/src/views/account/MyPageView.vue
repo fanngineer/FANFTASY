@@ -8,7 +8,7 @@
           <div class="circle1">
             <div class="circle2">
               <div class="circle3">
-                <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo">
+                <img :src="this.profileImage" alt="로고" class="profile-logo">
               </div>
             </div>
           </div>
@@ -28,13 +28,12 @@
           </div>
         </div>
         
-        <div style="margin-top: auto">
-          <button class="charge-button">
-            FAN 충전
+        <div style="margin-top: auto;">
+          <button class="charge-button" @click="charge()">
+            NFN 충전
           </button>
         </div>
       </div>
-  
       
       <div class="mypage-filter-tab" >
         <button @click="clickOwnedNFT" class="mypage-filter-tab-part" tabindex="-1" @keydown.prevent="handleBtnDown" >
@@ -131,9 +130,10 @@
 <script>
 // import LoginUserHeaders from "@/components/headers/LoginUserHeaders.vue"
 // import NotLoginUserHeaders from "@/components/headers/NotLoginUserHeaders.vue"
-// import BankABI from "../../../path/to/BankABI.json";
-// import Web3 from "web3"
+import BankABI from "../../../path/to/BankABI.json";
+import Web3 from "web3"
 import  VueCookies  from 'vue-cookies';
+import { Buffer } from 'buffer';
 // import NFTCard from "@/components/market/NFTCard.vue"
 
 export default {
@@ -209,6 +209,127 @@ export default {
       if (e.keyCode===9){
         e.stopPropagation();
       }
+    },
+    async charge() {
+      console.log("1111");
+      
+      const web3 = new Web3('https://fanftasy.kro.kr/network');
+      
+      const account = VueCookies.get('Account');
+      const accounts = await web3.eth.getAccounts();
+      console.log(accounts);
+
+      const tempMessage = "testSigning";
+      const msg = `0x${Buffer.from(tempMessage, 'utf8').toString('hex')}`;
+      console.log(msg);
+      // await web3.eth.request({
+      //   method: 'personal_sign',
+      //   params: [msg, account, 'example sign'],
+      // }).then((res) => {
+      //   console.log(res);
+      // });
+      // web3.eth.personal.sign("msg", account, "example sign");
+      
+      const contractAddress = '0xc8AD4DF30fc1a99a716B9Fc9F3752E79eda47180';
+      // const contractAddress = '0xcC3E0342D6E62E84bA6028220fEe64a94875b398';
+      const bankContract = new web3.eth.Contract(BankABI, contractAddress);
+
+      bankContract.getPastEvents('Withdraw', {
+        fromBlock: 0,
+        toBlock: 'latest',
+      }, function(err, events){
+        if(err){ 
+          console.log(err);
+        }
+        else{
+          console.log(events);
+        }
+      });
+
+      bankContract.getPastEvents('Deposit', {
+        fromBlock: 0,
+        toBlock: 'latest',
+      }, function(err, events){
+        if(err){ 
+          console.log(err);
+        }
+        else{
+          console.log(events);
+        }
+      });
+      
+      // const amount = web3.utils.toWei("1", "ether");
+      console.log(account);
+      
+        // amount 만큼 컨트랙트에서 가져오기
+        // bankContract.methods.withdraw(amount).send({ from: account });
+        
+        // deposit 실행된 로그
+        // const depositEvent = bankContract.events.Deposit();
+        // depositEvent.on("data", event => {
+          //   console.log("Deposit event:", event.returnValues);
+          // }).on("error", console.error);
+        
+        // 컨트랙트에 얼마가 남아있는지 확인하는 기능
+        bankContract.methods.getBalance().call((err, result) => {
+          if (err) {
+            console.error(err);
+          } 
+          else {
+            console.log('Contract balance:', result);
+          }
+        });
+        
+        // bank 컨트랙트에 1이더만큼 넣음 -> abi 메서드 사용
+        // const depositAmount = web3.utils.toWei("1", "ether"); // 1 ETH를 wei 단위로 변환
+        // await window.ethereum.request('eth_requestAccounts').then((accounts) => {
+        //   const accout = accounts[0];
+        //   console.log(accout);
+        //   bankContract.methods.deposit().send({
+        //     from: accout,
+        //     value: web3.utils.toWei("1", "ether")
+        //   })
+        //   .then((res) => {
+        //     console.log(res);
+        //   })
+        //   .on("transactionHash", (hash) => {
+        //     console.log(`Transaction hash: ${hash}`);
+        //   })
+        //   .on("receipt", (receipt) => {
+        //     console.log(`Transaction receipt: ${JSON.stringify(receipt, null, 2)}`);
+        //   })
+        //   .on("error", (error) => {
+        //     console.error(error);
+        //   });
+        // });
+        
+
+        web3.eth.accounts.wallet.add(account);
+
+        // bankContract.methods.deposit().send({
+        //   from: account,
+        //   value: web3.utils.toWei("1", "ether")
+        // })
+        // .on("transactionHash", function(hash) {
+        //   console.log("Transaction hash: " + hash);
+        // })
+        // .on("receipt", function(receipt) {
+        //   console.log(receipt);
+        // })
+        // .on("error", function(error) {
+        //   console.error(error);
+        // });
+        
+        
+        // bank 컨트랙트에 1이더만큼 넣음
+        // console.log(account);
+        // const value = web3.utils.toWei("1", "ether");
+        // const txHash = await web3.eth.sendTransaction({
+        //   from: account,
+        //   to: '0xc8AD4DF30fc1a99a716B9Fc9F3752E79eda47180',
+        //   value: value
+        // });
+        // console.log(txHash);
     },
 
     async getUserNFTs(){

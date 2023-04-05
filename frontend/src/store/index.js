@@ -240,6 +240,7 @@ const store = createStore({
           phone: this.state.phone, //전화번호
           role: this.state.role, //아티스트 or 팬
           company: this.state.company, //소속사
+          profileImg: "https://fanftasy.s3.ap-northeast-2.amazonaws.com/profileImg/8c64c983-1b80-40fb-bcc1-366f3322cbb2.png",
         },
       })
         .then((res) => {
