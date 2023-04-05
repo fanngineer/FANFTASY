@@ -137,18 +137,27 @@
         </router-link>
         <br>
         <br>
+
+        <!-- <div class="df" style="justify-content: center;">
+          <NFTCardR v-for="(card, index) in mcards.slice(0, 4)" :key="index" :card="card" class="" />
+        </div> -->
+
         <div class="df cen" v-if="a == 1">
-          <div style="width: 300px; height: 500px; margin: 0 40px;">
-            <v-img src="@/assets/nft_main(1).jpg" alt="" style=" border-radius: 3%;">
-            </v-img>
-          </div>
-          <div style="width: 300px; height: 500px; margin: 0 40px;">
-            <v-img src="@/assets/nft_main(1).jpg" alt="" style=" border-radius: 3%;">
-            </v-img>
-          </div>
-          <div style="width: 300px; height: 500px; margin: 0 40px;">
-            <v-img src="@/assets/nft_main(1).jpg" alt="" style=" border-radius: 3%;">
-            </v-img>
+          <div v-for="(card, index) in ocards.slice(0,3)" :key="index">
+            <div style="margin: 0 40px;">
+              <router-link :to="{name:'MarketDetailView', params:{id: card.nftSource.nftSourceId}}">
+                <div style=" width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                  <!-- {{ card.nftSource.fileType }} -->
+                  <!-- <img :src="card.nftSource.fileCID" alt="no" style="border-radius: 15px; width: 300px; height: 500px;"> -->
+                  <v-img v-if="card.nftSource.fileType === 'image'" :src="card.nftSource.fileCID" alt="이미지" style="border-radius: 15px; width: 300px; height: 500px;"></v-img>
+                  <video v-if="card.nftSource.fileType === 'video'" :src="card.nftSource.fileCID" alt="비디오" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted style="border-radius: 15px; width: 300px; height: 500px;"></video>
+                  <audio v-if="card.nftSource.fileType === 'audio'" controls :src="card.nftSource.fileCID" alt="오디오" style="border-radius: 15px; width: 300px; height: 500px;"></audio>
+                  <!-- <v-img v-if="card.fileType === 'image'" :src="card.fileCID" alt="" class="nft-img"></v-img>
+                  <video v-if="card.fileType === 'video'" :src="card.fileCID" alt="" class="nft-img" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
+                  <audio v-if="card.fileType === 'audio'" controls :src="card.fileCID" alt="오디오" class="nft-img"></audio> -->
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
         <div v-else style="margin: 33vh;">
@@ -282,6 +291,7 @@ export default {
       a: 1,
       cards: [],
       mcards: [],
+      ocards: [],
       orderType: 1,
       saleType: 1,
       page: 0,
@@ -310,6 +320,7 @@ export default {
   created() {
     this.getDrops()
     this.getMarket()
+    this.getOwns()
   },
   mounted() {},
   methods: {
@@ -340,6 +351,18 @@ export default {
       await this.$store.dispatch("getMarket", payload)
       this.mcards = this.$store.mcards
 
+    },
+    async getOwns(){
+      // const orderType = this.orderType
+      // const page = this.page
+      // const keyword = this.keyword
+      // const payload = {
+      //   orderType,
+      //   page,
+      //   keyword,
+      // }
+      await this.$store.dispatch("userNFTs")
+      this.ocards = this.$store.userNFTs
     },
   },
 }

@@ -8,7 +8,8 @@
           <div class="circle1">
             <div class="circle2">
               <div class="circle3">
-                <img class="profile-logo" :src="this.profileImage"  alt="로고"/>
+                <!-- <img class="profile-logo" :src="this.profileImage"  alt="로고"/> -->
+                <img v-bind:class="profileLogo" v-bind:src="this.profileImage"  alt="로고"/>
                 <!-- <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo"> -->
               </div>
             </div>
@@ -129,7 +130,9 @@ export default {
 
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
       profileImage: VueCookies.get('profileImage'),
-
+      profileImgWidth: 0,
+      profileImgHeight: 0,
+      nImg: new Image,
 
       userNFTs: [],
     }
@@ -336,8 +339,33 @@ export default {
   mounted() {
     if (this.profileImage === null) {
         this.profileImage = 'https://fanftasy.s3.ap-northeast-2.amazonaws.com/profileImg/08157c4f-6c97-4678-8f8a-1534d96aa21a.png'
-        console.log(this.profileImage)
+        console.log('this.profileImage :', this.profileImage)
       }
+
+    // this.nImg =new Image;
+    // this.nImg.src=this.profileImage;
+    // this.profileImgWidth = this.nImg.width;
+    // this.profileImgHeight = this.nImg.height;
+    // console.log('mounted 후 nImg 정보', this.nImg, this.nImg.width)
+    
+  },
+  computed: {
+    // profileLogo(){
+    //   const imgWidth = this.nImg.width;
+    //   const imgHeight = this.nImg.height;
+    //   console.log(this.profileImgWidth, this.profileImgHeight)
+
+    //   console.log('profileLogo() 프로필 이미지 사이즈 :', imgWidth, 'x', imgHeight)
+    //   if (imgWidth <= 154 && imgHeight<=154) {
+    //     return 'small-profile-logo';
+    //   } else if (imgWidth>154 && imgHeight<=154) {
+    //     return 'width-long-profile-logo';
+    //   } else if (imgWidth<=154 && imgHeight>154){
+    //     return 'height-long-profile-logo'
+    //   } else {
+    //     return 'default-profile-logo'
+    //   }
+    // }
   },
 }
 </script>
@@ -387,7 +415,7 @@ export default {
   height: 154px;
   /* width:50%; */
   /* height: 50%; */
-  object-fit: cover;
+  object-fit: fill;
 }
 
 
@@ -506,5 +534,6 @@ export default {
 .own-nfts-card:hover{
   box-shadow: 0px 10px 10px rgba(188, 188, 188, 0.6);
 }
+
 
 </style>

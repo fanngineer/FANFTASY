@@ -5,7 +5,9 @@ import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
 
 // const API_URL = "https://fanftasy.kro.kr/api"
-const API_URL = "http://70.12.247.102:8080/api"
+const API_URL = "http://192.168.200.176:8080/api"
+// const API_URL = "http://192.168.200.120:8080/api"
+// const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
