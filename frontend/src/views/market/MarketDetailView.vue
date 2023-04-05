@@ -85,11 +85,19 @@
                 <br />
                 <div class="sb">
                   <span class="ib">
-                    <v-img
+                    <!-- <v-img
                       :src="this.card.data.regArtist.profileImg"
                       alt="프로필 사진"
                       class="nft-detail-small-img fl"
-                    ></v-img>
+                    ></v-img> -->
+                    <span style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                      <img
+                      class="profile-image"
+                      :src="this.card.data.regArtist.profileImg"
+                      alt=""
+                      style="object-fit: fill;"
+                      />
+                    </span>
                     <p>Artist</p>
                     <p>{{ this.card.data.regArtist.nickname }}</p>
                   </span>

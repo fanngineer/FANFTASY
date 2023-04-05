@@ -34,6 +34,11 @@
     <input v-model="originPrice" type="text" style="border:solid" placeholder="판매가격을 입력해주세요.">
     <br>
     <br>
+    <label for="">판매종료일</label>
+    <input v-model="endDate" type="date" style="border:solid" >
+
+    <br>
+    <br>
     <!-- <label for="">파일 타입</label>
     <input type="combobox" style="border:solid"> -->
     <button @click="this.addNFT()">
@@ -57,6 +62,9 @@ export default {
       regArtistId: VueCookies.get("userId"),
       fileType:"",
       selectedFile: null,
+      endDate: null,
+      now: Date.now(), 
+      // a: Date.
     }
   },
   methods: {
@@ -75,16 +83,18 @@ export default {
       const originPrice = this.originPrice
       const regArtistId = this.regArtistId
       let fileType = this.fileType
+      const endDate = this.endDate + "T00:00:00"
+      console.log(endDate)
 
-
-      const payload ={
+      const payload = {
         file,
         title,
         content,
         totalNum,
         originPrice,
         regArtistId,
-        fileType
+        fileType,
+        endDate,
       }
       console.log("----------------------")
       console.log(payload)

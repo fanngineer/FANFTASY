@@ -4,8 +4,9 @@ import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
 
-// const API_URL = "https://fanftasy.kro.kr/api"
-const API_URL = "http://192.168.200.176:8080/api"
+const API_URL = "https://fanftasy.kro.kr/api"
+// const API_URL = "http://70.12.247.102:8080/api"
+// const API_URL = "http://192.168.200.176:8080/api"
 // const API_URL = "http://192.168.200.120:8080/api"
 // const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
@@ -30,7 +31,6 @@ const store = createStore({
     isSame: false,
     name: null,
     nickname: VueCookies.get("nickname"),
-    nickname2: null,
     address: null,
     phone: null,
     role: null,
@@ -271,9 +271,8 @@ const store = createStore({
           // console.log('res :', res)
           // console.log('res.data :', res.data)
           console.log('res.data.data : ', res.data.data)
-          this.state.nickname2 = res.data.data.nickname
           this.state.role = res.data.data.role
-          console.log(this.state.nickname2)
+          this.state.nickname = res.data.data.nickname
           console.log(this.state.role)
         })
         .catch((err) => {
@@ -340,7 +339,6 @@ const store = createStore({
         data: {
           address: address,
           nickname: this.state.nickname,
-          profileImg: this.state.profileImg,
         },
       })
         .then((res) => {
@@ -448,12 +446,13 @@ const store = createStore({
         totalNum: payload.totalNum,
         originPrice : payload.originPrice,
         regArtistId : payload.regArtistId,
-        fileType : payload.fileType
+        fileType : payload.fileType,
       }
       console.log("qwerwqerqwerwqerqwer")
       console.log(ppayload)
       console.log("asaaaaaaaaaaaaaa")
       formData.append("info", JSON.stringify(ppayload));
+      formData.append("endDate", payload.endDate);
       
       console.log(formData)
       axios({

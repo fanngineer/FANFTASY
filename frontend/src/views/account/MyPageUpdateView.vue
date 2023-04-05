@@ -1,18 +1,23 @@
 <template>
   <div class="update-container">
     <div style="flex-direction: column;">
-      <div class="profile-update">
+      <div class="profile-update" @mouseover="this.isHovered = true" @mouseout="this.isHovered = false">
         <label for="uploadImg">
+          프로필 사진
           <div class="profile-cover"></div>
           <div class="profile-img-upload-btn">
-            <v-icon icon="mdi-fountain-pen-tip"></v-icon>
+            <img :src="this.profileImg" style="border-radius: 50%; width: 184px; height: 184px; object-fit: fill;" alt="no">
+            <v-icon v-show="this.isHovered === true" icon="mdi-fountain-pen-tip" style="z-index: 3; position: absolute;"></v-icon>
           </div>
         </label>
         <input id="uploadImg" type="file" ref="fileInput" @change="uploadFile">
       </div>
       
-      <img :src="this.$store.profileImg" alt="no">
       
+      <br>
+      <br>
+      <br>
+      <br>
 
       <div>
         <label for="nickname">닉네임</label>
@@ -20,13 +25,14 @@
           <input v-model="this.$store.state.nickname" id="nickname" type="text" placeholder="닉네임을 적어주세요">
         </div>
       </div>
+
       <!-- <div>
         <label for="bio">자기 소개</label>
         <div>
           <textarea id="bio" type="text" maxlength="140" placeholder="자신을 소개해주세요!"></textarea>
         </div>
       </div> -->
-  
+      <br>
       <div>
         <button class="edit-profile-confirm" @click="confirmEditProfile">수정</button>
         <router-link to="/mypage" style="text-decoration: none;">
@@ -41,6 +47,7 @@
 
 <script>
 // import axios from 'axios';
+import  VueCookies  from 'vue-cookies';
 
 export default {
   name: 'MyPageUpdateView',
@@ -48,8 +55,13 @@ export default {
     return {
       userData : [],
       file: null,
+      profileImg: VueCookies.get('profileImage'),
+      isHovered: false,
       
     }
+  },
+  created() {
+    this.getUserDetail();
   },
   mounted() {
     // this.getUserDetail();  
@@ -59,7 +71,6 @@ export default {
       console.log('이미지 바꿉니다')
       this.$store.profileImg = this.$refs.fileInput.files[0];
       this.$store.dispatch('modiUserImg')
-      
     },
     
     confirmEditProfile(){
@@ -71,14 +82,7 @@ export default {
       try{
         const result = await this.$store.dispatch('userDetail')
 
-        console.log("result : " + result)
-        const nickname = this.$store.state.nickname2;
-        const a = this.$store.state.name;
-        // const c = document.getElementById('nickname')
-        const b= this.$store.state.profileImg;
-        console.log('안녕', a, b, nickname);
-        // c.placeholder = nickname
-        
+        console.log("result : " + result)        
       }
       catch (err){
         console.log(err)
@@ -98,13 +102,13 @@ export default {
   padding-top: 90px;
 }
 .profile-update{
-  height: 184px;
+  height: 154px;
   position: relative;
 }
 
-#uploadImg{
-  /* display: none; */
-}
+/* #uploadImg{
+  display: none;
+} */
 
 #nickname{
   border: 1px solid rgb(218,210,233);
@@ -119,8 +123,8 @@ export default {
 }
 
 .profile-img-upload-btn{
-  width: 184px;
-  height: 184px;
+  width: 154px;
+  height: 154px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -129,15 +133,18 @@ export default {
 }
 .profile-cover{
   position: absolute;
-  width: 184px;
-  height: 184px;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  width: 154px;
+  height: 154px;
   border-radius: 50%;
   opacity: 0;
 }
 .profile-update:hover .profile-cover{
   opacity: 1;
-  width: 184px;
-  height: 184px;
+  width: 154px;
+  height: 154px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.4);
 }

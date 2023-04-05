@@ -57,7 +57,7 @@
             class="profile-image"
             :src="this.profileImage"
             alt=""
-            style="object-fit: cover;"
+            style="object-fit: fill;"
             />
           </p>
           <p class="nick">{{ this.nickname }} 님</p>

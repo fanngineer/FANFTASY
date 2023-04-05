@@ -8,18 +8,31 @@
           <div class="circle1">
             <div class="circle2">
               <div class="circle3">
-                <!-- <img class="profile-logo" :src="this.profileImage"  alt="로고"/> -->
-                <img v-bind:class="profileLogo" v-bind:src="this.profileImage"  alt="로고"/>
-                <!-- <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo"> -->
+                <label for="uploadImg">
+                  <div class="profile-update profile-img-upload-btn " @mouseover="this.isHovered = true" @mouseout="this.isHovered = false"
+                  style="cursor: pointer;">
+                    <div class="profile-cover"></div>
+                    <img :src="this.profileImage" style="border-radius: 50%; width: 154px; height: 154px; object-fit: fill;" alt="프로필사진" />
+                    <v-icon v-show="this.isHovered === true" icon="mdi-fountain-pen-tip" style="z-index: 999; position: absolute;"></v-icon>
+                    <!-- <img :src="require('@/assets/EthereumIcon.png')" alt="로고" class="profile-logo"> -->
+                  </div>
+                </label>
+                <input id="uploadImg" type="file" ref="fileInput" @change="uploadFile">
               </div>
             </div>
           </div>
           
           <div style="margin: 10px; font-weight: bold; font-size: 32px;">
-            {{ nickname }} 님
-            <router-link to="/mypageupdate" style="text-decoration: none;">
-              <v-icon icon="mdi-lead-pencil"  @click="searchArticle" class="profile-pencil-button"></v-icon>
-            </router-link>
+            <span v-if="changeNickname === false">
+              {{ nickname }} 님
+            </span>
+            <span v-else>
+              <input v-model="this.$store.state.nickname" id="nickname" type="text" placeholder="닉네임을 적어주세요"> 
+            </span>
+            <v-icon v-if="changeNickname === false" icon="mdi-lead-pencil"  @click="changeNicknameBtn" class="profile-pencil-button"></v-icon>
+            <button v-else class="edit-profile-confirm" @click="confirmEditProfile">수정</button>
+            <!-- <router-link to="/mypageupdate" style="text-decoration: none;">
+            </router-link> -->
           </div>
 
           <!-- 메타마스크 주소 -->
@@ -75,21 +88,30 @@
             <div class="own-nfts-card">
               <router-link :to="{name:'MarketDetailView', params:{id: nft.nftSource.nftSourceId}}" style="min-width:164px; text-decoration: none; color:black; display:flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                  <img :src="nft.nftSource.fileCID" alt="no" class="nft-img-owned">
+                  <!-- <img :src="nft.nftSource.fileCID" alt="no" class="nft-img-owned"> -->
+                  <v-img v-if="nft.nftSource.fileType === 'image'" :src="nft.nftSource.fileCID" alt="이미지" class="nft-img-owned"></v-img>
+                  <video v-if="nft.nftSource.fileType === 'video'" :src="nft.nftSource.fileCID" alt="비디오" class="nft-img-owned" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
+                  <audio v-if="nft.nftSource.fileType === 'audio'" controls :src="nft.nftSource.fileCID" alt="오디오" class="nft-img-owned"></audio>
                 </div>
                 <div style="margin-left: 5px; margin-bottom: 15px">
                   <div class="item-name" style="font-size:20px;">
                     {{ nft.nftSource.title }}
                   </div>
                   <div style="font-size:15px">
-                    by. {{ nft.nftSource.regArtist.nickname }}
+                    by {{ nft.nftSource.regArtist.nickname }}
                   </div>
+                  <!-- <div style="font-size:15px">
+                    {{ nft.nftSource.originPrice }} FTS
+                  </div> -->
                   <div style="font-size:15px">
-                    {{ nft.nftSource.originPrice }} FAN
+                    <span>
+                      #{{ nft.editionNum }}
+                    </span>
+                    <span style="font-size:10px">
+                      edition
+                    </span>
                   </div>
-                  <div style="font-size:15px">
-                    {{ nft.nftSource.remainNum }} / {{ nft.nftSource.totalNum }}
-                  </div>
+                  
                 </div>
               </router-link>
             </div>
@@ -130,11 +152,12 @@ export default {
 
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
       profileImage: VueCookies.get('profileImage'),
-      profileImgWidth: 0,
-      profileImgHeight: 0,
-      nImg: new Image,
 
+      isHovered: false,
       userNFTs: [],
+      userData : [],
+      file: null,
+      changeNickname: false,
     }
   },
   async created() {
@@ -145,6 +168,10 @@ export default {
     this.getUserDetail();
   },
   methods:{
+    changeNicknameBtn (){
+      this.changeNickname = true;
+    },
+
     copyAddress: async function(){
       let a = this.address;
       // this.$store.dispatch('getAccount');
@@ -332,6 +359,19 @@ export default {
       await this.$store.dispatch('userNFTs')
       this.userNFTs = this.$store.userNFTs
     },
+
+    uploadFile() {
+      console.log('이미지 바꿉니다')
+      this.$store.profileImg = this.$refs.fileInput.files[0];
+      this.$store.dispatch('modiUserImg')
+    },
+
+    confirmEditProfile(){
+      this.$store.dispatch('modiUserInfo')
+      // this.$router.go(-1)
+    },
+
+
   },
   watch() {
 
@@ -451,6 +491,8 @@ export default {
   color: white;
   background-color: RGB(106, 63, 193);
   margin-bottom: 10px;
+  border: solid #cdcdcd 1px;
+  box-shadow: 1px 1px 5px #cdcdcd inset;
 }
 
 #metamask-address{
@@ -535,5 +577,13 @@ export default {
   box-shadow: 0px 10px 10px rgba(188, 188, 188, 0.6);
 }
 
-
+.profile-img-upload-btn{
+  width: 184px;
+  height: 184px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 5px 5px gray; 
+}
 </style>
