@@ -141,8 +141,28 @@
         <!-- <div class="df" style="justify-content: center;">
           <NFTCardR v-for="(card, index) in mcards.slice(0, 4)" :key="index" :card="card" class="" />
         </div> -->
-
-        <div class="df cen" v-if="a == 1">
+        
+        <div v-if="uid===null" style="margin: 33vh;">
+        <span style="font-size: 30px">
+          현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
+        </span>
+        <br>
+        <br>
+        <br>
+        <div class="">
+          <span class="">
+            <router-link to="/drops" style="text-decoration: none; color: black">
+              아티스트가 만든 NFT를 구매해보세요
+            </router-link>
+          </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="">
+            <router-link to="/market" style="text-decoration: none; color: black">
+              사용자간 거래를 해보세요
+            </router-link>
+          </span>
+        </div>
+      </div>
+        <div class="df cen" v-else>
           <div v-for="(card, index) in ocards.slice(0,3)" :key="index">
             <div style="margin: 0 40px;">
               <router-link :to="{name:'MarketDetailView', params:{id: card.nftSource.nftSourceId}}">
@@ -158,26 +178,6 @@
                 </div>
               </router-link>
             </div>
-          </div>
-        </div>
-        <div v-else style="margin: 33vh;">
-          <span style="font-size: 30px">
-            현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
-          </span>
-          <br>
-          <br>
-          <br>
-          <div class="">
-            <span class="">
-              <router-link to="/drops" style="text-decoration: none; color: black">
-                아티스트가 만든 NFT를 구매해보세요
-              </router-link>
-            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="">
-              <router-link to="/market" style="text-decoration: none; color: black">
-                사용자간 거래를 해보세요
-              </router-link>
-            </span>
           </div>
         </div>
         <br>
@@ -202,7 +202,7 @@ import NFTCardR from "@/components/resell/NFTCard.vue"
 // import RankingCard from "@/components/mainpage/RankingCard.vue"
 // import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 // import "vue3-carousel/dist/carousel.css"
-// import VueCookies from "vue-cookies"
+import VueCookies from "vue-cookies"
 // import Web3 from "web3"
 // import { Carousel, Slide} from 'vue3-carousel'
 
@@ -314,6 +314,7 @@ export default {
         },
       ],
       sortnum: 0,
+      uid:VueCookies.get('userId'),
     }
   },
   watch: {},
