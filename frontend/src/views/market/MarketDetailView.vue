@@ -184,7 +184,6 @@ export default {
       card: [],
       profile: VueCookies.get('profileImage'),
     }
-  },
   created() {
     this.getDropsDetail()
   },

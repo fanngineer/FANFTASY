@@ -19,6 +19,14 @@
         <router-link to="/drops" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
         <router-link to="/market" v-if="currentRouteName==='ResellListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">MARKET</router-link>
         <router-link to="/market" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
+        <!-- {{ currentRouteName }} -->
+        
+
+        <router-link to="/drops" v-if="currentRouteName==='MarketListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/drops" v-else-if="currentRouteName==='MarketDetailView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/drops" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
+        <router-link to="/market" v-if="currentRouteName==='ResellListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">MARKET</router-link>
+        <router-link to="/market" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
         <!-- <router-link to="/community" class="header-router"
           >커뮤니티</router-link
         > -->
@@ -51,6 +59,7 @@
 
         <!-- </router-link> -->
         <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
+        <router-link v-if="IsLOGIN" to="/mypage" class="icon-profile">
           <img
           class="profile-image"
           :src="this.profileImage"
@@ -77,6 +86,7 @@
 </template>
 
 <script>
+import VueCookies from "vue-cookies"
 import VueCookies from "vue-cookies"
 export default {
   name: "NotLoginUserHeaders",
@@ -126,6 +136,38 @@ export default {
         this.profileImage = 'https://fanftasy.s3.ap-northeast-2.amazonaws.com/profileImg/8c64c983-1b80-40fb-bcc1-366f3322cbb2.png'
         console.log(this.profileImage)
       }
+  },
+  watch: {
+    nickname: function () {
+      console.log(VueCookies.get('nickname'));
+
+      console.log(VueCookies.isKey('AccessToken'));
+      this.logIn = VueCookies.isKey('AccessToken');
+    },
+    profileImage: function () {
+      console.log(VueCookies.get('profileImage'));
+      
+    },
+  },
+  computed: {
+    // 반응형으로 계산된 속성
+    IsLOGIN() {
+      console.log(this.logIn);
+      return this.logIn === true;
+    },
+    currentRouteName(){
+      // console.log(this.$route.name)
+      return this.$route.name
+    },
+    marketClicked(){
+      const mc = this.$route.name;
+      console.log(mc, 'dfdf')
+      if (mc.indexOf('Market')>=0) {
+        console.log('네')
+        return '네';
+      }
+      return '아니오';
+    },
   },
   methods: {
     
