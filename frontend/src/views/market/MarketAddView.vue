@@ -15,23 +15,23 @@
     <br>
     <label for="">파일선택</label>
     <!-- <input v-on:change="previewFiles(this.files)" type="file" accept="image/*, video/*, audio/*" style="border:solid"> -->
-    <input type="file" @change="handleFileUpload">
+    <input type="file" @change="handleFileUpload" accept="image/*, video/*, audio/*"/>
     <br>
     <br>
     <label for="">제목</label>
-    <input v-model="title" type="text" style="border:solid">
+    <input v-model="title" type="text" style="border:solid" placeholder="제목을 입력해주세요.">
     <br>
     <br>
     <label for="">내용</label>
-    <textarea v-model="content" name="" id="" cols="30" rows="10" style="border:solid"></textarea>
+    <textarea v-model="content" name="" id="" cols="30" rows="10" style="border:solid" placeholder="상세내용을 입력해주세요."></textarea>
     <br>
     <br>
     <label for="">발매 갯수</label>
-    <input v-model="totalNum" type="text" style="border:solid">
+    <input v-model="totalNum" type="text" style="border:solid" placeholder="발매할 NFT수를 입력해주세요.">
     <br>
     <br>
     <label for="">발매가격</label>
-    <input v-model="originPrice" type="text" style="border:solid">
+    <input v-model="originPrice" type="text" style="border:solid" placeholder="판매가격을 입력해주세요.">
     <br>
     <br>
     <!-- <label for="">파일 타입</label>
@@ -55,13 +55,17 @@ export default {
       totalNum:"",
       originPrice:"",
       regArtistId: VueCookies.get("userId"),
-      fileType:"image",
+      fileType:"",
+      selectedFile: null,
     }
   },
   methods: {
     handleFileUpload(event) {
       this.file = event.target.files[0];
       console.log(this.file);
+      console.log(this.file.type.substring(0, 5))
+      this.fileType = this.file.type.substring(0, 5)
+      
     },
     addNFT() {
       const file = this.file

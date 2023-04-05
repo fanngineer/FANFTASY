@@ -7,6 +7,7 @@
           <v-card-title class="nft-card-title">
             <v-img v-if="card.fileType === 'image'" :src="card.fileCID" alt="" class="nft-img"></v-img>
             <video v-if="card.fileType === 'video'" :src="card.fileCID" alt="" class="nft-img" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
+            <audio v-if="card.fileType === 'audio'" controls :src="card.fileCID" alt="오디오" class="nft-img"></audio>
           </v-card-title>
 
           <div style="width: 220px;">
@@ -15,13 +16,18 @@
                 {{ card.title }}  
               </p>
               <p class="item-content">
-                {{ card.regArtist.nickname }}
+                <span style="font-size: 12px;">
+                  by
+                </span>
+                <span>
+                  {{ card.regArtist.nickname }}
+                </span>
               </p>
               <p class="item-content">
-                {{ card.originPrice }} FAN
+                {{ card.originPrice }} FTS
               </p>
               <p class="item-content">
-                {{card.remainNum}}/{{ card.totalNum }}
+                {{card.remainNum}} / {{ card.totalNum }}개
               </p>
             </v-card-item>
           </div>

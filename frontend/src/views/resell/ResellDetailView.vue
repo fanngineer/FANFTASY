@@ -21,6 +21,7 @@
               class="nft-detail-img"
               autoplay="1"
               ></iframe>
+            <audio v-if="this.card.data.nftSource.fileType === 'audio'" controls :src="this.card.data.nftSource.fileCID" alt="오디오" class="nft-img"></audio>
             </div>
             
             
@@ -81,8 +82,8 @@
                 <div class="sb">
                   <span class="ib">
                     <v-img
-                      src="@/assets/심호연.png"
-                      alt="호연"
+                      :src="this.card.data.nftSource.regArtist.profileImg"
+                      alt="프로필 사진"
                       class="nft-detail-small-img fl"
                     ></v-img>
                     <p>Artist</p>
@@ -97,11 +98,28 @@
                   </span>
                   <span class="ib">
                     <v-img
+                      v-if="userId === null"
                       src="@/assets/Heart_Icon.png"
                       alt=""
                       class="nft-detail-small-img fl"
                     ></v-img>
-                    <p style="margin-top: 12px">{{this.card.data.nftSource.likeNum}}</p>
+                    <v-img
+                      v-if="this.card.data.userLike===true & userId != null"
+                      src="@/assets/Heart_Icon.png"
+                      alt=""
+                      class="nft-detail-small-img fl"
+                      @click="unLike()"
+                      style="cursor: pointer;"
+                      ></v-img>
+                      <v-img
+                      v-if="this.card.data.userLike===false & userId != null"
+                      src="@/assets/empty_Heart_Icon.png"
+                      alt=""
+                      class="nft-detail-small-img fl"
+                      @click="Like()"
+                      style="cursor: pointer;"
+                      ></v-img>
+                    <p style="margin-top: 12px">{{this.card.data.nftLikeNum}}</p>
                     <br />
                   </span>
                 </div>
@@ -111,16 +129,14 @@
         
               <div class="nft-detail-box">
                 <div class="sa">
-                  <span class="ib" style="margin-top: 30px;">
-                    <span class="nft-item-name">판매가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="nft-item-content">{{ this.card.data.currentPrice }} FTS</span>
-                    </span>
-                    <!-- <span class="ib" style="margin-top: 30px;">
-                      <p class="nft-item-name">잔여수량</p>
-                      <p class="nft-item-content">19/50</p>
-                    </span> -->
+                  <div class="sa" style="margin-top: 30px; width: 495px;">
+                    <span class="nft-item-name" style="margin-top: 8px;">판매가격</span>
+                    <span v-if="this.card.data.currentPrice > 0" class="nft-item-content">{{ this.card.data.currentPrice }} FTS</span>
+                    <span v-else class="nft-item-content">미판매</span>
+                  </div>
                 </div>
-                <button class="purchase-btn">구매하기</button>
+                <button v-if="this.card.data.currentPrice > 0" class="purchase-btn">구매하기</button>
+                <button v-else class="unpurchase-btn">구매하기</button>
               </div>
       
           </div>
@@ -167,6 +183,8 @@
 </template>
 
 <script>
+import VueCookies from "vue-cookies"
+
 export default {
   data(){
     return{
@@ -175,9 +193,12 @@ export default {
         {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
         {date:'2023-03-27 17:28', edition:'#2', price:'1.25 FTS'},
       ],
-      NFTId: this.$route.params.id,
+      nftSourceId: this.$route.params.id,
+      nftId:'',
+
       // currentPrice: this.$route.params.currentPrice,
       card: [],
+      userId: VueCookies.get('userId'),
     }
   },
   created() {
@@ -186,7 +207,7 @@ export default {
   methods: {
     async getMarketDetail() {
       
-      const nftSourceId = this.NFTId
+      const nftSourceId = this.nftSourceId
       // const currentPrice = this.currentPrice
       
       // const payload = {
@@ -198,6 +219,17 @@ export default {
       this.card = this.$store.mcard
       // console.log(this.card)
       // console.log("123456789")
+      this.nftId = this.$store.mcard.data.nftId
+    },
+    Like() {
+      this.$store.dispatch("marketLike", this.nftId )
+      this.card.data.userLike = true
+      this.card.data.nftLikeNum += 1
+    },
+    unLike() {
+      this.$store.dispatch("marketUnLike", this.nftId )
+      this.card.data.userLike = false
+      this.card.data.nftLikeNum -= 1
     },
   },
 
@@ -292,6 +324,25 @@ export default {
   margin-right: auto;
   position: relative;
   background-color: RGB(106, 63, 193);
+}
+
+.unpurchase-btn {
+  display: flex;
+  /* right: 10px; */
+  width: 415px;
+  height: 70px;
+  font-size: 36px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  color: white;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  cursor:default;
+  background-color: darkgray;
 }
 
 .nft-item-name {

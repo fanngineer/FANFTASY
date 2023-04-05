@@ -4,8 +4,8 @@ import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
 
-const API_URL = "https://fanftasy.kro.kr/api"
-// const API_URL = "http://70.12.247.102:8080/api"
+// const API_URL = "https://fanftasy.kro.kr/api"
+const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
@@ -266,14 +266,17 @@ const store = createStore({
         },
       })
         .then((res) => {
-          console.log('res :', res)
-          console.log('res.data :', res.data)
+          // console.log('res :', res)
+          // console.log('res.data :', res.data)
           console.log('res.data.data : ', res.data.data)
           this.state.nickname2 = res.data.data.nickname
+          this.state.role = res.data.data.role
           console.log(this.state.nickname2)
+          console.log(this.state.role)
         })
         .catch((err) => {
           console.log(err)
+          alert("로그인 해주세요")
         })
     },
 
@@ -375,9 +378,13 @@ const store = createStore({
     },
     
     async getDropsDetail(context, NFTId) {
+      const uid = VueCookies.get("userId")
       await axios({
         method: "get",
         url: `${API_URL}/nft/drops/${NFTId}`,
+        params: {
+          userId: uid
+        }
       })
         .then((res) => {
           console.log(res)
@@ -413,12 +420,12 @@ const store = createStore({
       
     async getMarketDetail(context, nftSourceId) {
       // const currentPrice = payload.currentPrice
+      const uid = VueCookies.get("userId")
       await axios({
         method: "get",
         url: `${API_URL}/nft/market/${nftSourceId}`,
         params: {
-          // nftSourceId:nftSourceId,
-          // currentPrice:currentPrice
+          userId: uid,
         }
       })
         .then((res) => {
@@ -459,7 +466,79 @@ const store = createStore({
       .catch((err) => {
         console.log(err)
       })
-    }
+    },
+
+    dropsLike(context, nftSourceId) {
+      const uid = VueCookies.get("userId")
+      axios({
+        method: "get",
+        url: `${API_URL}/like/source`,
+        params: {
+          nftSourceId: nftSourceId,
+          userId: uid,
+        }
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+    dropsUnLike(context, nftSourceId) {
+      const uid = VueCookies.get("userId")
+      axios({
+        method: "get",
+        url: `${API_URL}/like/source-cancel`,
+        params: {
+          nftSourceId: nftSourceId,
+          userId: uid,
+        }
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+    marketLike(context, nftId) {
+      const uid = VueCookies.get("userId")
+      axios({
+        method: "get",
+        url: `${API_URL}/like/nft`,
+        params: {
+          nftId: nftId,
+          userId: uid,
+        }
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+    marketUnLike(context, nftId) {
+      const uid = VueCookies.get("userId")
+      axios({
+        method: "get",
+        url: `${API_URL}/like/nft-cancel`,
+        params: {
+          nftId: nftId,
+          userId: uid,
+        }
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
 
     },
     modules: {},

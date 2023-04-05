@@ -30,6 +30,11 @@
         </div>
         
         <div style="margin-top: auto;">
+          <router-link :to="{name: 'MarketAddView'}" style="text-decoration: none;">
+            <button v-if="this.role === 'artist'" class="charge-button" @click="goToAdd()" >
+              NFT 생성
+            </button>
+          </router-link>
           <button class="charge-button" @click="charge()">
             NFN 충전
           </button>
@@ -120,6 +125,7 @@ export default {
       btnOwnedNFT: true,
       btnNFTLog: false,
       btnAttractedNFT: false ,
+      role: "fan",
 
       myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
       profileImage: VueCookies.get('profileImage'),
@@ -133,6 +139,7 @@ export default {
     this.address = this.$store.state.address;
 
     this.getUserNFTs();
+    this.getUserDetail();
   },
   methods:{
     copyAddress: async function(){
@@ -180,6 +187,22 @@ export default {
         e.stopPropagation();
       }
     },
+
+    async getUserDetail(){
+      try{
+        const result = await this.$store.dispatch('userDetail')
+
+        console.log("result : " + result)
+        this.role = this.$store.state.role;
+      }
+      catch (err){
+        console.log(err)
+      }
+      // finally{
+
+      // }
+    },
+
     async charge() {
       console.log("1111");
       

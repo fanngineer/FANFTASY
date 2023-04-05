@@ -2,12 +2,12 @@
   <div style="text-align: center;">
     <!-- {{ this.card }} -->
     <div class="nft-card-class">
-      <!-- {{ card }} -->
       <router-link :to="{ name: 'ResellDetailView', params: { id: card.nftSourceId }}">
         <v-card class="nft-card-r">      
           <v-card-title class="nft-card-title">
             <v-img v-if="card.fileType === 'image'" :src="card.fileCID" alt="" class="nft-img"></v-img>
             <video v-if="card.fileType === 'video'" :src="card.fileCID" alt="" class="nft-img"></video>
+            <audio v-if="card.fileType === 'audio'" controls :src="card.fileCID" alt="오디오" class="nft-img"></audio>
             
           </v-card-title>
 

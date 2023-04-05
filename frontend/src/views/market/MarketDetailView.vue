@@ -22,6 +22,7 @@
             class="nft-detail-img"
             autoplay="1"
             ></iframe>
+            <audio v-if="this.card.data.fileType === 'audio'" controls :src="this.card.data.fileCID" alt="오디오" class="nft-img"></audio>
           </div>
           
           
@@ -29,8 +30,8 @@
           <div style="width: 500px; white-space:pre-line; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">상세 정보</p> 
             <p style="font-size: 14px; font-weight:500">
-              <!-- {{ this.card.data.content }} -->
-              {{ this.card }}
+              {{ this.card.data.content }}
+              <!-- {{ this.card }} -->
             </p>
           </div>
           <hr>
@@ -85,8 +86,8 @@
                 <div class="sb">
                   <span class="ib">
                     <v-img
-                      src="@/assets/심호연.png"
-                      alt="호연"
+                      :src="this.card.data.regArtist.profileImg"
+                      alt="프로필 사진"
                       class="nft-detail-small-img fl"
                     ></v-img>
                     <p>Artist</p>
@@ -103,9 +104,26 @@
                   </span>
                   <span class="ib">
                     <v-img
+                      v-if="userId === null"
                       src="@/assets/Heart_Icon.png"
                       alt=""
                       class="nft-detail-small-img fl"
+                    ></v-img>
+                    <v-img
+                      v-if="card.data.userLike===true & userId != null"
+                      src="@/assets/Heart_Icon.png"
+                      alt=""
+                      class="nft-detail-small-img fl"
+                      @click="unLike()"
+                      style="cursor: pointer;"
+                    ></v-img>
+                    <v-img
+                      v-if="card.data.userLike===false & userId != null"
+                      src="@/assets/empty_Heart_Icon.png"
+                      alt=""
+                      class="nft-detail-small-img fl"
+                      @click="Like()"
+                      style="cursor: pointer;"
                     ></v-img>
                     <p style="margin-top: 12px">{{this.card.data.likeNum}}</p>
                     <br />
@@ -119,11 +137,11 @@
                 <div class="sa">
                   <span class="ib" style="margin-top: 30px;">
                     <p class="nft-item-name">판매가격</p>
-                    <p class="nft-item-content">1.03NFN</p>
+                    <p class="nft-item-content">{{this.card.data.originPrice}} FTS</p>
                   </span>
                   <span class="ib" style="margin-top: 30px;">
                     <p class="nft-item-name">잔여수량</p>
-                    <p class="nft-item-content">19/50</p>
+                    <p class="nft-item-content">{{this.card.data.remainNum}} / {{this.card.data.totalNum}}개</p>
                   </span>
                 </div>
                 <button class="purchase-btn">구매하기</button>
@@ -186,6 +204,7 @@ export default {
       NFTId: this.$route.params.id,
       card: [],
       profile: VueCookies.get('profileImage'),
+      userId: VueCookies.get('userId'),
     }
   },
   created() {
@@ -200,6 +219,17 @@ export default {
       // console.log(this.card)
       // console.log("123456789")
     },
+
+    Like() {
+      this.$store.dispatch("dropsLike", this.NFTId )
+      this.card.data.userLike = true
+      this.card.data.likeNum += 1
+    },
+    unLike() {
+      this.$store.dispatch("dropsUnLike", this.NFTId )
+      this.card.data.userLike = false
+      this.card.data.likeNum -= 1
+    }
   },
 
 }

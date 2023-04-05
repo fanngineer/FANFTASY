@@ -18,6 +18,7 @@
         <router-link to="/drops" v-else-if="currentRouteName==='MarketDetailView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">DROPS</router-link>
         <router-link to="/drops" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">DROPS</router-link>
         <router-link to="/market" v-if="currentRouteName==='ResellListView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">MARKET</router-link>
+        <router-link to="/market" v-else-if="currentRouteName==='ResellDetailView'" class="header-router font-k header-tab-clicked" style="margin: 0px 30px;">MARKET</router-link>
         <router-link to="/market" v-else class="header-router font-k header-tab" style="margin: 0px 30px;">MARKET</router-link>
         <!-- <router-link to="/community" class="header-router"
           >커뮤니티</router-link
