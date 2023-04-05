@@ -163,22 +163,7 @@
         </div>
       </div>
         <div class="df cen" v-else>
-          <div v-for="(card, index) in ocards.slice(0,3)" :key="index">
-            <div style="margin: 0 40px;">
-              <router-link :to="{name:'MarketDetailView', params:{id: card.nftSource.nftSourceId}}">
-                <div style=" width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-                  <!-- {{ card.nftSource.fileType }} -->
-                  <!-- <img :src="card.nftSource.fileCID" alt="no" style="border-radius: 15px; width: 300px; height: 500px;"> -->
-                  <v-img v-if="card.nftSource.fileType === 'image'" :src="card.nftSource.fileCID" alt="이미지" style="border-radius: 15px; width: 300px; height: 500px;"></v-img>
-                  <video v-if="card.nftSource.fileType === 'video'" :src="card.nftSource.fileCID" alt="비디오" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted style="border-radius: 15px; width: 300px; height: 500px;"></video>
-                  <audio v-if="card.nftSource.fileType === 'audio'" controls :src="card.nftSource.fileCID" alt="오디오" style="border-radius: 15px; width: 300px; height: 500px;"></audio>
-                  <!-- <v-img v-if="card.fileType === 'image'" :src="card.fileCID" alt="" class="nft-img"></v-img>
-                  <video v-if="card.fileType === 'video'" :src="card.fileCID" alt="" class="nft-img" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
-                  <audio v-if="card.fileType === 'audio'" controls :src="card.fileCID" alt="오디오" class="nft-img"></audio> -->
-                </div>
-              </router-link>
-            </div>
-          </div>
+          <NFTphoto v-for="(card, index) in ocards.slice(0,3)" :key="index" :photo="card"/>
         </div>
         <br>
         <span>
@@ -199,10 +184,12 @@
 import animMain from "@/components/mainpage/anim.vue"
 import NFTCard from "@/components/market/NFTCard.vue"
 import NFTCardR from "@/components/resell/NFTCard.vue"
+import NFTphoto from "@/components/mainpage/NFTphoto.vue"
 // import RankingCard from "@/components/mainpage/RankingCard.vue"
 // import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 // import "vue3-carousel/dist/carousel.css"
 import VueCookies from "vue-cookies"
+
 // import Web3 from "web3"
 // import { Carousel, Slide} from 'vue3-carousel'
 
@@ -285,6 +272,7 @@ export default {
     NFTCard,
     NFTCardR,
     animMain,
+    NFTphoto,
   },
   data() {
     return {
@@ -315,6 +303,7 @@ export default {
       ],
       sortnum: 0,
       uid:VueCookies.get('userId'),
+      
     }
   },
   watch: {},
@@ -365,6 +354,8 @@ export default {
       await this.$store.dispatch("userNFTs")
       this.ocards = this.$store.userNFTs
     },
+
+    
   },
 }
 </script>

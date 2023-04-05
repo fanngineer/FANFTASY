@@ -63,7 +63,7 @@ export default {
     stopVideo() {
       this.videoElement.pause();
       this.isPlaying = false;
-    }
+    },
   }
 }
 </script>
