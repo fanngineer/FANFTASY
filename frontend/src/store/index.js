@@ -4,10 +4,16 @@ import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
 import Swal from 'sweetalert2'
+import SaleABI from "../../path/to/SaleABI.json";
+import SaleFactoryABI from "../../path/to/SaleFactoryABI.json";
+import Web3 from "web3"
 
-// const API_URL = "http://192.168.100.35:8080/api"
-const API_URL = "https://fanftasy.kro.kr/api"
+const web3 = new Web3(window.ethereum);
+const saleFactoryContractAddress = '0x0509b43FF9CcAC684ef00bc82020208b6F86d156';
+const saleFactoryContract = new web3.eth.Contract(SaleFactoryABI, saleFactoryContractAddress);
+// const API_URL = "https://fanftasy.kro.kr/api"
 // const API_URL = "http://70.12.247.102:8080/api"
+const API_URL = "http://192.168.91.150:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
@@ -51,6 +57,11 @@ const store = createStore({
     mcards: [],
     mcard: [],
     otheruser:[],
+    resellDetailNFTs:[],
+    SaleContractAddress: null, 
+    nftId: null, 
+    price: null, 
+    err: null,
   },
   getters: {
     isLogin: function () {
@@ -72,7 +83,7 @@ const store = createStore({
         )
       }
     },
-
+    
     LogOut() {
       this.state.CurrentAccount = null;
       this.state.AccessToken = null;
@@ -448,7 +459,11 @@ const store = createStore({
         .then((res) => {
           console.log("123156453895125661548653468534")
           console.log(res)
+          this.state.price = (res.data.data.currentPrice) * (10**18);
+          this.state.nftId = res.data.data.nftId;
+          this.state.SaleContractAddress = res.data.data.saleContract;
           this.mcard = res.data
+          this.dispatch('getDropsNftId', res.data.data.nftSourceId)
         })
         .catch((err) => {
           console.log(err)
@@ -602,6 +617,81 @@ const store = createStore({
       })
     },
 
+    async getDropsNftId(context, payload) {
+      const accessToken = VueCookies.get('AccessToken')
+      console.log(`${API_URL}/nft/buy/` + payload);
+      axios({
+        method: "get",
+        url: `${API_URL}/nft/buy/` + payload,
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        console.log(res.data.messege);
+        if(res.data.messege === "SUCCESS"){
+          console.log(res.data.data.nftId);
+          console.log(res.data.data.contractAddress);
+          console.log(res.data.data.price);
+          const payload = {nftId: res.data.data.nftId, contractAddress: res.data.data.contractAddress, price: res.data.data.price};
+          this.dispatch('BuyToBlockChain', payload);
+        }
+        else{
+          console.log(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    },
+
+    async BuyToBlockChain(context, payload){
+      const SaleContractAddress = payload.contractAddress;
+      const SaleContract = new web3.eth.Contract(SaleABI, SaleContractAddress);
+      const account  = VueCookies.get('Account');
+      console.log(account);
+      const price = (payload.price) * (10 ** 18);
+      console.log(price);
+      //  구매인데 판매 중인 nft의 가격을 value에 입력이 되어야한다.
+      // const ans = SaleContract.methods.purchase().send({ from : account, value : price });
+      SaleContract.methods.purchase().send({ from : account, value : price })
+      .on("receipt", function(receipt) {
+        console.log("Buy Receipt : ");
+        console.log(receipt);
+      })
+      .on("error", function(err) {
+        console.log(err);
+        this.state.err = err;
+      })
+      // console.log(await ans);
+      // if(ans === null || ans === undefined) {
+      //   console.log("문제 발생")
+      // }
+      console.log(this.state.err);
+
+      if(this.state.err === null || this.state.err === undefined) {
+        const accessToken = VueCookies.get('AccessToken');
+        axios ({
+          method: "put",
+          url: `${API_URL}/nft/buy`,
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+          data: {
+            nftId: payload.nftId,
+            buyerId: VueCookies.get('userId'),
+          }
+        })
+        .then((res) => {
+          console.log(res.data.message);
+        })
+      }
+      else{
+        alert("error");
+      }
+    },
     async resellDetailNFTs(context, NFTId) {
       try {
         const response = await axios({
@@ -614,7 +704,63 @@ const store = createStore({
       }
     },
 
+    async createSaleToBlockChain(context, payload) {
+      const amount = web3.utils.toWei( payload.price, "ether");
+      const account = VueCookies.get('Account');
+      
+      (await saleFactoryContract.methods.createSale(payload.tokenId, amount).send({ from: account })
+      .on("transactionHash", function(hash) {
+        console.log("Transaction hash: " + hash);
+      })
+      .on("receipt", function(receipt) {
+        console.log("Create Sale Receipt : ");
+        console.log(receipt);
+
+        saleFactoryContract.getPastEvents('NewSale', {
+          filter: { itemId : [ payload.tokenId ] },
+          fromBlock: 0,
+          toBlock: 'latest',
+        }, async function(err, events){
+          console.log(err);
+          console.log(events);
+          this.state.SaleContractAddress = events[events.length - 1].returnValues._saleContract;
+          console.log(this.state.SaleContractAddress);
+        });
+
+        const payload1 = {
+          nftId: payload.tokenId,
+          contractAddress: this.state.SaleContractAddress,
+          price: payload.price,
+        };
+        this.dispatch('resellRegistration', payload1);
+      })
+      .on("error", function(err) {
+        console.error(err);
+        this.state.err = err;
+      }));
     },
+
+    async resellRegistration(context, payload){
+      const accessToken = VueCookies.get('AccessToken');
+      axios({
+        method: "put",
+        url: `${API_URL}/nft/resell`,
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+        data: {
+          nftId: payload.nftId,
+          contractAddress: payload.contractAddress,
+          price: payload.price,
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.message);
+      })
+    }
+
+  },
     modules: {},
   })
   

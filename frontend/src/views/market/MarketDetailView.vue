@@ -161,7 +161,7 @@
                     <p class="nft-item-content">{{this.card.data.remainNum}} / {{this.card.data.totalNum}}개</p>
                   </span>
                 </div>
-                <button class="purchase-btn">구매하기</button>
+                <button class="purchase-btn" @click="buy()">구매하기</button>
               </div>
       
           </div>
@@ -247,7 +247,11 @@ export default {
       this.$store.dispatch("dropsUnLike", this.NFTId )
       this.card.data.userLike = false
       this.card.data.likeNum -= 1
-    }
+    },
+    buy() {
+      console.log(this.NFTId);
+      this.$store.dispatch("getDropsNftId", this.NFTId )
+    },
   },
 
 }

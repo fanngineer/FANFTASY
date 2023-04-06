@@ -468,31 +468,28 @@ export default {
         console.log(err)
       }
       // finally{
-
-      // }
+        
+        // }
     },
-
+      
     async getUserNFTs(type){
       await this.$store.dispatch('userNFTs', type)
       this.userNFTs = this.$store.userNFTs
     },
+      
     async charge() {
-      console.log("1111");
-      // const web3 = new Web3(new Web3.providers.HttpProvider('https://fanftasy.kro.kr/network'));
-      // const web3 = new Web3('https://fanftasy.kro.kr/network');
-      const account = VueCookies.get('Account');
-      // const accounts = await web3.eth.getAccounts();
-      // console.log(accounts);
-      console.log(account);
-      // console.log(await web3.eth.sign('hello', account));
 
-      // console.log(web3.providers);
-      // console.log(web3.givenProvider);
+      console.log(window.ethereum)
+      
+      ////////////////
+      const web3 = new Web3(window.ethereum);
+      console.log("1111");
+      const account = VueCookies.get('Account');
+      console.log(account);
 
       // 메타마스크가 실행 되면서 서명 요청 
       // const method = 'personal_sign';
       // const params = ['test', account];
-      // // await Web3.providers.HttpProvider('https://fanftasy.kro.kr/network').send(
       // await window.ethereum.request(
       //   {
       //     method,
@@ -505,43 +502,38 @@ export default {
       // .catch((err) => {
       //   console.log(err);
       // })
-
-        console.log(window.ethereum)
-        
-        ////////////////
-        const web3 = new Web3(window.ethereum);
-        const bankContractAddress = '0xbC7eeBAbbAd2E7427C7E3cF7B3B073ed51a91390';
-        const bankContract = new web3.eth.Contract(BankABI, bankContractAddress);
-        const  amount = web3.utils.toWei("100", "ether"); // 1 ETH를 wei 단위로 변환
-        // console.log(bankContract);
+      const bankContractAddress = '0xbC7eeBAbbAd2E7427C7E3cF7B3B073ed51a91390';
+      const bankContract = new web3.eth.Contract(BankABI, bankContractAddress);
+      // const  amount = web3.utils.toWei("100", "ether"); // 1 ETH를 wei 단위로 변환
+      // console.log(bankContract);
 
 
-        /////////////////////////////////////////////
-        const saleFactoryContractAddress = '0x0509b43FF9CcAC684ef00bc82020208b6F86d156';
-        const saleFactoryContract = new web3.eth.Contract(SaleFactoryABI, saleFactoryContractAddress);
-        console.log(await saleFactoryContract.methods);
+      /////////////////////////////////////////////
+      const saleFactoryContractAddress = '0x0509b43FF9CcAC684ef00bc82020208b6F86d156';
+      const saleFactoryContract = new web3.eth.Contract(SaleFactoryABI, saleFactoryContractAddress);
+      console.log(await saleFactoryContract.methods);
 
-        // 앞이 nft_id 이고 amount가 price -> 단위는 wei 이기에 단위 변환 만들기
-        // const ans = (await saleFactoryContract.methods.createSale(5, amount).send({ from: account }));
-        // (await saleFactoryContract.methods.createSale(5, amount).send({ from: account })
-        // .on("transactionHash", function(hash) {
-        //     console.log("Transaction hash: " + hash);
-        //   })
-        //   .on("receipt", function(receipt) { // .then과 비슷함
-        //     console.log("Create Sale Receipt : ");
-        //     console.log(receipt);
-        //   })
-        //   .on("error", function(error) {
-        //       console.error(error);
-        //   }));
-        //   console.log(ans);
+      // 앞이 nft_id 이고 amount가 price -> 단위는 wei 이기에 단위 변환 만들기
+      // const ans = (await saleFactoryContract.methods.createSale(5, amount).send({ from: account }));
+      // (await saleFactoryContract.methods.createSale(5, amount).send({ from: account })
+      // .on("transactionHash", function(hash) {
+      //     console.log("Transaction hash: " + hash);
+      //   })
+      //   .on("receipt", function(receipt) { // .then과 비슷함
+      //     console.log("Create Sale Receipt : ");
+      //     console.log(receipt);
+      //   })
+      //   .on("error", function(error) {
+      //       console.error(error);
+      //   }));
+      //   console.log(ans);
 
         // 판매 컨트랙트의 주소
         // var SaleContractAddress = null;
         
-        // // 판매 컨트랙트의 주소를 가져오기 위한 판매 올린 로그 불러오기
+        // 판매 컨트랙트의 주소를 가져오기 위한 판매 올린 로그 불러오기
         // saleFactoryContract.getPastEvents('NewSale', {
-        //   filter: { itemId : [11] },
+        //   filter: { itemId : [ 6 ] },
         //   fromBlock: 0,
         //   toBlock: 'latest',
         // },async function(err, events){
@@ -549,18 +541,13 @@ export default {
         //   console.log(events);
         //   this.SaleContractAddress = events[events.length - 1].returnValues._saleContract;
         //   console.log(this.SaleContractAddress);
-        //   
-          
-          
-          
           
           
         //   // ///////////////////////////////////////////////////////////////////////////////////
         //   //  판매 중인 nft 구매 하려면 필요한 컨트랙트
-        //   let SaleContract = new web3.eth.Contract(SaleABI, this.SaleContractAddress);
+        //   const SaleContract = new web3.eth.Contract(SaleABI, this.SaleContractAddress);
         //   console.log(SaleContract.methods);
         //   let price = null;
-
         //   // 판매 가격 받아오기
         //   SaleContract.methods.getFinalPrice().call((err, res) => {
         //     if(err) {
@@ -571,15 +558,16 @@ export default {
         //       price = res;
         //     }
         //   })
-
-
         //   //  구매인데 판매 중인 nft의 가격을 value에 입력이 되어야한다.
-        //   const ans = SaleContract.methods.purchase().send({ from : account, value : price });
-        //   console.log(await ans);
-
-
-
-
+        //   SaleContract.methods.purchase().send({ from : account, value : price })
+        //   .call((err, res) => {
+        //     if(err){
+        //       console.log(err);
+        //     }
+        //     else{
+        //       console.log(res);
+        //     }
+        //   });
         // });
         // console.log(this.SaleContractAddress);
 
@@ -678,7 +666,7 @@ export default {
         
         
         // amount 만큼 은행에서 가져오기 amount 가 1 이더만큼인 걸 wei 단위로 변환 시켜둔 것
-        bankContract.methods.withdraw(amount).send({ from: account });
+        // bankContract.methods.withdraw(amount).send({ from: account });
         
         // // 은행에 얼마가 남아있는지 확인하는 기능
         bankContract.methods.getBalance().call((err, result) => {
@@ -709,9 +697,9 @@ export default {
           //     console.error(error);
           // });
           
-          },
+    },
           
-          uploadFile() {
+    uploadFile() {
       console.log('이미지 바꿉니다')
       this.$store.profileImg = this.$refs.fileInput.files[0];
       this.$store.dispatch('modiUserImg')

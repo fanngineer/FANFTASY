@@ -152,7 +152,7 @@
                     <span v-else class="nft-item-content">미판매</span>
                   </div>
                 </div>
-                <button v-if="this.card.data.currentPrice > 0" class="purchase-btn">구매하기</button>
+                <button v-if="this.card.data.currentPrice > 0" class="purchase-btn" @click="buy()">구매하기</button>
                 <button v-else class="unpurchase-btn">구매하기</button>
               </div>
       
@@ -248,6 +248,15 @@ export default {
       this.$store.dispatch("marketUnLike", this.nftId )
       this.card.data.userLike = false
       this.card.data.nftLikeNum -= 1
+    },
+    buy() {
+      console.log(this.nftId);
+      const payload = {
+        nftId: this.nftId,
+        price: this.$store.state.price,
+        contractAddress: this.$store.state.SaleContractAddress
+      }
+      this.$store.dispatch( "BuyToBlockChain", payload );
     },
   },
 
