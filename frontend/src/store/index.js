@@ -11,9 +11,9 @@ import Web3 from "web3"
 const web3 = new Web3(window.ethereum);
 const saleFactoryContractAddress = '0x0509b43FF9CcAC684ef00bc82020208b6F86d156';
 const saleFactoryContract = new web3.eth.Contract(SaleFactoryABI, saleFactoryContractAddress);
-const API_URL = "https://fanftasy.kro.kr/api"
+// const API_URL = "https://fanftasy.kro.kr/api"
 // const API_URL = "http://70.12.247.102:8080/api"
-// const API_URL = "http://192.168.91.150:8080/api"
+const API_URL = "http://192.168.91.150:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
@@ -227,9 +227,9 @@ const store = createStore({
     async sameAccount() {
       // 쿠키와 메타마스크의 현재 지갑 주소를 비교해서 같으면 true, 다르면 false
       await this.dispatch("getAccount")
-      if (VueCookies.isKey("CurrentAccount") === true) {
+      if (VueCookies.isKey("Account") === true) {
         // 이미 로그인을 했을 경우
-        if (VueCookies.get("CurrentAccount") === this.state.CurrentAccount) {
+        if (VueCookies.get("Account") === (await window.ethereum.request({ method: "eth_requestAccounts" }))[0]) {
           // 마지막으로 로그인 했을 때의 쿠키와 현재의 메타마스크에 연결되있는 계정 주소가 같을 경우
           this.state.isSame = true
           this.state.success = true
@@ -239,10 +239,12 @@ const store = createStore({
           this.commit("LogOut")
           this.dispatch("LOGIN")
           this.state.success = false
+          router.push('/')
         }
       } else {
         // 로그인이 안되어 있을 경우x`
         this.state.success = false
+        router.push('/')
       }
     },
 
@@ -274,7 +276,7 @@ const store = createStore({
           this.state.success = false
           Swal.fire({
             title: "회원가입 실패",
-            text: "회원가입에 실패하였습니다.",
+            text: "회원가입에 실패하였습니다. 올바른 양식을 입력해주세요",
             icon: "error" //"info,success,warning,error" 중 택1
           })
           router.go()
@@ -487,6 +489,13 @@ const store = createStore({
       },
 
     addNFT(context, payload) {
+      
+      Swal.fire({
+        title: "생성 중...",
+        text: "NFT를 생성중입니다. 잠시만 기다려주세요",
+        showConfirmButton: false,
+      })
+
       const formData = new FormData();
       formData.append("file", payload.file);
       const ppayload = {
@@ -526,7 +535,7 @@ const store = createStore({
           text: "NFT 생성이 실패하였습니다.",
           icon: "error" //"info,success,warning,error" 중 택1
         });
-        // router.go()
+        router.go()
       })
     },
 

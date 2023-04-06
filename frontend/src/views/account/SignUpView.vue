@@ -10,10 +10,10 @@
         <div class="signup-title">
           회원가입
         </div>
-        <input type="text" class="name t" placeholder="실명" v-model="this.name"/>
-        <input type="text" class="nickname t" placeholder="닉네임" v-model="this.nickname"/>
-        <input type="text" class="email t" placeholder="이메일" v-model="this.email" />
-        <input type="text" class="phone t" placeholder="전화번호" v-model="this.phone" />
+        <input type="text" class="name t" placeholder="이름(실명)" v-model="this.name"/>
+        <input type="text" class="nickname t" placeholder="닉네임(2~8글자)" v-model="this.nickname"/>
+        <input type="text" class="email t" placeholder="이메일(example@google.com)" v-model="this.email" />
+        <input type="text" class="phone t" placeholder="전화번호(01012345678)" v-model="this.phone" />
         <input type="text" class="company t" v-if="!this.$store.state.isFan" placeholder="소속사" v-model="this.company" />
         <button class="connective" @click="connectWallet">
               <img :src="require('@/assets/metamask_fox.png')" alt="foxFace" style="width:40px; height: 40px;">

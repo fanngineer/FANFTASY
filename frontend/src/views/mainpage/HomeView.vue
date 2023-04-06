@@ -151,7 +151,7 @@
           <NFTCardR v-for="(card, index) in mcards.slice(0, 4)" :key="index" :card="card" class="" />
         </div> -->
         
-        <div v-if="uid===null" style="margin: 33vh;">
+        <div v-if="uid===null || ocards.length === 0" style="margin: 33vh;">
         <span style="font-size: 30px">
           현재 보유하고 있는 NFT가 없습니다. NFT를 구매해보세요!
         </span>
