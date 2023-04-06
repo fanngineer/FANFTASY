@@ -5,8 +5,8 @@ import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
 import Swal from 'sweetalert2'
 
-const API_URL = "http://192.168.100.35:8080/api"
-// const API_URL = "https://fanftasy.kro.kr/api"
+// const API_URL = "http://192.168.100.35:8080/api"
+const API_URL = "https://fanftasy.kro.kr/api"
 // const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
