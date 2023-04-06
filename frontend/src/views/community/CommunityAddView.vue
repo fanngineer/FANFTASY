@@ -40,6 +40,7 @@
 <script>
 import LoginUserHeaders from '@/components/headers/LoginUserHeaders.vue';
 import NotLoginUserHeaders from '@/components/headers/NotLoginUserHeaders.vue';
+import Swal from 'sweetalert2'
 
 export default {
   components:{
@@ -58,6 +59,11 @@ export default {
     //addConfirm 함수는 post axios로 db에 보냄과 동시에 community로 리다이렉트
     addConfirm(){
       if (!this.title){
+        Swal.fire({
+          title: "METAMASK 필수",
+          text: "저희 사이트는 METAMASK가 필수입니다.",
+          icon: "info" //"info,success,warning,error" 중 택1
+        })
         alert('제목을 입력해주세요')
       } else if (!this.boardType) {
         alert('게시글 분류를 선택해주세요')

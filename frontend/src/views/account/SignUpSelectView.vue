@@ -1,9 +1,6 @@
 <template>
   <div class="entire-select">
     <div style="flex-direction: column;">
-
-    
-      
       <div class="title-container">
         <div class="title-select">
           회원 가입
@@ -36,22 +33,22 @@
         <div style="display: flex; justify-content: center; margin-top: 30px;">
           이미 계정이 있다면&nbsp; 
           <button class="login">로그인</button>
-
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import VueCookies from 'vue-cookies';
+import Swal from 'sweetalert2';
+import router from "@/router"
 
 export default {
   name: "SignUpSelectView",
   components: {
   },
   data () {
-
     return {
       address: null,
       email: null,
@@ -59,12 +56,27 @@ export default {
       phone: null,
       role: null,
       company: null,
+      mem: false,
     }
   },
   created () {
-    
+    this.isLogin()
   },
   methods: {
+    isLogin(){
+      if (VueCookies.get("nickname") != null){
+        this.mem = true
+        Swal.fire({
+          title: "회원가입 실패",
+          text: "이미 등록된 회원입니다.",
+          icon: "warning" //"info,success,warning,error" 중 택1
+        })
+        router.go(-1)
+      } else {
+        this.mem = false
+      }
+    },
+    
     isArtist () {
       this.$store.state.isFan = false;
       this.$router.push('/signup');
@@ -106,8 +118,8 @@ export default {
   color: transparent;
 }
 
-.button-container {
-}
+/* .button-container {
+} */
 
 .button-group {
   display: flex;

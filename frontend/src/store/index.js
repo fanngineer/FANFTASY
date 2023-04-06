@@ -11,9 +11,9 @@ import Web3 from "web3"
 const web3 = new Web3(window.ethereum);
 const saleFactoryContractAddress = '0x0509b43FF9CcAC684ef00bc82020208b6F86d156';
 const saleFactoryContract = new web3.eth.Contract(SaleFactoryABI, saleFactoryContractAddress);
-// const API_URL = "https://fanftasy.kro.kr/api"
+const API_URL = "https://fanftasy.kro.kr/api"
 // const API_URL = "http://70.12.247.102:8080/api"
-const API_URL = "http://192.168.91.150:8080/api"
+// const API_URL = "http://192.168.91.150:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
@@ -75,7 +75,12 @@ const store = createStore({
       if (typeof window.ethereum !== "undefined") {
         console.log("설치되있음")
       } else {
-        alert("저희 사이트는 METAMASK가 필수입니다.")
+        Swal.fire({
+          title: "METAMASK 필수",
+          text: "저희 사이트는 METAMASK가 필수입니다.",
+          icon: "info" //"info,success,warning,error" 중 택1
+        })
+        // alert("저희 사이트는 METAMASK가 필수입니다.")
         //METAMASK 설치 페이지가 새 창에 뜸
         window.open(
           "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
@@ -95,6 +100,7 @@ const store = createStore({
       VueCookies.remove("profileImage");
       VueCookies.remove("userId");
       // VueCookies.remove("RefreshToken");
+      router.push('/')
 
       console.log("로그아웃");
     },
@@ -235,7 +241,7 @@ const store = createStore({
           this.state.success = false
         }
       } else {
-        // 로그인이 안되어 있을 경우
+        // 로그인이 안되어 있을 경우x`
         this.state.success = false
       }
     },
@@ -266,6 +272,12 @@ const store = createStore({
         .catch((error) => {
           console.log(error)
           this.state.success = false
+          Swal.fire({
+            title: "회원가입 실패",
+            text: "회원가입에 실패하였습니다.",
+            icon: "error" //"info,success,warning,error" 중 택1
+          })
+          router.go()
         })
     },
 
@@ -291,7 +303,11 @@ const store = createStore({
         })
         .catch((err) => {
           console.log(err)
-          alert("로그인 해주세요")
+          Swal.fire({
+            title: "실패",
+            text: "로그인 해주세요.",
+            icon: "error" //"info,success,warning,error" 중 택1
+          })
         })
     },
 
@@ -496,7 +512,6 @@ const store = createStore({
         console.log(res)
       })
       .then(()=>{
-        // alert("NFT 생성이 완료되었습니다.")
         Swal.fire({
           title: "성공",
           text: "NFT 생성이 완료되었습니다!",
@@ -511,7 +526,7 @@ const store = createStore({
           text: "NFT 생성이 실패하였습니다.",
           icon: "error" //"info,success,warning,error" 중 택1
         });
-        router.go()
+        // router.go()
       })
     },
 

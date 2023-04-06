@@ -421,7 +421,12 @@ export default {
       console.log('dd', a, '와:', a.textContent , '끝')
       window.navigator.clipboard.writeText(a).then(() => {
         // 복사가 완료되면 호출된다.
-        alert("메타마스크 주소를 복사했습니다!");
+        Swal.fire({
+          title: "복사 완료",
+          text: "METAMASK 지갑 주소를 복사했습니다!",
+          icon: "success" //"info,success,warning,error" 중 택1
+        })
+        // alert("메타마스크 주소를 복사했습니다!");
       });
     },
 
@@ -1133,8 +1138,8 @@ export default {
 }
 
 .profile-img-upload-btn{
-  width: 184px;
-  height: 184px;
+  width: 154px;
+  height: 154px;
   border-radius: 50%;
   display: flex;
   justify-content: center;

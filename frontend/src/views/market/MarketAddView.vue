@@ -49,6 +49,8 @@
 
 <script>
 import VueCookies from "vue-cookies"
+import Swal from 'sweetalert2'
+import router from "@/router"
 
 export default {
   name: "MarketAddView",
@@ -64,10 +66,39 @@ export default {
       selectedFile: null,
       endDate: null,
       now: Date.now(), 
+      role: null,
       // a: Date.
     }
   },
+  created(){
+    this.getUserDetail()
+  },
   methods: {
+    async getUserDetail(){
+      try{
+        const result = await this.$store.dispatch('userDetail')
+
+        console.log("result : " + result)
+        this.role = this.$store.state.role;
+        console.log(this.role)
+        this.isArtist()
+      }
+      catch (err){
+        console.log(err)
+      }
+    },
+
+    isArtist(){
+      if (this.role != 'artist') {
+        Swal.fire({
+          title: "접근 불가",
+          text: "권한이 없습니다!",
+          icon: "warning" //"info,success,warning,error" 중 택1
+        })
+        router.go(-1)
+      }
+    },
+
     handleFileUpload(event) {
       this.file = event.target.files[0];
       console.log(this.file);
