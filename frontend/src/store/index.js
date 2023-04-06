@@ -49,6 +49,7 @@ const store = createStore({
     mcards: [],
     mcard: [],
     otheruser:[],
+    resellDetailNFTs:[],
   },
   getters: {
     isLogin: function () {
@@ -586,6 +587,21 @@ const store = createStore({
         console.log(err)
       })
     },
+
+    resellDetailNFTs(context, NFTId) {
+      axios({
+        method: "get",
+        url: `${API_URL}/nft/resell/${NFTId}`,
+      })
+      .then((res) => {
+        console.log("123485678956")
+        console.log(res.data.data)
+        this.resellDetailNFTs = res.data.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
 
     },
     modules: {},
