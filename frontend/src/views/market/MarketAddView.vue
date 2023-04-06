@@ -72,6 +72,7 @@ export default {
   },
   created(){
     this.getUserDetail()
+    this.isLogin()
   },
   methods: {
     async getUserDetail(){
@@ -85,6 +86,20 @@ export default {
       }
       catch (err){
         console.log(err)
+      }
+    },
+
+    async isLogin(){
+      if (VueCookies.get("nickname") === null){
+        this.mem = true
+        await Swal.fire({
+          title: "로그인 되지 않았습니다.",
+          text: "로그인 후 이용해주세요",
+          icon: "warning" //"info,success,warning,error" 중 택1
+        })
+        router.go(-1)
+      } else {
+        this.mem = false
       }
     },
 

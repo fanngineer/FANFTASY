@@ -12,7 +12,7 @@
           <!-- <v-img src="@/assets/maingif.gif" style="width:350px; height: 550px;"></v-img> -->
         </span>
       </div>
-      <div style="text-align: center; font-size: 30px; margin-top: 14vh;">스크롤</div>
+      <div style="text-align: center; font-size: 30px; margin-top: 22vh;">스크롤</div>
       <div style="text-align: center;">
         <v-img src="@/assets/chevron-double-down.png" alt="" style="width: 35px; margin: auto;"></v-img>
       </div>

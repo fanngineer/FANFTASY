@@ -69,13 +69,13 @@ const store = createStore({
     },
   },
   mutations: {
-    installedMetamask() {
+    async installedMetamask() {
       // metamask 확장자가 설치 되어있는지 확인하는 method
       // Check if Web3 has already been injected by MetaMask
       if (typeof window.ethereum !== "undefined") {
         console.log("설치되있음")
       } else {
-        Swal.fire({
+        await Swal.fire({
           title: "METAMASK 필수",
           text: "저희 사이트는 METAMASK가 필수입니다.",
           icon: "info" //"info,success,warning,error" 중 택1

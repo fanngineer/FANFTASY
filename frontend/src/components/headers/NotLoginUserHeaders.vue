@@ -80,6 +80,8 @@
 
 <script>
 import VueCookies from "vue-cookies"
+import Swal from "sweetalert2"
+
 export default {
   name: "NotLoginUserHeaders",
   data() {
@@ -151,6 +153,11 @@ export default {
       }
       else if(Member === false) {
         console.log("회원이 아닙니다.");
+        Swal.fire({
+          title: "회원이 아닙니다.",
+          text: "회원가입 페이지로 이동합니다.",
+          icon: "warning",
+        })
         this.$router.push('/select');
       }
       else if(Member === null) {
