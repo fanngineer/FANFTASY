@@ -58,7 +58,7 @@ export default {
       this.role = 'fan';
     }
     else{
-      this.role = 'artist';
+      this.role = 'wait';
     }
     
   },
