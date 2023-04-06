@@ -248,7 +248,7 @@ const store = createStore({
       }
     },
 
-    async signup() {
+    async signup(context, payload) {
       console.log(this.state.address)
       console.log(this.state.CurrentAccount)
       await this.dispatch("changeNetWork")
@@ -671,12 +671,13 @@ const store = createStore({
       })
     },
 
-    async BuyToBlockChain(context, payload){
+    async BuyToBlockChain(context, payload) {
+      context.dispatch('sameAccount');
       const SaleContractAddress = payload.contractAddress;
       const SaleContract = new web3.eth.Contract(SaleABI, SaleContractAddress);
       const account  = VueCookies.get('Account');
       console.log(account);
-      const price = (payload.price) * (10 ** 18);
+      const price = web3.utils.toWei((payload.price), "ether");
       console.log(price);
       //  구매인데 판매 중인 nft의 가격을 value에 입력이 되어야한다.
       // const ans = SaleContract.methods.purchase().send({ from : account, value : price });
@@ -684,18 +685,7 @@ const store = createStore({
       .on("receipt", function(receipt) {
         console.log("Buy Receipt : ");
         console.log(receipt);
-      })
-      .on("error", function(err) {
-        console.log(err);
-        this.state.err = err;
-      })
-      // console.log(await ans);
-      // if(ans === null || ans === undefined) {
-      //   console.log("문제 발생")
-      // }
-      console.log(this.state.err);
 
-      if(this.state.err === null || this.state.err === undefined) {
         const accessToken = VueCookies.get('AccessToken');
         axios ({
           method: "put",
@@ -711,11 +701,16 @@ const store = createStore({
         .then((res) => {
           console.log(res.data.message);
         })
-      }
-      else{
-        alert("error");
-      }
+        .catch((err) => {
+          alert(err);
+        });
+      })
+      .on("error", function(err) {
+        console.error(err);
+        alert(err);
+      });
     },
+
     async resellDetailNFTs(context, NFTId) {
       try {
         const response = await axios({
@@ -729,6 +724,7 @@ const store = createStore({
     },
 
     async createSaleToBlockChain(context, payload) {
+      context.dispatch('sameAccount');
       const amount = web3.utils.toWei( payload.price, "ether");
       const account = VueCookies.get('Account');
       
@@ -789,13 +785,13 @@ const store = createStore({
         }
       })
       .then((res) => {
-        console.log('resellRegistration => res :', res);
-        console.log('res.data.message :', res.data.message);
+        console.log(res);
+        console.log(res.data.messege);
       })
       .catch((err) => {
-        console.log('err :',err);
+        console.log(err);
       })
-    }
+    },
 
   },
     modules: {},
