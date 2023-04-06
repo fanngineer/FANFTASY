@@ -161,12 +161,15 @@
       </div>
   
       <!-- 주의사항 -->
-      <div style="margin-bottom: 20px;">
+      <div style="margin-bottom: 15px;">
           <ui>
             <span style="font-weight: bold; font-size: 24px; background: linear-gradient(to right, #6A3FC1, #5B9BD5); color: transparent; -webkit-background-clip: text; margin: 15px;" >
               FANFTASY 유의사항
             </span>
-            <div style="font-size:14px">
+            <div style="font-size:14px; color: rgb(100,100,100);">
+              <li style="color:#6A3FC1; font-weight: bold;">
+                거래 수수료의 일부는 환경 보호를 위한 기금에 기부됩니다.
+              </li>
               <li>
                 구매는 메타마스크 계좌 내 에프티에스(FTS) 토큰이 차감되는 방식으로 진행됩니다.
               </li>
@@ -400,7 +403,7 @@ export default {
 li{
   padding-left: 30px; 
   text-indent: -20px;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 </style>

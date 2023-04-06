@@ -6,39 +6,44 @@
     padding-top: 100px;
     text-align: center;
     /* display: flex; */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;">
     <span class="minting-title">
       NFT 생성
     </span>
-    <br>
-    <br>
-    <label for="">파일선택</label>  
-    <!-- <input v-on:change="previewFiles(this.files)" type="file" accept="image/*, video/*, audio/*" style="border:solid"> -->
-    <input type="file" @change="handleFileUpload" accept="image/*, video/*, audio/*"/>
-    <br>
-    <br>
-    <label for="">제목</label>
-    <input v-model="title" type="text" style="border:solid" placeholder="제목을 입력해주세요.">
-    <br>
-    <br>
-    <label for="">내용</label>
-    <textarea v-model="content" name="" id="" cols="30" rows="4" style="border:solid" placeholder="상세내용을 입력해주세요."></textarea>
-    <br>
-    <br>
-    <label for="">발매 갯수</label>
-    <input v-model="totalNum" type="text" style="border:solid" placeholder="발매할 NFT수를 입력해주세요.">
-    <br>
-    <br>
-    <label for="">발매가격</label>
-    <input v-model="originPrice" type="text" style="border:solid" placeholder="판매가격을 입력해주세요.">
-    <br>
-    <br>
-    <label for="">판매종료일</label>
-    <input v-model="endDate" type="date" style="border:solid" >
-
-    <br>
-    <br>
+    <div style="width:400px; justify-content: left;">
+      <br>
+      <br>
+      <label for="" style="margin-right:10px">파일선택</label>  
+      <!-- <input v-on:change="previewFiles(this.files)" type="file" accept="image/*, video/*, audio/*" style="border:solid"> -->
+      <input type="file" @change="handleFileUpload" accept="image/*, video/*, audio/*"/>
+      <br>
+      <br>
+      <label for="minting-title">제목</label>
+      <input id="minting-title" v-model="title" type="text" class="minting-input" style="height: 40px;" placeholder="제목을 입력해주세요.">
+      <br>
+      <br>
+      <div style="position:relative">
+        <label for="minting-content" style="position: absolute; margin-bottom:100px; top: 10px; left:20px">내용</label>
+        <textarea v-model="content" name="minting-content" id="" cols="30" rows="5" class="minting-input" style="padding-top: 10px" placeholder="상세내용을 입력해주세요."></textarea>
+      </div>
+      <br>
+      <label for="">발매 갯수</label>
+      <input v-model="totalNum" type="text" class="minting-input" style="height:40px;" placeholder="발매할 NFT수를 입력해주세요.">
+      <br>
+      <br>
+      <label for="">발매가격</label>
+      <input v-model="originPrice" type="text" class="minting-input" style="height:40px;" placeholder="판매가격을 입력해주세요.">
+      <br>
+      <br>
+      <label for="">판매종료일</label>
+      <input v-model="endDate" type="date" class="minting-input" style="height:40px; padding-right:10px" >
+  
+      <br>
+      <br>
+    </div>
     <!-- <label for="">파일 타입</label>
     <input type="combobox" style="border:solid"> -->
     <button @click="this.addNFT()" class="minting-button">
@@ -156,6 +161,12 @@ export default {
   font-size: 45px;
   font-weight: bold;
   color: #6a3fc1;
+}
+.minting-input{
+  border:2px solid #DAD2E9; 
+  margin-left:12px; 
+  padding-left:10px; 
+  border-radius: 15px;
 }
 .minting-button{
   width: 20vw;
