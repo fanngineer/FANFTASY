@@ -1,19 +1,19 @@
 <template>
   <div style="
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     /* background-color: white; */
     padding-top: 100px;
     text-align: center;
     /* display: flex; */
     justify-content: center;
     align-items: center;">
-    <span style="font-size: 45px">
+    <span class="minting-title">
       NFT 생성
     </span>
     <br>
     <br>
-    <label for="">파일선택</label>
+    <label for="">파일선택</label>  
     <!-- <input v-on:change="previewFiles(this.files)" type="file" accept="image/*, video/*, audio/*" style="border:solid"> -->
     <input type="file" @change="handleFileUpload" accept="image/*, video/*, audio/*"/>
     <br>
@@ -23,7 +23,7 @@
     <br>
     <br>
     <label for="">내용</label>
-    <textarea v-model="content" name="" id="" cols="30" rows="10" style="border:solid" placeholder="상세내용을 입력해주세요."></textarea>
+    <textarea v-model="content" name="" id="" cols="30" rows="4" style="border:solid" placeholder="상세내용을 입력해주세요."></textarea>
     <br>
     <br>
     <label for="">발매 갯수</label>
@@ -41,8 +41,8 @@
     <br>
     <!-- <label for="">파일 타입</label>
     <input type="combobox" style="border:solid"> -->
-    <button @click="this.addNFT()">
-      NFT 생성
+    <button @click="this.addNFT()" class="minting-button">
+      생성 시작
     </button>
   </div>
 </template>
@@ -106,5 +106,22 @@ export default {
 </script>
 
 <style>
-
+.minting-title{
+  font-size: 45px;
+  font-weight: bold;
+  color: #6a3fc1;
+}
+.minting-button{
+  width: 20vw;
+  height: 8vh;
+  border-radius: 15px;
+  font-size: 2vw;
+  font-weight: bold;
+  border: 1px #9B7CF8 solid;
+  color: #9B7CF8; 
+}
+.minting-button:hover{
+  background-color: #9B7CF8;
+  color: white;
+}
 </style>
