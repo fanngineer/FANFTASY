@@ -3,9 +3,10 @@ import VueCookies from "vue-cookies"
 import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
+import Swal from 'sweetalert2'
 
-const API_URL = "https://fanftasy.kro.kr/api"
-// const API_URL = "http://70.12.247.102:8080/api"
+// const API_URL = "https://fanftasy.kro.kr/api"
+const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
@@ -49,7 +50,6 @@ const store = createStore({
     mcards: [],
     mcard: [],
     otheruser:[],
-    resellDetailNFTs:[],
   },
   getters: {
     isLogin: function () {
@@ -465,9 +465,7 @@ const store = createStore({
         regArtistId : payload.regArtistId,
         fileType : payload.fileType,
       }
-      console.log("qwerwqerqwerwqerqwer")
-      console.log(ppayload)
-      console.log("asaaaaaaaaaaaaaa")
+
       formData.append("info", JSON.stringify(ppayload));
       formData.append("endDate", payload.endDate);
       
@@ -481,8 +479,23 @@ const store = createStore({
       .then((res) => {
         console.log(res)
       })
+      .then(()=>{
+        // alert("NFT 생성이 완료되었습니다.")
+        Swal.fire({
+          title: "성공",
+          text: "NFT 생성이 완료되었습니다!",
+          icon: "success" //"info,success,warning,error" 중 택1
+        });
+        router.go(-1)
+      })
       .catch((err) => {
         console.log(err)
+        Swal.fire({
+          title: "실패",
+          text: "NFT 생성이 실패하였습니다.",
+          icon: "error" //"info,success,warning,error" 중 택1
+        });
+        router.go()
       })
     },
 
@@ -588,20 +601,17 @@ const store = createStore({
       })
     },
 
-    resellDetailNFTs(context, NFTId) {
-      axios({
-        method: "get",
-        url: `${API_URL}/nft/resell/${NFTId}`,
-      })
-      .then((res) => {
-        console.log("123485678956")
-        console.log(res.data.data)
-        this.resellDetailNFTs = res.data.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
+    async resellDetailNFTs(context, NFTId) {
+      try {
+        const response = await axios({
+          method: "get",
+          url: `${API_URL}/nft/resell/${NFTId}`,
+        });
+        return response.data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
     },
     modules: {},

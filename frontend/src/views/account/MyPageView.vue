@@ -722,13 +722,14 @@ export default {
       // this.$router.go(-1)
     },
     
-    showModalImg(nft){
-      const NFTId = nft.nftId
-      console.log(NFTId)
-      this.$store.dispatch('resellDetailNFTs', NFTId)
-      this.nftInfo = this.$store.state.resellDetailNFTs
 
-      console.log('nft: ',nft)
+    async showModalImg(nft) {
+      const NFTId = nft.nftId;
+      const resellDetailNFTs = await this.$store.dispatch("resellDetailNFTs", NFTId);
+      console.log(resellDetailNFTs);
+      this.nftInfo = resellDetailNFTs;
+
+      console.log('nftInfo: ',this.nftInfo)
       const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
       console.log(fileCid)
       Swal.fire({
@@ -774,11 +775,13 @@ export default {
         }
       })
     },
-    showModalVideo(nft){
-      const NFTId = nft.nftId
-      console.log(NFTId)
-      this.$store.dispatch('resellDetailNFTs', NFTId)
-      this.nftInfo = this.$store.state.resellDetailNFTs
+
+    async showModalVideo(nft) {
+      const NFTId = nft.nftId;
+      const resellDetailNFTs = await this.$store.dispatch("resellDetailNFTs", NFTId);
+      console.log(resellDetailNFTs);
+      this.nftInfo = resellDetailNFTs;
+
       console.log('비디오nft : ', nft)
       const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
       Swal.fire({
@@ -819,11 +822,13 @@ export default {
         }
       })
     },
-    showModalAudio(nft){
-      const NFTId = nft.nftId
-      console.log(NFTId)
-      this.$store.dispatch('resellDetailNFTs', NFTId)
-      this.nftInfo = this.$store.state.resellDetailNFTs
+
+    async showModalAudio(nft) {
+      const NFTId = nft.nftId;
+      const resellDetailNFTs = await this.$store.dispatch("resellDetailNFTs", NFTId);
+      console.log(resellDetailNFTs);
+      this.nftInfo = resellDetailNFTs;
+
       const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
       Swal.fire({
         title: '소유 NFT 정보',
