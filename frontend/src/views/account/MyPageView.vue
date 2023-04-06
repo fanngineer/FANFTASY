@@ -81,14 +81,74 @@
         </div>
       </div>
       
-      
+       
       <v-container style="width:800px">
         <v-row>
           <v-col v-for="(nft,index) in userNFTs" :key="index" cols="12" md="3">
             <div class="own-nfts-card">
-              <router-link :to="{name:'MarketDetailView', params:{id: nft.nftSource.nftSourceId}}" style="min-width:164px; text-decoration: none; color:black; display:flex; flex-direction: column; justify-content: space-between;">
+              <button v-if="nft.nftSource.fileType === 'image'" @click="showModalImg(nft)" class="button-owned-nft">
+                <v-img v-if="nft.nftSource.fileType === 'image'" :src="nft.nftSource.fileCID" alt="이미지" class="nft-img-owned"></v-img>
+                <div style="margin-left: 5px; margin-bottom: 15px">
+                  <div class="item-name" style="font-size:20px;">
+                    {{ nft.nftSource.title }}
+                  </div>
+                  <div style="font-size:15px">
+                    by {{ nft.nftSource.regArtist.nickname }}
+                  </div>
+                  <div style="font-size:15px">
+                    <span>
+                      #{{ nft.editionNum }}
+                    </span>
+                    <span style="font-size:10px">
+                      edition
+                    </span>
+                  </div>
+                </div>
+              </button>
+              <button v-if="nft.nftSource.fileType === 'video'" @click="showModalVideo(nft)" class="button-owned-nft">
+                <video v-if="nft.nftSource.fileType === 'video'" :src="nft.nftSource.fileCID" alt="비디오" class="nft-img-owned" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
+                <div style="margin-left: 5px; margin-bottom: 15px">
+                    <div class="item-name" style="font-size:20px;">
+                      {{ nft.nftSource.title }}
+                    </div>
+                    <div style="font-size:15px">
+                      by {{ nft.nftSource.regArtist.nickname }}
+                    </div>
+                    <div style="font-size:15px">
+                      <span>
+                        #{{ nft.editionNum }}
+                      </span>
+                      <span style="font-size:10px">
+                        edition
+                      </span>
+                    </div>
+                  </div>
+              </button>
+              <button v-if="nft.nftSource.fileType === 'audio'" @click="showModalAudio(nft)" class="button-owned-nft">
+                <audio v-if="nft.nftSource.fileType === 'audio'" controls :src="nft.nftSource.fileCID" alt="오디오" class="nft-img-owned"></audio>
+                <div style="margin-left: 5px; margin-bottom: 15px">
+                    <div class="item-name" style="font-size:20px;">
+                      {{ nft.nftSource.title }}
+                    </div>
+                    <div style="font-size:15px">
+                      by {{ nft.nftSource.regArtist.nickname }}
+                    </div>
+                    <div style="font-size:15px">
+                      <span>
+                        #{{ nft.editionNum }}
+                      </span>
+                      <span style="font-size:10px">
+                        edition
+                      </span>
+                    </div>
+                  </div>
+              </button>
+            </div>
+            <!-- <button v-if="nfr.nftSource.fileType === 'audio'" @click="showModalAudio">오디오 팔아</button> -->
+            
+            <!-- <div class="own-nfts-card">
+              <router-link :to="{name:'UserNFTView', params:{nftId: nft.nftSource.nftSourceId}}" style="min-width:164px; text-decoration: none; color:black; display:flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                  <!-- <img :src="nft.nftSource.fileCID" alt="no" class="nft-img-owned"> -->
                   <v-img v-if="nft.nftSource.fileType === 'image'" :src="nft.nftSource.fileCID" alt="이미지" class="nft-img-owned"></v-img>
                   <video v-if="nft.nftSource.fileType === 'video'" :src="nft.nftSource.fileCID" alt="비디오" class="nft-img-owned" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
                   <audio v-if="nft.nftSource.fileType === 'audio'" controls :src="nft.nftSource.fileCID" alt="오디오" class="nft-img-owned"></audio>
@@ -100,9 +160,6 @@
                   <div style="font-size:15px">
                     by {{ nft.nftSource.regArtist.nickname }}
                   </div>
-                  <!-- <div style="font-size:15px">
-                    {{ nft.nftSource.originPrice }} FTS
-                  </div> -->
                   <div style="font-size:15px">
                     <span>
                       #{{ nft.editionNum }}
@@ -114,7 +171,7 @@
                   
                 </div>
               </router-link>
-            </div>
+            </div> -->
           </v-col>
         </v-row>
       </v-container>
@@ -133,6 +190,7 @@ import Web3 from "web3"
 import  VueCookies  from 'vue-cookies';
 import { Buffer } from 'buffer';
 // import NFTCard from "@/components/market/NFTCard.vue"
+import Swal from 'sweetalert2'
 
 export default {
   name: 'MyPageView',
@@ -158,6 +216,7 @@ export default {
       userData : [],
       file: null,
       changeNickname: false,
+
     }
   },
   async created() {
@@ -371,7 +430,181 @@ export default {
       // this.$router.go(-1)
     },
 
+    showModalImg(nft){
+      console.log('nft: ',nft)
+      const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
+      Swal.fire({
+        title: '소유 NFT 정보',
+        confirmButtonText: '판매',
+        showCancelButton:true,
+        cancelButtonText: '취소',
+        // buttonsStyling: false,
+        html:`
+          <div style="display:flex; ">
+            <img src="${fileCid}" style="height:500px; width:auto"/>
+            <div style="margin-left:10px; display:flex; flex-direction:column; text-align:start;">
+              <div>
+                <label for="title" style="font-weight:bold;">NFT 이름</label>
+                <div id="title">${nft.nftSource.title}</div>
+              </div>
+              <div>
+                <label for="nickname" style="font-weight:bold;">아티스트</label>
+                <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
+              </div>
+              <div>
+                <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
+                <div id="edition-num">#. ${nft.editionNum}</div>
+              </div>
+            </div>
+          </div>
+        `,
+        customClass: {
+          confirmButton: 'btn-right',
+          cancelButton: 'btn-left'
+        },
+      }).then((result)=>{
+        if (result.isConfirmed){
+          console.log('confirm')
+          this.$router.push({name:'UserNFTView', params:{nftId:nft.nftId}})
+        } else if (result.isDenied){
+          console.log('Deny')
+        }
+      })
+    },
+    showModalVideo(nft){
+      console.log('비디오nft : ', nft)
+      const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
+      Swal.fire({
+        title: '소유 NFT 정보',
+        confirmButtonText: '판매',
+        showCancelButton:true,
+        cancelButtonText: '취소',
+        html:`
+        <div style="display:flex; ">
+          <div>
+            <video src="${fileCid}" alt="비디오" autoplay muted style="height:500px; width:auto;"/>
 
+          </div>
+          <div style="margin-left:10px; display:flex; flex-direction:column; text-align:start; width:100%;">
+            <div>
+              <label for="title" style="font-weight:bold; ">NFT 이름</label>
+              <div id="title" style="text-align:right; margin-bottom:10px;">${nft.nftSource.title}</div>
+            </div>
+            <hr>
+            <div>
+              <label for="nickname" style="font-weight:bold;">아티스트</label>
+              <div id="artist-nickname" style="text-align:right; margin-bottom:10px;">by. ${nft.nftSource.regArtist.nickname}</div>
+            </div>
+            <hr>
+            <div>
+              <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
+              <div id="edition-num" style="text-align:right; margin-bottom:10px;">#. ${nft.editionNum}</div>
+            </div>
+            <hr>
+          </div>
+        </div>
+        `,
+      }).then((result)=>{
+        if (result.isConfirmed){
+          console.log('confirm')
+          this.$router.push({name:'UserNFTView', params:{nftId:nft.nftId}})
+        } else if (result.isDenied){
+          console.log('Deny')
+        }
+      })
+    },
+    showModalAudio(nft){
+      const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
+      Swal.fire({
+        title: '소유 NFT 정보',
+        confirmButtonText: '판매',
+        showCancelButton:true,
+        cancelButtonText: '취소',
+        html:`
+        <div style="display:flex; ">
+          <iframe src="${fileCid}" alt="오디오" class="nft-img-owned" style="height:500px; width:auto;"></iframe>
+            <div style="margin-left:10px; display:flex; flex-direction:column; text-align:start;">
+              <div>
+                <label for="title" style="font-weight:bold;">NFT 이름</label>
+                <div id="title">${nft.nftSource.title}</div>
+              </div>
+              <div>
+                <label for="nickname" style="font-weight:bold;">아티스트</label>
+                <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
+              </div>
+              <div>
+                <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
+                <div id="edition-num">#. ${nft.editionNum}</div>
+              </div>
+            </div>
+          </div>
+        `,
+      }).then((result)=>{
+        if (result.isConfirmed){
+          console.log('confirm')
+          this.$router.push({name:'UserNFTView', params:{nftId:nft.nftId}})
+        } else if (result.isDenied){
+          console.log('Deny')
+        }
+      })
+
+    },
+
+    showModal(nft){
+      console.log(nft)
+      console.log('되냐?',nft.owner)
+      console.log(JSON.stringify(nft))
+      const c = nft.nftSource.fileType.toString()
+      console.log('c:',c, c.type, c==='image', c==="image")
+      const a = JSON.stringify(nft.nftSource.fileCID)
+      const b = a.replace('"','').replace('"','')
+      Swal.fire({
+        title: '모달 타이틀',
+        confirmButtonText: '판매',
+        showCancelButton:true,
+        cancelButtonText: '취소',
+        buttonsStyling: false,
+        html:`
+        <div>
+          div가 됨?  
+        </div>
+        <div v-if="${c}=='video'">
+          비디오
+          <video src="${b}" alt="비디오" autoplay muted style="height:400px"/>
+        </div>
+        <div v-else-if="${c}==='image'" >
+          이미지
+          <img src="${b}" style="height:400px"/>
+        </div>
+        <div v-else-if="${c}==='audio'">
+          오디오
+          <audio controls :src="${b}" alt="오디오"></audio>
+        </div>  
+        <div>
+          ${c}
+          시발 이게 왜 됨?
+        </div>
+        ${b}
+        이거임
+        ${a}
+        이미지 태그
+        <div>
+        </div>
+        
+          `,
+        customClass: {
+          confirmButton: 'btn-right',
+          cancelButton: 'btn-left'
+        },
+      }).then((result)=>{
+        if (result.isConfirmed){
+          console.log('confirm')
+          this.$router.push({name:'UserNFTView', params:{nftId:17}})
+        } else if (result.isDenied){
+          console.log('Deny')
+        }
+      })
+    },
   },
   watch() {
 
@@ -586,4 +819,31 @@ export default {
   align-items: center;
   box-shadow: 0px 5px 5px gray; 
 }
+
+
+.button-owned-nft{
+  min-width:164px; 
+  text-decoration: none; 
+  color:black; 
+  display:flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+}
+
+.btn-right {
+  width: 100px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: #9B7CF8;
+  margin-left: 5px;
+  box-shadow: 0px 5px 5px rgba(188,188,188,0.8);
+}
+.btn-left {
+  width: 100px;
+  height: 50px;
+  border-radius: 15px;
+  margin-right: 5px;
+  box-shadow: 0px 5px 5px rgba(188,188,188,0.8);
+}
+
 </style>
