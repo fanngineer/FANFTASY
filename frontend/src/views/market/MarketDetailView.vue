@@ -38,7 +38,16 @@
           <div style="width: 500px; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
             <div>
-              <p>소유자 : {{ this.card.data.regArtist.nickname }}</p>
+              <!-- <p>소유자 : {{ this.card.data.regArtist.nickname }}</p> -->
+              <p class="df" style="justify-content: space-between;">
+                  <span class="df">
+                    소유자 : {{ this.card.data.regArtist.nickname }}
+                  </span>
+                  <span class="df" style="justify-content: end;">
+                    <router-link v-if="this.card.data.regArtist.userId != this.userId" :to="{ name: 'userpageview', params: {id: this.card.data.regArtist.userId }}">정보 더보기</router-link>
+                    <router-link v-else :to="{name: 'mypageview'}">정보 더보기</router-link>
+                  </span>
+                </p>
               <p>블록체인 : FANFTASY </p>
               <p>컨트랙트 주소 : 0xaeb2DC75a63352947Bdbe6d9E6A37c0752481007 </p>
               <p>토큰 표준 : ERC721 </p>
@@ -50,13 +59,13 @@
             <p>
               <table>
                 <thead>
-                  <tr>
+                  <tr style="text-align: start; margin-left: 10px;">
                     <th >발매일시</th>
                     <th >발매 NFT 에디션 개수</th>
                     <th >가격</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style="text-align: center;">
                   <!-- <tr v-for="(log, index) in tradeLog" :key="index"> 
                     <td>{{ log.date }}</td>
                     <td>{{ log.edition }}</td>
@@ -90,12 +99,12 @@
                       alt="프로필 사진"
                       class="nft-detail-small-img fl"
                     ></v-img> -->
-                    <span style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                    <span style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; ">
                       <img
                       class="profile-image"
                       :src="this.card.data.regArtist.profileImg"
                       alt=""
-                      style="object-fit: fill;"
+                      style="object-fit: fill; width: 35px; height: 35px; border-radius: 50%; margin-right: 10px; margin-top: 8px;"
                       />
                     </span>
                     <p>Artist</p>
@@ -167,7 +176,7 @@
             </span>
             <div style="font-size:14px">
               <li>
-                구매는 메타마스크 계좌 내 엔에프엔(NFN) 토큰이 차감되는 방식으로 진행됩니다.
+                구매는 메타마스크 계좌 내 에프티에스(FTS) 토큰이 차감되는 방식으로 진행됩니다.
               </li>
               <li>
                 구매 거래가 체결되면 거래 취소가 불가하므로 신중하게 결정하여 진행해주세요.
@@ -176,7 +185,7 @@
                 거래가 완료되면 해당 금액은 메타마스크 내 거래 가능 금액에서 제외됩니다.
               </li>
               <li>
-                메타마스크 계좌 내 계좌에서 엔에프엔(NFN) 토큰이 차감되어 거래가 체결됩니다.
+                메타마스크 계좌 내 계좌에서 에프티에스(FTS) 토큰이 차감되어 거래가 체결됩니다.
               </li>
               <li>
                 NFT의 외부 입출금은 현재 지원하지 않습니다. 
@@ -213,6 +222,7 @@ export default {
       card: [],
       profile: VueCookies.get('profileImage'),
       userId: VueCookies.get('userId'),
+      address: VueCookies.get('Account'),
     }
   },
   created() {

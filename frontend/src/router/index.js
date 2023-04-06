@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/mainpage/HomeView.vue';
 import MyPageView from '../views/account/MyPageView.vue';
-import MyPageUpdateView from '../views/account/MyPageUpdateView';
+import UserPageView from '../views/account/UserPageView.vue';
+// import MyPageUpdateView from '../views/account/MyPageUpdateView';
 import MarketListView from '../views/market/MarketListView.vue';
 import MarketDetailView from '../views/market/MarketDetailView.vue';
 import MarketAddView from '../views/market/MarketAddView.vue';
@@ -36,15 +37,20 @@ const routes = [
     component: CommunityDetailView
   },
   {
+    path: '/userpage/:id',
+    name: 'userpageview',
+    component: UserPageView
+  },
+  {
     path: '/mypage',
     name: 'mypageview',
     component: MyPageView
   },
-  {
-    path: '/mypageupdate',
-    name: 'mypageupdate',
-    component: MyPageUpdateView
-  },
+  // {
+  //   path: '/mypageupdate',
+  //   name: 'mypageupdate',
+  //   component: MyPageUpdateView
+  // },
   {
     path: '/drops',
     name: 'MarketListView',

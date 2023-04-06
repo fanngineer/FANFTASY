@@ -37,7 +37,15 @@
             <div style="width: 500px; margin:20px">
               <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">NFT 정보</p>
               <div>
-                <p>소유자 : {{ this.card.data.owner.nickname }}</p>
+                <p class="df" style="justify-content: space-between;">
+                  <span class="df">
+                    소유자 : {{ this.card.data.owner.nickname }}
+                  </span>
+                  <span class="df" style="justify-content: end;">
+                    <router-link v-if="this.card.data.owner.userId != this.userId" :to="{ name: 'userpageview', params: {id: this.card.data.owner.userId }}">정보 더보기</router-link>
+                    <router-link v-else :to="{name: 'mypageview'}">정보 더보기</router-link>
+                  </span>
+                </p>
                 <p>블록체인 : FANFTASY </p>
                 <p>컨트랙트 주소 : 0xaeb2DC75a63352947Bdbe6d9E6A37c0752481007 </p>
                 <p>토큰 표준 : ERC721 </p>
@@ -49,13 +57,13 @@
             <p>
               <table style="width: 500px;" >
                 <thead>
-                  <tr style="text-align: start; margin-left: 10px; ">
+                  <tr style="text-align: start; margin-left: 10px;">
                     <th >거래일시</th>
                     <th >NFT 에디션 번호</th>
                     <th >가격</th>
                   </tr>
                 </thead>
-                <tbody  style="text-align: center;">
+                <tbody style="text-align: center;">
                   <tr v-for="(log, index) in tradeLog" :key="index"> 
                     <td >{{ log.date }}</td>
                     <td >{{ log.edition }}</td>
@@ -81,13 +89,22 @@
                 <br />
                 <div class="sb">
                   <span class="ib">
-                    <v-img
+                    <!-- <v-img
                       :src="this.card.data.nftSource.regArtist.profileImg"
                       alt="프로필 사진"
-                      class="nft-detail-small-img fl"
-                    ></v-img>
-                    <p>Artist</p>
-                    <p>{{ this.card.data.nftSource.regArtist.nickname }}</p>
+                      class="profile-image nft-detail-small-img fl"
+                      style="object-fit: fill; width: 35px; height: 35px; border-radius: 50%; margin-right: 10px; margin-top: 8px;"
+                    ></v-img> -->
+                    <span style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; ">
+                      <img
+                      class="profile-image"
+                      :src="this.card.data.nftSource.regArtist.profileImg"
+                      alt=""
+                      style="object-fit: fill; width: 35px; height: 35px; border-radius: 50%; margin-right: 10px; margin-top: 8px;"
+                      />
+                      <p>Artist</p>
+                      <p>{{ this.card.data.nftSource.regArtist.nickname }}</p>
+                    </span>
                   </span>
                   <span class="ib">
                     <v-icon v-if="this.card.data.nftSource.fileType === 'image'" icon="mdi-image" class="nft-detail-small-img fl"></v-icon>
@@ -151,7 +168,7 @@
             </span>
             <div style="font-size:14px">
               <li>
-                구매는 메타마스크 계좌 내 엔에프엔(NFN) 토큰이 차감되는 방식으로 진행됩니다.
+                구매는 메타마스크 계좌 내 에프티에스(FTS) 토큰이 차감되는 방식으로 진행됩니다.
               </li>
               <li>
                 구매 거래가 체결되면 거래 취소가 불가하므로 신중하게 결정하여 진행해주세요.
@@ -160,7 +177,7 @@
                 거래가 완료되면 해당 금액은 메타마스크 내 거래 가능 금액에서 제외됩니다.
               </li>
               <li>
-                메타마스크 계좌 내 계좌에서 엔에프엔(NFN) 토큰이 차감되어 거래가 체결됩니다.
+                메타마스크 계좌 내 계좌에서 에프티에스(FTS) 토큰이 차감되어 거래가 체결됩니다.
               </li>
               <li>
                 NFT의 외부 입출금은 현재 지원하지 않습니다. 
@@ -214,6 +231,7 @@ export default {
       //   nftSourceId,
       //   currentPrice
       // }
+      // console.log(nftSourceId)
       await this.$store.dispatch("getMarketDetail", nftSourceId)
       // console.log(this.card)
       this.card = this.$store.mcard

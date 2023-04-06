@@ -116,7 +116,16 @@
           <!-- <NFTCardR v-for="i in 4" :key="i" class="nft-card-class"/> -->
 
         </div>
-        </div>
+        <span>
+          <router-link to="/market" style="text-decoration: none; color: #9B7CF8;">
+            <div class="go-my-box2">
+              <p style="padding-top: 7px; font-size: 16px;">
+                SEE MORE RESELLING NFT
+              </p> 
+            </div>
+          </router-link>
+        </span>
+      </div>
     </div>
 
     <div class="content section">
@@ -351,7 +360,7 @@ export default {
       //   page,
       //   keyword,
       // }
-      await this.$store.dispatch("userNFTs")
+      await this.$store.dispatch("userNFTs",1)
       this.ocards = this.$store.userNFTs
     },
 
@@ -482,6 +491,18 @@ body {
   border-radius: 50px;
   margin: auto;
   background: #9B7CF8;
+  vertical-align: middle;
+  font-family: KCC-Ganpan;
+}
+
+.go-my-box2 {
+  width: 300px;
+  height: 40px;
+  /* font-size: 30px; */
+  border: solid 1px;
+  border-radius: 50px;
+  margin: auto;
+  background: white;
   vertical-align: middle;
   font-family: KCC-Ganpan;
 }

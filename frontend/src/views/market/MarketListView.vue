@@ -245,12 +245,12 @@ export default {
   display: inline-block;
   position: relative;
   font-weight: bolder;
-  color: white;
+  /* color: white; */
 }
 .filter-btn:after {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  position: absolute;
+  /* position: absolute; */
   content: "";
   bottom: -5%;
   display: block;

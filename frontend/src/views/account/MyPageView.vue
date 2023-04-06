@@ -43,15 +43,17 @@
           </div>
         </div>
         
-        <div style="margin-top: auto;">
+        <div v-show="changeNickname === false" style="margin-top: auto;">
           <router-link :to="{name: 'MarketAddView'}" style="text-decoration: none;">
             <button v-if="this.role === 'artist'" class="charge-button" @click="goToAdd()" >
               NFT 생성
             </button>
           </router-link>
           <button class="charge-button" @click="charge()">
-            NFN 충전
+          <!-- <button class="charge-button" @click="showVideoModal('VIDEO_ID');"> -->
+            FTS 충전
           </button>
+          <video-modal :video-id="videoId" v-if="isVideoModalOpen" @close="closeVideoModal" />
         </div>
       </div>
       
@@ -73,16 +75,46 @@
       <hr style="width:100%">
   
       <!-- 메뉴 콤보박스 -->
-      <div style="display: flex; justify-content: end;">
+      <div v-if="this.seto === 1" style="display: flex; justify-content: end; margin-top: 10px;">
         <div style="margin-left:14px; width:200px; border-radius: 50% !important;">
           <div>
-            <v-combobox :items="myNFTmenu"></v-combobox> 
+            <select  class="input-category input font-medium" v-model="selected" name="" id="" @change="this.onItemSelected()">
+              <option value="1" selected>최신 순</option>
+              <option value="2">이름 순 : A→Z</option>
+              <option value="3">이름 순 : Z→A</option>
+            </select>
+            <!-- <v-combobox v-model="selected" :items="myNFTmenu" native="onItemSelected"></v-combobox>  -->
           </div>
         </div>
       </div>
-      
-       
-      <v-container style="width:800px">
+
+      <div v-if="this.seto === 3" style="display: flex; justify-content: start; margin-top: 10px;">
+        <div style="margin-left:14px; width:200px; border-radius: 50% !important;">
+          <div>
+            <button
+                v-on:click="selectDrops"
+                v-if="sedm === 1"
+                class="filter-btn"
+              >
+                DROPS
+              </button>
+              <button v-on:click="selectDrops" v-else class="filter-btn2">
+                DROPS
+              </button>
+              <button
+                v-on:click="selectMarket"
+                v-if="sedm === 2"
+                class="filter-btn"
+              >
+                MARKET
+              </button>
+              <button v-on:click="selectMarket" v-else class="filter-btn2">
+                MARKET
+              </button>
+          </div>
+        </div>
+      </div>
+      <v-container v-if="this.seto === 1" style="width:800px">
         <v-row>
           <v-col v-for="(nft,index) in userNFTs" :key="index" cols="12" md="3">
             <div class="own-nfts-card">
@@ -175,6 +207,80 @@
           </v-col>
         </v-row>
       </v-container>
+      
+      <v-container v-if="this.seto === 3 & this.sedm === 1" style="width:800px">
+        <v-row>
+          <v-col v-for="(nft, index) in userLikeDropsNFTs" :key="index" cols="12" md="3">
+            <div class="own-nfts-card">
+              <router-link :to="{name:'MarketDetailView', params:{id: nft.nftSourceId}}" style="min-width:164px; text-decoration: none; color:black; display:flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <!-- <img :src="nft.nftSource.fileCID" alt="no" class="nft-img-owned"> -->
+                  <v-img v-if="nft.fileType === 'image'" :src="nft.fileCID" alt="이미지" class="nft-img-owned"></v-img>
+                  <video v-if="nft.fileType === 'video'" :src="nft.fileCID" alt="비디오" class="nft-img-owned" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
+                  <audio v-if="nft.fileType === 'audio'" controls :src="nft.fileCID" alt="오디오" class="nft-img-owned"></audio>
+                </div>
+                <div style="margin-left: 5px; margin-bottom: 15px">
+                  <div class="item-name" style="font-size:20px;">
+                    {{ nft.title }}
+                  </div>
+                  <div style="font-size:15px">
+                    by {{ nft.regArtist.nickname }}
+                  </div>
+                  <!-- <div style="font-size:15px">
+                    {{ nft.nftSource.originPrice }} FTS
+                  </div> -->
+                  <div style="font-size:15px">
+                    <span>
+                      {{ nft.remainNum }} / {{ nft.totalNum }} 개
+                    </span>
+                    <!-- <span style="font-size:10px">
+                      edition
+                    </span> -->
+                  </div>
+                  
+                </div>
+              </router-link>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container v-if="this.seto === 3 & this.sedm === 2" style="width:800px">
+        <v-row>
+          <v-col v-for="(nft, index) in userLikeMarketNFTs" :key="index" cols="12" md="3">
+            <div class="own-nfts-card">
+              <router-link :to="{name:'ResellDetailView', params:{id: nft.nftSource.nftSourceId}}" style="min-width:164px; text-decoration: none; color:black; display:flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <!-- <img :src="nft.nftSource.fileCID" alt="no" class="nft-img-owned"> -->
+                  <v-img v-if="nft.nftSource.fileType === 'image'" :src="nft.nftSource.fileCID" alt="이미지" class="nft-img-owned"></v-img>
+                  <video v-if="nft.nftSource.fileType === 'video'" :src="nft.nftSource.fileCID" alt="비디오" class="nft-img-owned" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
+                  <audio v-if="nft.nftSource.fileType === 'audio'" controls :src="nft.nftSource.fileCID" alt="오디오" class="nft-img-owned"></audio>
+                </div>
+                <div style="margin-left: 5px; margin-bottom: 15px">
+                  <div class="item-name" style="font-size:20px;">
+                    {{ nft.nftSource.title }}
+                  </div>
+                  <div style="font-size:15px">
+                    by {{ nft.nftSource.regArtist.nickname }}
+                  </div>
+                  <!-- <div style="font-size:15px">
+                    {{ nft.nftSource.originPrice }} FTS
+                  </div> -->
+                  <div style="font-size:15px">
+                    <!-- <span>
+                      # {{ nft.editionNum }}
+                    </span> -->
+                    <!-- <span style="font-size:10px">
+                      edition
+                    </span> -->
+                  </div>
+                  
+                </div>
+              </router-link>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
 
     </div>
     
@@ -189,6 +295,7 @@ import BankABI from "../../../path/to/BankABI.json";
 import Web3 from "web3"
 import  VueCookies  from 'vue-cookies';
 import { Buffer } from 'buffer';
+import VideoModal from "@/components/mypage/modal.vue";
 // import NFTCard from "@/components/market/NFTCard.vue"
 import Swal from 'sweetalert2'
 
@@ -196,6 +303,7 @@ export default {
   name: 'MyPageView',
   components: {
     // NFTCard,
+    VideoModal,
   },
   data(){
     return {
@@ -208,25 +316,74 @@ export default {
       btnAttractedNFT: false ,
       role: "fan",
 
-      myNFTmenu : ['최신 순','거래량 많은 순','거래 횟수 많은 순', '이름 순 : A→Z','이름 순 : Z→A'],
+      myNFTmenu : ['최신 순', '이름 순 : A→Z','이름 순 : Z→A'],
       profileImage: VueCookies.get('profileImage'),
 
       isHovered: false,
       userNFTs: [],
+      userLikeDropsNFTs: [],
+      userLikeMarketNFTs: [],
       userData : [],
       file: null,
       changeNickname: false,
-
+      type: 1,
+      selected: 1,
+      isVideoModalOpen: false,
+      videoId: "",
+      seto: 1,
+      sedm: 1,
     }
   },
   async created() {
     await this.$store.dispatch('getAccount');
     this.address = this.$store.state.address;
 
-    this.getUserNFTs();
+    this.getUserNFTs(this.type);
     this.getUserDetail();
+    this.getuserLikeDropsNFTs()
+    this.getuserLikeMarketNFTs()
   },
   methods:{
+    getuserLikeDropsNFTs(){
+      this.$store.dispatch('getuserLikeDropsNFTs')
+      this.userLikeDropsNFTs = this.$store.userLikeDropsNFTs
+    },
+
+    getuserLikeMarketNFTs(){
+      this.$store.dispatch('getuserLikeMarketNFTs')
+      this.userLikeMarketNFTs = this.$store.userLikeMarketNFTs
+    },
+    
+    selectDrops() {
+      this.sedm = 1
+    },
+    selectMarket() {
+      this.sedm = 2
+    },
+    
+    showVideoModal(videoId) {
+      this.videoId = videoId;
+      this.isVideoModalOpen = true;
+    },
+
+    closeVideoModal() {
+      this.isVideoModalOpen = false;
+      this.videoId = "";
+    },
+    
+    onItemSelected() {
+      if (this.selected === "1") {
+        this.type = 1
+      } else if (this.selected === "2") {
+        this.type = 2
+      } else if (this.selected === "3") {
+        this.type = 3
+      }
+    console.log(this.selected)
+    console.log(this.type)
+    this.getUserNFTs(this.type)
+    },
+
     changeNicknameBtn (){
       this.changeNickname = true;
     },
@@ -255,6 +412,7 @@ export default {
       this.btnNFTLog = false;
       this.btnAttractedNFT = false;
       this.filterTapX = 0;
+      this.seto = 1
       console.log('보유한 NFT')
     },
     clickNFTLog (){
@@ -262,13 +420,17 @@ export default {
       this.btnNFTLog = true;
       this.btnAttractedNFT = false;
       this.filterTapX = 104;
+      this.seto = 2
       console.log('NFT 거래 기록')
     },
     clickAttractedNFT (){
+      this.getuserLikeDropsNFTs()
+      this.getuserLikeMarketNFTs()
       this.btnOwnedNFT = false;
       this.btnNFTLog = false;
       this.btnAttractedNFT = true;
       this.filterTapX = 216;
+      this.seto = 3
       console.log('관심 있는 NFT')
     },
     handleBtnDown(e){
@@ -414,8 +576,8 @@ export default {
         // console.log(txHash);
     },
 
-    async getUserNFTs(){
-      await this.$store.dispatch('userNFTs')
+    async getUserNFTs(type){
+      await this.$store.dispatch('userNFTs', type)
       this.userNFTs = this.$store.userNFTs
     },
 
@@ -820,6 +982,66 @@ export default {
   box-shadow: 0px 5px 5px gray; 
 }
 
+.input-category {
+  width: 204px !important;
+  /* float: right; */
+  /* right: 0vw; */
+  /* position: absolute; */
+}
+
+.input {
+  width: 204px;
+  height: 7vh;
+  /* border-radius: 2.2vw; */
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  /* border: 1vh solid $color-main-75; */
+  margin: 0;
+  padding-left: 10px;
+  background: rgb(240, 240, 240);
+  border-bottom: solid 1px;
+}
+
+.edit-profile-confirm{
+  background-color: rgb(106, 63, 193);
+  color: white;
+  font-size: 28px;
+  width:100px;
+  height: 70px;
+  border-radius: 15px;
+  margin-left: 3px;
+  border: solid #cdcdcd 1px;
+  box-shadow: 1px 1px 5px #cdcdcd inset;
+}
+
+#nickname{
+  border: 1px solid rgb(218,210,233);
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.profile-update{
+  height: 154px;
+  position: relative;
+}
+
+.profile-cover{
+  position: absolute;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  width: 154px;
+  height: 154px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.profile-update:hover .profile-cover{
+  opacity: 1;
+  width: 154px;
+  height: 154px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
 
 .button-owned-nft{
   min-width:164px; 

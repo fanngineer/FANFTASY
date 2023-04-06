@@ -4,11 +4,8 @@ import axios from "axios"
 import createPersistedState from "vuex-persistedstate"
 import router from "@/router"
 
-const API_URL = "https://fanftasy.kro.kr/api"
-// const API_URL = "http://70.12.247.102:8080/api"
-// const API_URL = "http://192.168.200.176:8080/api"
-// const API_URL = "http://192.168.200.120:8080/api"
-// const API_URL = "http://70.12.247.102:8080/api"
+// const API_URL = "https://fanftasy.kro.kr/api"
+const API_URL = "http://70.12.247.102:8080/api"
 // const API_URL = "http://70.12.247.124:8080/api"
 // const API_URL = "http://70.12.246.214:8080/api"
 // const API_URL = "http://localhost:8080/api",
@@ -47,8 +44,11 @@ const store = createStore({
     cards: [],
     card: [],
     userNFTs: [],
+    userLikeDropsNFTs: [],
+    userLikeMarketNFTs: [],
     mcards: [],
     mcard: [],
+    otheruser:[],
   },
   getters: {
     isLogin: function () {
@@ -281,15 +281,29 @@ const store = createStore({
         })
     },
 
-    async userNFTs(){
+    async otherUserDetail(context, uid) {
+      await axios({
+        method: "get",
+        url: `${API_URL}/user/other/${uid}`,
+      })
+        .then((res) => {
+          console.log('res.data.data : ', res.data)
+          this.state.otheruser = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    async userNFTs(context, type){
       const uid = VueCookies.get("userId"); 
       console.log('uid :',uid)
       await axios({
         method: "get",
         url: `${API_URL}/nft/user/${uid}`,
-        // data: {
-        //   ownerId: uid,
-        // }
+        params: {
+          type,
+        }
       })
       .then((res)=>{
         console.log('userNFTs : ', res)
@@ -429,6 +443,7 @@ const store = createStore({
         }
       })
         .then((res) => {
+          console.log("123156453895125661548653468534")
           console.log(res)
           this.mcard = res.data
         })
@@ -535,6 +550,36 @@ const store = createStore({
       })
       .then((res) => {
         console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+    getuserLikeDropsNFTs() {
+      const uid = VueCookies.get("userId")
+      axios({
+        method: "get",
+        url: `${API_URL}/like/source/${uid}`,
+      })
+      .then((res) => {
+        this.userLikeDropsNFTs = res.data.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    
+    getuserLikeMarketNFTs() {
+      const uid = VueCookies.get("userId")
+      axios({
+        method: "get",
+        url: `${API_URL}/like/nft/${uid}`,
+      })
+      .then((res) => {
+        console.log("123485678956")
+        console.log(res.data.data)
+        this.userLikeMarketNFTs = res.data.data
       })
       .catch((err) => {
         console.log(err)
