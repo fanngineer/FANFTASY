@@ -118,9 +118,13 @@
         <v-row>
           <v-col v-for="(nft,index) in userNFTs" :key="index" cols="12" md="3">
             <div class="own-nfts-card">
-              <button v-if="nft.nftSource.fileType === 'image'" @click="showModalImg(nft)" class="button-owned-nft">
+              <div v-if="nft.nftSource.fileType === 'image'" class="button-owned-nft">
+                <div class="two-button">
+                  <button class="sell-button">판매</button>
+                  <button class="info-button" @click="showModalImg(nft)">정보</button>
+                </div>
                 <v-img v-if="nft.nftSource.fileType === 'image'" :src="nft.nftSource.fileCID" alt="이미지" class="nft-img-owned"></v-img>
-                <div style="margin-left: 5px; margin-bottom: 15px">
+                <div class="info-or-button" style="margin-left: 5px; margin-bottom: 15px">
                   <div class="item-name" style="font-size:20px;">
                     {{ nft.nftSource.title }}
                   </div>
@@ -136,10 +140,14 @@
                     </span>
                   </div>
                 </div>
-              </button>
-              <button v-if="nft.nftSource.fileType === 'video'" @click="showModalVideo(nft)" class="button-owned-nft">
+              </div>
+              <div v-if="nft.nftSource.fileType === 'video'" class="button-owned-nft">
+                <div class="two-button">
+                  <button class="sell-button">판매</button>
+                  <button class="info-button" @click="showModalVideo(nft)">정보</button>
+                </div>
                 <video v-if="nft.nftSource.fileType === 'video'" :src="nft.nftSource.fileCID" alt="비디오" class="nft-img-owned" ref="videoPlayer" @mouseover="playVideo" @mouseout="stopVideo" muted></video>
-                <div style="margin-left: 5px; margin-bottom: 15px">
+                <div class="info-or-button" style="margin-left: 5px; margin-bottom: 15px">
                     <div class="item-name" style="font-size:20px;">
                       {{ nft.nftSource.title }}
                     </div>
@@ -155,10 +163,14 @@
                       </span>
                     </div>
                   </div>
-              </button>
-              <button v-if="nft.nftSource.fileType === 'audio'" @click="showModalAudio(nft)" class="button-owned-nft">
+                </div>
+              <div v-if="nft.nftSource.fileType === 'audio'" class="button-owned-nft">
+                <div class="two-button">
+                  <button class="sell-button">판매</button>
+                  <button class="info-button" @click="showModalAudio(nft)">정보</button>
+                </div>
                 <audio v-if="nft.nftSource.fileType === 'audio'" controls :src="nft.nftSource.fileCID" alt="오디오" class="nft-img-owned"></audio>
-                <div style="margin-left: 5px; margin-bottom: 15px">
+                <div class="info-or-button" style="margin-left: 5px; margin-bottom: 15px">
                     <div class="item-name" style="font-size:20px;">
                       {{ nft.nftSource.title }}
                     </div>
@@ -174,7 +186,7 @@
                       </span>
                     </div>
                   </div>
-              </button>
+                </div>
             </div>
             <!-- <button v-if="nfr.nftSource.fileType === 'audio'" @click="showModalAudio">오디오 팔아</button> -->
             
@@ -718,30 +730,35 @@ export default {
 
       console.log('nft: ',nft)
       const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
+      console.log(fileCid)
       Swal.fire({
         title: '소유 NFT 정보',
-        confirmButtonText: '판매',
-        showCancelButton:true,
-        cancelButtonText: '취소',
-        // buttonsStyling: false,
+        showCancelButton: false,
+        showConfirmButton: false,
         html:`
-          <div style="display:flex; ">
-            <img src="${fileCid}" style="height:500px; width:auto"/>
-            <div style="margin-left:10px; display:flex; flex-direction:column; text-align:start;">
-              <div>
-                <label for="title" style="font-weight:bold;">NFT 이름</label>
-                <div id="title">${nft.nftSource.title}</div>
+          <div class="wrapper-nft">
+            <div class="single-card">
+              <div class="card-front">
+                <img src="${fileCid}" style="height:100%; width:100%; border-radius: 15px;"/>
               </div>
-              <div>
-                <label for="nickname" style="font-weight:bold;">아티스트</label>
-                <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
+              <div class="card-back">
+                <div class="card-content">
+                  <div>
+                    <label for="title" style="font-weight:bold;">NFT 이름</label>
+                    <div id="title">${nft.nftSource.title}</div>
+                  </div>
+                  <div>
+                    <label for="nickname" style="font-weight:bold;">아티스트</label>
+                    <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
+                  </div>
+                  <div>
+                    <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
+                    <div id="edition-num">#. ${nft.editionNum}</div>
+                  </div>
                 </div>
-                <div>
-                <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
-                <div id="edition-num">#. ${nft.editionNum}</div>
               </div>
             </div>
-          </div>
+            </div>
         `,
         customClass: {
           confirmButton: 'btn-right',
@@ -750,7 +767,8 @@ export default {
       }).then((result)=>{
         if (result.isConfirmed){
           console.log('confirm')
-          this.$router.push({name:'UserNFTView', params:{nftId:nft.nftId}})
+          this.confirmResell()
+          // this.$router.push({name:'UserNFTView', params:{nftId:nft.nftId}})
         } else if (result.isDenied){
           console.log('Deny')
         }
@@ -765,33 +783,32 @@ export default {
       const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
       Swal.fire({
         title: '소유 NFT 정보',
-        confirmButtonText: '판매',
-        showCancelButton:true,
-        cancelButtonText: '취소',
+        showCancelButton: false,
+        showConfirmButton: false,
         html:`
-        <div style="display:flex; ">
-          <div>
-            <video src="${fileCid}" alt="비디오" autoplay muted style="height:500px; width:auto;"/>
-
-            </div>
-          <div style="margin-left:10px; display:flex; flex-direction:column; text-align:start; width:100%;">
-            <div>
-              <label for="title" style="font-weight:bold; ">NFT 이름</label>
-              <div id="title" style="text-align:right; margin-bottom:10px;">${nft.nftSource.title}</div>
+          <div class="wrapper-nft">
+            <div class="single-card">
+              <div class="card-front">
+                <video src="${fileCid}" alt="비디오" autoplay muted style="height:500px; width:auto;"/>
               </div>
-              <hr>
-            <div>
-              <label for="nickname" style="font-weight:bold;">아티스트</label>
-              <div id="artist-nickname" style="text-align:right; margin-bottom:10px;">by. ${nft.nftSource.regArtist.nickname}</div>
+              <div class="card-back">
+                <div class="card-content">
+                  <div>
+                    <label for="title" style="font-weight:bold;">NFT 이름</label>
+                    <div id="title">${nft.nftSource.title}</div>
+                  </div>
+                  <div>
+                    <label for="nickname" style="font-weight:bold;">아티스트</label>
+                    <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
+                  </div>
+                  <div>
+                    <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
+                    <div id="edition-num">#. ${nft.editionNum}</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <hr>
-            <div>
-              <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
-              <div id="edition-num" style="text-align:right; margin-bottom:10px;">#. ${nft.editionNum}</div>
-            </div>
-            <hr>
           </div>
-        </div>
         `,
       }).then((result)=>{
         if (result.isConfirmed){
@@ -810,24 +827,33 @@ export default {
       const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
       Swal.fire({
         title: '소유 NFT 정보',
-        confirmButtonText: '판매',
-        showCancelButton:true,
-        cancelButtonText: '취소',
+        showCancelButton: false,
+        showConfirmButton: false,
         html:`
-        <div style="display:flex; ">
-          <iframe src="${fileCid}" alt="오디오" class="nft-img-owned" style="height:500px; width:auto;"></iframe>
-            <div style="margin-left:10px; display:flex; flex-direction:column; text-align:start;">
-              <div>
-                <label for="title" style="font-weight:bold;">NFT 이름</label>
-                <div id="title">${nft.nftSource.title}</div>
+          <div class="wrapper-nft">
+            <div class="single-card">
+              <div class="card-front">
+                <div style="height:100%; display:flex; align-items:center;">
+                  <audio controls autoplay >
+                    <source src="${fileCid}" type="audio/mp3">
+                  </audio>
+                </div>
               </div>
-              <div>
-                <label for="nickname" style="font-weight:bold;">아티스트</label>
-                <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
-              </div>
-              <div>
-                <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
-                <div id="edition-num">#. ${nft.editionNum}</div>
+              <div class="card-back">
+                <div class="card-content">
+                  <div>
+                    <label for="title" style="font-weight:bold;">NFT 이름</label>
+                    <div id="title">${nft.nftSource.title}</div>
+                  </div>
+                  <div>
+                    <label for="nickname" style="font-weight:bold;">아티스트</label>
+                    <div id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</div>
+                  </div>
+                  <div>
+                    <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
+                    <div id="edition-num">#. ${nft.editionNum}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -843,6 +869,13 @@ export default {
 
     },
 
+    confirmResell(){
+      console.log('되팔이 극혐...')
+      Swal.fire({
+        title:'되팔이 확인'
+      })
+    },
+    
     showModal(nft){
       console.log(nft)
       console.log('되냐?',nft.owner)
@@ -1100,6 +1133,7 @@ export default {
   justify-content: center;
   min-height: 353px;
   border-radius: 15px;
+  position: relative;
 }
 .own-nfts-card:hover{
   box-shadow: 0px 10px 10px rgba(188, 188, 188, 0.6);
@@ -1200,6 +1234,97 @@ export default {
   border-radius: 15px;
   margin-right: 5px;
   box-shadow: 0px 5px 5px rgba(188,188,188,0.8);
+}
+
+
+.wrapper-nft,
+.single-card{
+  height: 450px;
+  max-width: 300px;
+  margin: auto;
+  position: relative;
+}
+.wrapper-nft{
+  perspective: 900px;
+}
+.single-card{
+  text-align: center;
+  transition: all 1.5s cubic-bezier(0.7, -.5, 0.3, 1.8);
+  transform-style: preserve-3d;
+}
+.wrapper-nft:active .single-card{
+  transform: rotateY(180deg);
+}
+.card-front,
+.card-back{
+  width: 300px;
+  position: relative;
+  top:0;
+  left:0;
+  backface-visibility: hidden;
+}
+.card-front{
+  cursor: pointer;
+  height: 100%;
+  background-color: #9B7CF8;
+  backface-visibility: hidden;
+  border-radius: 50px;
+  background-size: cover;
+  background-position: center center;
+}
+.card-back{
+  transform: rotateY(180deg);
+  position: absolute;
+  border-radius: 50px;
+  height: 450px;
+  background: #fff;
+}
+.card-content{
+  padding-top: 25%;
+}
+
+
+.own-nfts-card:hover .info-or-button{
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.two-button{
+  position: absolute;
+  z-index: 10;
+  top: 84%;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 13px;
+}
+.own-nfts-card:hover .info-button{
+  transition: 0.5s ease-in-out;
+  opacity: 1;
+}
+.own-nfts-card:hover .sell-button{
+  transition: 0.5s ease-in-out;
+  opacity: 1;
+}
+.info-button{
+  background-color: #9B7CF8;
+  color: white;
+  width: 60px;
+  border-radius: 10px;
+  opacity: 0;
+}
+.sell-button{
+  background-color: #9B7CF8;
+  color: white;
+  width: 60px;
+  border-radius: 10px;
+  opacity: 0;
+}
+.info-button:hover{
+  background-color: #6A3FC1;
+}
+.sell-button:hover{
+  background-color: #6A3FC1;
 }
 
 </style>
