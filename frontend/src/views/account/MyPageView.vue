@@ -120,7 +120,7 @@
             <div class="own-nfts-card">
               <div v-if="nft.nftSource.fileType === 'image'" class="button-owned-nft">
                 <div class="two-button">
-                  <button class="sell-button">판매</button>
+                  <button class="sell-button" @click="showModalToSell(nft)">판매</button>
                   <button class="info-button" @click="showModalImg(nft)">정보</button>
                 </div>
                 <v-img v-if="nft.nftSource.fileType === 'image'" :src="nft.nftSource.fileCID" alt="이미지" class="nft-img-owned"></v-img>
@@ -546,6 +546,7 @@ export default {
         //   console.log(events);
         //   this.SaleContractAddress = events[events.length - 1].returnValues._saleContract;
         //   console.log(this.SaleContractAddress);
+        //   
           
           
         //   // ///////////////////////////////////////////////////////////////////////////////////
@@ -564,6 +565,11 @@ export default {
         //     }
         //   })
         //   //  구매인데 판매 중인 nft의 가격을 value에 입력이 되어야한다.
+        //   const ans = SaleContract.methods.purchase().send({ from : account, value : price });
+        //   console.log(await ans);
+
+
+
         //   SaleContract.methods.purchase().send({ from : account, value : price })
         //   .call((err, res) => {
         //     if(err){
@@ -621,7 +627,6 @@ export default {
         //     console.log(res);
         //   }
         // })
-
 
 
 
@@ -749,6 +754,10 @@ export default {
                     <label for="edition-num" style="font-weight:bold;">에디션 번호</label>
                     <div id="edition-num">#. ${nft.editionNum}</div>
                   </div>
+                  <div>
+                    <label for="edition-num" style="font-weight:bold;">상세 정보</label>
+                    <div id="edition-num">${this.nftInfo.content}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -761,8 +770,6 @@ export default {
       }).then((result)=>{
         if (result.isConfirmed){
           console.log('confirm')
-          this.confirmResell()
-          // this.$router.push({name:'UserNFTView', params:{nftId:nft.nftId}})
         } else if (result.isDenied){
           console.log('Deny')
         }
@@ -867,10 +874,48 @@ export default {
 
     },
 
-    confirmResell(){
-      console.log('되팔이 극혐...')
+    async showModalToSell(nft){
+      const NFTId = nft.nftId;
+      const resellDetailNFTs = await this.$store.dispatch("resellDetailNFTs", NFTId);
+      console.log(resellDetailNFTs);
+      this.nftInfo = resellDetailNFTs;
+      console.log('포뇨포뇨',this.nftInfo)
+      const fileCid = JSON.stringify(nft.nftSource.fileCID).replace('"','').replace('"','')
       Swal.fire({
-        title:'되팔이 확인'
+        title: 'NFT 리셀',
+        showCancelButton: false,
+        confirmButtonText: '판매하기',
+        html:`
+          <div>
+            <img src="${fileCid}" style="height:50%; width:50%; border-radius: 15px;"/>
+          </div>
+          <div>
+            <input id="price" placeholder="가격" style="border-style:solid;"></input>
+          </div>  
+          <div>
+            <div>
+              <label for="title" style="font-weight:bold;">NFT 이름</label>
+              <span id="title">${nft.nftSource.title}</span>
+            </div>
+            <div>
+              <label for="nickname" style="font-weight:bold;">아티스트</label>
+              <span id="artist-nickname">by. ${nft.nftSource.regArtist.nickname}</span>
+            </div>
+          </div>
+        `,
+        preConfirm:()=>{
+          return [
+            document.getElementById('price').value,
+          ];
+        },
+      }).then((result) => {
+        const payload = {
+          tokenId: this.nftInfo.nftId,
+          price:result.value[0]
+
+        }
+        console.log('result의 값이야 : ', result.value[0])
+        this.$store.dispatch("createSaleToBlockChain", payload);
       })
     },
     

@@ -737,25 +737,35 @@ const store = createStore({
           toBlock: 'latest',
         }, async function(err, events){
           console.log(err);
-          console.log(events);
-          this.state.SaleContractAddress = events[events.length - 1].returnValues._saleContract;
-          console.log(this.state.SaleContractAddress);
-        });
+          console.log('event : ', events);
+          console.log('events[events.length - 1] : ', events[events.length - 1]);
+          console.log('events[events.length - 1].returnValues : ', events[events.length - 1].returnValues);
+          console.log('events[events.length - 1].returnValues._saleContract : ', events[events.length - 1].returnValues._saleContract);
 
-        const payload1 = {
-          nftId: payload.tokenId,
-          contractAddress: this.state.SaleContractAddress,
-          price: payload.price,
-        };
-        this.dispatch('resellRegistration', payload1);
+
+          context.state.SaleContractAddress = events[events.length - 1].returnValues._saleContract;
+          console.log('this.state,SaleContractAddress',context.state.SaleContractAddress);
+        })
+        .then((events) => {
+          context.state.SaleContractAddress = events[events.length - 1].returnValues._saleContract;
+          console.log('this.state,SaleContractAddress(events) :',context.state.SaleContractAddress);
+          const payload1 = {
+            nftId: payload.tokenId,
+            contractAddress: context.state.SaleContractAddress,
+            price: payload.price,
+          };
+          console.log('payload1 :', payload1)
+          context.dispatch('resellRegistration', payload1);
+
+        });
       })
       .on("error", function(err) {
         console.error(err);
-        this.state.err = err;
+        context.state.err = err;
       }));
     },
 
-    async resellRegistration(context, payload){
+    async resellRegistration(context, payload1){
       const accessToken = VueCookies.get('AccessToken');
       axios({
         method: "put",
@@ -764,14 +774,17 @@ const store = createStore({
           Authorization: 'Bearer ' + accessToken,
         },
         data: {
-          nftId: payload.nftId,
-          contractAddress: payload.contractAddress,
-          price: payload.price,
+          nftId: payload1.nftId,
+          contractAddress: payload1.contractAddress,
+          price: payload1.price,
         }
       })
       .then((res) => {
-        console.log(res);
-        console.log(res.data.message);
+        console.log('resellRegistration => res :', res);
+        console.log('res.data.message :', res.data.message);
+      })
+      .catch((err) => {
+        console.log('err :',err);
       })
     }
 
