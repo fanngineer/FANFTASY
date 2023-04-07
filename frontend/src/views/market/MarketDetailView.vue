@@ -56,16 +56,16 @@
           <hr>
           <div style="width: 500px; margin:20px">
             <p style="font-size: 20px; font-weight:1000; text-indent: -15px;">거래 정보</p>
-            <p>
+            <p style="justify-content: space-between">
               <table>
                 <thead>
-                  <tr style="text-align: start; margin-left: 10px;">
+                  <tr class=""  style="justify-content: space-between; text-align: left; margin-left: 10px;">
                     <th >발매일시</th>
                     <th >발매 NFT 에디션 개수</th>
                     <th >가격</th>
                   </tr>
                 </thead>
-                <tbody style="text-align: center;">
+                <tbody style="text-align: left;">
                   <!-- <tr v-for="(log, index) in tradeLog" :key="index"> 
                     <td>{{ log.date }}</td>
                     <td>{{ log.edition }}</td>

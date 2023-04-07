@@ -702,12 +702,22 @@ const store = createStore({
           console.log(res.data.message);
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
+          Swal.fire({
+            title: "구입 실패",
+            text: "지갑주소가 유효하지 않습니다. 로그인 및 지갑을 확인해주세요.",
+            icon: "warning" //"info,success,warning,error" 중 택1
+          })
         });
       })
       .on("error", function(err) {
         console.error(err);
-        alert(err);
+        Swal.fire({
+          title: "구입 실패",
+          text: "지갑주소가 유효하지 않습니다. 로그인 및 지갑을 확인해주세요.",
+          icon: "warning" //"info,success,warning,error" 중 택1
+        })
+        // alert(err);
       });
     },
 
