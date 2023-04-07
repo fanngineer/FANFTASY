@@ -1,9 +1,9 @@
 <template>
   <div style="
     width: 100%;
-    height: 80vh;
+    height: 100vh;
     /* background-color: white; */
-    padding-top: 100px;
+    padding-top: 10px;
     text-align: center;
     /* display: flex; */
     display: flex;
@@ -14,12 +14,25 @@
       NFT 생성
     </span>
     <div style="width:400px; justify-content: left;">
-      <br>
-      <br>
-      <label for="" style="margin-right:10px">파일선택</label>  
+      <div >
+        <label for="mintingFile">
+          <img v-if="imageUrl" :src="imageUrl" style="width:400px; height: 200px; border-radius: 15px; object-fit: contain;"/>
+          <video v-else-if="videoUrl" style="width:400px; height: 200px; border-radius: 15px; object-fit: contain;" controls >
+            <source :src="videoUrl" type="video/mp4" />
+          </video>
+          <div v-else style="display: flex; justify-content: center; align-items: center; width:400px; height: 200px; border:2px solid #DAD2E9; border-radius: 15px; ">
+            <v-icon icon="mdi-upload" style="color:#9B7CF8; font-size: 60px;"></v-icon>
+          </div>
+        </label>
+        <input id="mintingFile" type="file" ref="fileInput" style="display: none;" @change="previewFile" accept="image/*, video/*" />
+      </div>
+      
+      <!-- <br> -->
+      <!-- <br> -->
+      <!-- <label for="minting-file" style="margin-right:10px">파일선택</label>   -->
       <!-- <input v-on:change="previewFiles(this.files)" type="file" accept="image/*, video/*, audio/*" style="border:solid"> -->
-      <input type="file" @change="handleFileUpload" accept="image/*, video/*, audio/*"/>
-      <br>
+      <!-- <input type="file" @change="handleFileUpload" accept="image/*, video/*, audio/*"/> -->
+      <!-- <br> -->
       <br>
       <label for="minting-title">제목</label>
       <input id="minting-title" v-model="title" type="text" class="minting-input" style="height: 40px;" placeholder="제목을 입력해주세요.">
@@ -73,6 +86,9 @@ export default {
       now: Date.now(), 
       role: null,
       // a: Date.
+
+      imageUrl: null,
+      videoUrl: null,
     }
   },
   created(){
@@ -121,10 +137,9 @@ export default {
 
     handleFileUpload(event) {
       this.file = event.target.files[0];
-      console.log(this.file);
-      console.log(this.file.type.substring(0, 5))
+      console.log('this.file :', this.file);
+      console.log('this,file.type.substring(0, 5) :', this.file.type.substring(0, 5))
       this.fileType = this.file.type.substring(0, 5)
-      
     },
     addNFT() {
       const file = this.file
@@ -151,7 +166,33 @@ export default {
       console.log(payload)
 
       this.$store.dispatch("addNFT", payload)
-    }
+    },
+
+    previewFile(event) {
+      this.file = event.target.files[0];
+      console.log('this.file :', this.file);
+      console.log('this,file.type.substring(0, 5) :', this.file.type.substring(0, 5))
+      this.fileType = this.file.type.substring(0, 5)
+
+      const pre_file = event.target.files[0];
+
+      if (pre_file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.readAsDataURL(pre_file);
+        reader.onload = () => {
+          this.imageUrl = reader.result;
+        };
+        this.videoUrl = null
+
+      } else if (pre_file.type.startsWith('video/')) {
+        const reader = new FileReader();
+        reader.readAsDataURL(pre_file);
+        reader.onload = () => {
+          this.videoUrl = reader.result;
+        };
+        this.imageUrl = null
+      }
+    },
   },
 }
 </script>
