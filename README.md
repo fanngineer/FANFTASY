@@ -9,34 +9,34 @@
 2022.02.20(월) ~ 2022.04.07(금)
 ## 📝 **주요 기능**
 ### Main Page
-<img src = "asset/view/main.gif" width="450"> 
+<img src = "asset/view/main.gif" width="700"> 
 
 ### 메타마스크 로그인
-<img src = "asset/view/metamask_create.gif" width="450">  
+<img src = "asset/view/metamask_create.gif" width="700">  
 
 - 서비스 이용을 위해서 메타마스크가 필수이며, 설치되어 있지 않은 경우 설치 페이지로 이동합니다.
 ### 회원가입
-<img src = "asset/view/sign_in.gif" width="450">  
+<img src = "asset/view/sign_in.gif" width="700">  
 
 - 최초 로그인의 경우, 메타마스크에서 네트워크 연결을 진행시키고 회원가입을 진행합니다.  
 - 회원가입은 아티스트, 회원으로 구분됩니다.  
 - 아티스트는 가입 직후 회원의 권한을 가지며, 서비스 관리자의 인증으로 권한이 변경됩니다.
 
 ### NFT 발행
-<img src = "asset/view/create_NFT.gif" width="450">
+<img src = "asset/view/create_NFT.gif" width="700">
 
 - 아티스트는 ERC 721기반의 NFT를 발행할 수 있습니다.
 - 사진, 영상, 음성 등의 컨텐츠를 업로드하고, 해당 컨텐츠의 발행 Edition 갯수를 설정할 수 있습니다.
 - 발행 요청한 NFT는 서버를 통해 블록체인 네트워크에 생성됩니다.
 
 ### 발행된 NFT 조회
-<img src = "asset/view/drops.gif" width="450">
+<img src = "asset/view/drops.gif" width="700">
 
 - 아티스트가 발행한 NFT들을 둘러볼 수 있습니다.
 - 최신순, 판매 금액순, 잔여량 적은순으로 정렬이 가능하며 이름, 내용, 아티스트에 포함된 키워드로 검색할 수 있습니다.
 
 ### 발행된 NFT 구매
-<img src = "asset/view/drops_purchase.gif" width="450">
+<img src = "asset/view/drops_purchase.gif" width="700">
 
 - NFT의 상세 정보를 볼 수 있습니다. 하트를 통해 관심 목록에 추가 할 수 있으며, 추가된 횟수를 나타냅니다.
 - 아티스트가 발행한 NFT를 구매할 수 있습니다.
@@ -44,14 +44,14 @@
 - 해당 컨텐츠의 Edition Number가 가장 낮은 NFT가 거래되면 잔여 수량에 반영됩니다.
 
 ### My page
-<img src = "asset/view/my_page.gif" width="450">
+<img src = "asset/view/my_page.gif" width="700">
 
 - 회원 정보를 조회하고 수정할 수 있습니다.
 - 보유한 NFT와 NFT상세 페이지에서 추가한 관심 목록을 확인할 수 있습니다.
 - 보유한 NFT를 클릭하면, 상세 정보를 확인할 수 있습니다.
 
 ### 구매한 NFT 판매
-<img src = "asset/view/resell_register.gif" width="450">
+<img src = "asset/view/resell_register.gif" width="700">
 
 - 구매한 NFT의 가격을 설정해서 판매할 수 있습니다.
 - 판매 등록한 NFT는 Market 페이지에서 조회할 수 있으며, 발행된 NFT 구매와 동일하게 구매할 수 있습니다.
