@@ -94,12 +94,14 @@
 ## 📐 시스템 아키텍처
 
 ### 아키텍처
-
-![특화_아키텍쳐.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aa0b5a08-a1a1-46ac-b31f-eef6018569fd/%ED%8A%B9%ED%99%94_%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png)
+<img src = "asset/system_architecture.png" width="600">
 
 ---
+## 📂 ERD
+<img src = "asset/ERD.png" width="600">
 
-## 🧑‍🤝‍🧑 프로젝트 과정
+---
+## 🧑‍🤝‍🧑 프로젝트 관리
 
 - MatterMost
     - 의견 조율
@@ -130,8 +132,8 @@
 
 브랜치 전략
 - 젠킨스 배포를 위해 백, 프론트로 크게 브랜치를 나눔(dev-).
-- dev-front, dev-back에서 각각 브랜치를 파서 작업 후, 완성한 기능은 머지.
-- 문제가 생긴 브랜치에서 분기(fix-)해서 수정 후 정상화하면 머지(merge).
+- dev-front, dev-back에서 각각 브랜치를 파서 작업 후, 완성한 기능은 merge.
+- 문제가 생긴 브랜치에서 분기(fix-)해서 수정 후 정상화하면 병합(merge).
 
 
 ---
