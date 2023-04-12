@@ -94,7 +94,7 @@
 ## 📐 시스템 아키텍처
 
 ### 아키텍처
-<img src = "asset/system_architecture.png" width="600">
+<img src = "asset/system_architecture.PNG" width="600">
 
 ---
 ## 📂 ERD
