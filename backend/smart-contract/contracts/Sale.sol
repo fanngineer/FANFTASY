@@ -70,7 +70,7 @@ contract Sale is Ownable{
     
     
     //판매 취소 함수
-    function cancelSales() public {
+    function cancelSales() public onlyOwner{
         require(!isEnded, "This sale is already ended.");
         require(!isCanceled, "This sale is already canceled.");
         // Sale을 취소 상태로 설정
