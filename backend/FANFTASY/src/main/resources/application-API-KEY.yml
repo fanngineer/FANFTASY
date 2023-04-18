@@ -1,0 +1,22 @@
+pinata:
+  API_Key: 
+  API_Secret: 
+  JWT: 
+
+#blockchain:
+#  NetworkURL: HTTP://127.0.0.1:7545
+#  AdminPrivateKey: 
+#  ContractAddress: "0x6d082A87793C6498157b457Bb23f62De82a2692c"
+#  NetworkID: 5777
+#  AdminAddress: "0xB8Ad2Cf28E9aA717398Fb2b08f8328e916305D98"
+
+
+##EC2
+blockchain:
+  NetworkURL: https://fanftasy.kro.kr/network
+  AdminPrivateKey: 
+#  NFTContractAddress: "0xaeb2DC75a63352947Bdbe6d9E6A37c0752481007"
+  NFTContractAddress: "0xDcC5cdA0Ea01c12eA756601021c0029FC39efD38"
+  SaleFactoryAddress: "0x0509b43FF9CcAC684ef00bc82020208b6F86d156"
+  NetworkID: 1336
+  AdminAddress: "0xdb2d8BAE9F41703285d99AB76d655a5E1c2646AB"
